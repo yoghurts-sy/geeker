@@ -14,8 +14,11 @@
 // +----------------------------------------------------------------------
 return [
     // 默认中间件命名空间
+    //\think\middleware\AllowCrossDomain::class,
+    'Cors' => app\http\middleware\Cors::class,
     'ApiUserAuth' => app\http\middleware\ApiUserAuth::class,
     'ApiUserStatus' => app\http\middleware\ApiUserStatus::class,
     'ApiUserBindPhone' => app\http\middleware\ApiUserBindPhone::class,
     'ApiGetUserid' => app\http\middleware\ApiGetUserid::class,
+
 ];
