@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "yoghurt.jwt",
+      "type": "com.geeker.love.utils.JwtUtils",
+      "sourceType": "com.geeker.love.utils.JwtUtils"
+    }
+  ],
+  "properties": [
+    {
+      "name": "yoghurt.jwt.expire",
+      "type": "java.lang.Long",
+      "sourceType": "com.geeker.love.utils.JwtUtils",
+      "defaultValue": 0
+    },
+    {
+      "name": "yoghurt.jwt.header",
+      "type": "java.lang.String",
+      "sourceType": "com.geeker.love.utils.JwtUtils"
+    },
+    {
+      "name": "yoghurt.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.geeker.love.utils.JwtUtils"
+    }
+  ],
+  "hints": []
+}

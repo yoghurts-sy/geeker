@@ -1,8 +1,8 @@
 package com.geeker.love.shiro;
 
 import cn.hutool.json.JSONUtil;
-import com.yoghurt.myblog.common.lang.Result;
-import com.yoghurt.myblog.utils.JwtUtils;
+import com.geeker.love.common.lang.Result;
+import com.geeker.love.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -32,6 +32,7 @@ public class JwtFilter extends AuthenticatingFilter {
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         HttpServletRequest hsr = (HttpServletRequest) servletRequest;
         String token = hsr.getHeader("Authorization");
+        System.out.println(token);
         if (StringUtils.isEmpty(token)){
             return null;
         }
@@ -42,11 +43,14 @@ public class JwtFilter extends AuthenticatingFilter {
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         HttpServletRequest hsr = (HttpServletRequest) servletRequest;
         String token = hsr.getHeader("Authorization");
+
+        System.out.println(token);
+
         if (StringUtils.isEmpty(token)){
             return true;
         } else {
             Claims claim = jwtUtils.getClaimByToken(token);
-            if (claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
+            if (claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) { // 校验异常
                 throw new ExpiredCredentialsException("Token expired， please login again");
             }
         }

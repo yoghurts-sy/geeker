@@ -59,7 +59,7 @@ public class ShiroConfig {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/**", "jwt"); // 主要通过注解方式校验权限
+        filterMap.put("/**", "jwt"); // 所有请求经过jwt filter
         chainDefinition.addPathDefinitions(filterMap);
         return chainDefinition;
     }

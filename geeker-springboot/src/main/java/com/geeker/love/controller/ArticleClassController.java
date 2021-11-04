@@ -16,7 +16,7 @@ public class ArticleClassController {
     @GetMapping("/pc")
     @ResponseBody
     public List<ArticleClass> getAC(){
-        List<ArticleClass> ac=articleClassService.GetArticleClass();
+        List<ArticleClass> ac = articleClassService.GetArticleClass();
         return ac;
     }
 

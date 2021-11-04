@@ -1,5 +1,8 @@
 package com.geeker.love.shiro;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.geeker.love.pojo.User;
+import com.geeker.love.service.UserService;
 import com.geeker.love.utils.JwtUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,8 +18,8 @@ public class AccountRealm extends AuthorizingRealm {
     @Autowired
     private JwtUtils jwtUtils;
 
-    //@Autowired
-   // private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -42,8 +45,11 @@ public class AccountRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         JwtToken jwtToken = (JwtToken) authenticationToken;
+
+        System.out.println(jwtToken);
+
         String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
-        /*User user = userService.getById(Long.parseLong(userId));
+        User user = userService.QueryUserByUserId(Integer.parseInt(userId));
         if (user == null) {
             throw new UnknownAccountException("unknownAccount");
         }
@@ -52,7 +58,6 @@ public class AccountRealm extends AuthorizingRealm {
         }
         AccountProfile profile = new AccountProfile();
         BeanUtil.copyProperties(user, profile);
-        return new SimpleAuthenticationInfo(profile,jwtToken.getCredentials(),getName());*/
-        return null;
+        return new SimpleAuthenticationInfo(profile,jwtToken.getCredentials(),getName());
     }
 }
