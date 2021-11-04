@@ -6,8 +6,11 @@ import java.io.Serializable;
 
 @Data
 public class AccountProfile implements Serializable {
-    private Long id;
+    private Integer id;
     private String username;
-    private String avatar;
+    private String userpic;
+    private String phone;
     private String email;
+    private Integer status;
+    private Long create_time;
 }
