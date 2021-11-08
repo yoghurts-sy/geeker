@@ -24,9 +24,9 @@ public class UserController {
      */
 
     // 已经获取到手机验证码后 --> 用户拿着手机号码和验证码 --> 登录
-    @PostMapping("/phonecodelogin")
-    public Result PhoneLoginController(@RequestParam String phone, @RequestParam String code) throws GeekerException {
-        return userService.PhoneCodeLogin(phone, code);
+    @PostMapping("/codelogin")
+    public Result PhoneLoginController(@RequestBody LoginDto loginDto) throws GeekerException {
+        return userService.PhoneCodeLogin(loginDto.getPhone(), loginDto.getPassword()/*code*/);
     }
 
     @PostMapping("/sendcode")

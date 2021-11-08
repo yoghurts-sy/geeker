@@ -18,6 +18,17 @@
             "path" : "pages/my/my",
             "style" : {}
         }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"app-plus":{
+					"titleNView":false // true为自带返回键
+				}
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
