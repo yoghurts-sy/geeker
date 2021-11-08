@@ -33,12 +33,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result PhoneLogin(String phone, String password) throws GeekerException {
+
+        System.out.println(phone + " " + password);
         if (!checkPhone(phone)) throw new GeekerException("手机号码格式不正确");// 应该在前端校验
         User user = userMapper.queryUserByPhone(phone);
         nullOrNot.istrue(user == null, "用户不存在");
         nullOrNot.istrue(!user.getPassword().equals(SecureUtil.md5(password)), "密码不正确");
         // 记得把数据库改改
         String jwt = jwtUtils.generateToken(user.getId());
+
+        System.out.println(user);
 
         return Result.success(
                 MapUtil.builder()
@@ -61,6 +65,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Result PhoneCodeLogin(String phone, String code) throws GeekerException {
+        System.out.println(phone + " " + code);
+
+
         nullOrNot.istrue(!checkPhone(phone), "手机号码格式不正确");
         String redisCode = (String)redisUtils.get(phone);
         if (redisCode == null) return Result.fail("验证码已过期，请重新获取");
@@ -72,6 +79,9 @@ public class UserServiceImpl implements UserService {
             if (res != 1) throw new GeekerException("注册失败");
             user = userMapper.queryUserByPhone(phone);
         }
+
+        System.out.println("user"+user);
+
         String jwt = jwtUtils.generateToken(user.getId());
         return Result.success(
                 MapUtil.builder()
