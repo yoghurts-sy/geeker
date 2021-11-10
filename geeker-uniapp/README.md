@@ -7,3 +7,5 @@
 * animate：https://animate.style/
 	* 注意animate的用法，参考网站里的，原版的太旧了
 
+* 最好不要学他用class来调样式，直接还是按以前那样自定义class调样式
+* 它的class不一定生效
