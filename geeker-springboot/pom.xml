@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.geeker</groupId>
-    <artifactId>todolist</artifactId>
+    <artifactId>love</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>todolist</name>
-    <description>Geeker todolist</description>
+    <name>love</name>
+    <description>Geeker love</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -68,6 +68,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.6.54</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -110,7 +115,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.geeker.todolist.TodolistApplication</mainClass>
+                    <mainClass>com.geeker.love.LoveApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

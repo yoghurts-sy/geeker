@@ -1,5 +1,6 @@
 package com.geeker.love.controller;
 import com.geeker.love.pojo.Topic;
+import com.geeker.love.pojo.post;
 import com.geeker.love.service.impl.TopicService;
 import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,15 @@ public class TopicController {
         List<Topic> topics= topicService.getTopicsByPages(tc_id,pageNum);
         return topics;
     }
+
+    @GetMapping("/bytopic")
+    @ResponseBody
+    public List<post> getPostByTopic(@RequestParam Integer topic_id,
+                                     @RequestParam Integer pageNum)
+    {
+        List<post> posts= topicService.getPostByTopic(topic_id,pageNum);
+        return posts;
+    }
+
+
 }

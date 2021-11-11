@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geeker.love.dao.uploadFileMapper">
+  <insert id="uploadPics" parameterType="com.geeker.love.pojo.image" statementType="PREPARED" keyProperty="id">
+    insert into image(url,create_time,user_id) values
+     <foreach collection="pics" item="item" separator=",">
+       (#{item.url},unix_timestamp(now()),#{item.user_id})
+     </foreach>
+  </insert>
+
+
+
+</mapper>

@@ -8,6 +8,8 @@
         select * from topic where topic_class_id=#{TC_id}
     </select>
 
-
+    <select id="getPostByTopic" resultType="com.geeker.love.pojo.post">
+        select * from post where id in (select post_id from topic_post where topic_id=#{topic_id})
+    </select>
 
     </mapper>

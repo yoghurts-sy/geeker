@@ -18,14 +18,15 @@ public class LoveApplicationTests {
                 .setId("208")
                 .setSubject("geeKer")
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256,"shufan");
+                .signWith(SignatureAlgorithm.HS256,"kkkkk");
         String token=jwtBuilder.compact();
         System.out.println("token="+token);
         Claims claims=(Claims) Jwts.parser()
-                .setSigningKey("shufan")
+                .setSigningKey("xxxx")
                 .parse(token)
                 .getBody();
         System.out.println(claims.getId()+"=="+claims.getSubject());
+        
 
     }
 }
