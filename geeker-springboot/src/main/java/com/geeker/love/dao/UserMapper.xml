@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geeker.love.dao.UserMapper">
+    <select id="queryUserByUserId" resultType="com.geeker.love.pojo.User">
+        select distinct * from user where id = #{id}
+    </select>
+
+
+    <select id="queryUserByPhone" resultType="com.geeker.love.pojo.User">
+        select distinct * from user where phone = #{phone}
+    </select>
+
+    <insert id="insertUserByPhone" parameterType="com.geeker.love.pojo.User" statementType="PREPARED" keyProperty="id">
+        insert into user(username, phone, status, create_time) value ('第一次登录', #{phone}, 1, #{create_time})
+    </insert>
+
+    </mapper>

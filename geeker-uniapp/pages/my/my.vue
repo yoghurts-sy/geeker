@@ -1,6 +1,7 @@
 <template>
 	<view>
 		我的
+		<button @click="pushLogin" style="margin-top: 200rpx;">登录</button>
 	</view>
 </template>
 
@@ -12,7 +13,11 @@
 			}
 		},
 		methods: {
-			
+			pushLogin() {
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			}
 		}
 	}
 </script>

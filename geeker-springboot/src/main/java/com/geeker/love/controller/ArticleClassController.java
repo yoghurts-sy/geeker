@@ -13,10 +13,11 @@ import java.util.List;
 public class ArticleClassController {
     @Autowired
     private ArticleClassService articleClassService;
+
     @GetMapping("/pc")
     @ResponseBody
     public List<ArticleClass> getAC(){
-        List<ArticleClass> ac=articleClassService.GetArticleClass();
+        List<ArticleClass> ac = articleClassService.GetArticleClass();
         return ac;
     }
 
