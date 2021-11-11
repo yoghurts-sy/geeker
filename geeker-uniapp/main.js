@@ -8,6 +8,9 @@ Vue.prototype.$store = store
 
 Vue.config.productionTip = false
 
+import divider from '@/components/common/divider.vue';
+Vue.component('divider', divider)
+
 App.mpType = 'app'
 
 // 引入配置文件
