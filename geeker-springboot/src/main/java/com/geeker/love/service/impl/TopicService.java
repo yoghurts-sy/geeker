@@ -2,6 +2,7 @@ package com.geeker.love.service.impl;
 
 import com.geeker.love.dao.TopicMapper;
 import com.geeker.love.pojo.Topic;
+import com.geeker.love.pojo.post;
 import com.geeker.love.service.TopicServe;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,4 +27,12 @@ public class TopicService implements TopicServe {
 
         return lists;
     }
+    public List<post> getPostByTopic(Integer tid, Integer page) {
+        PageHelper.startPage(page,5);
+        List<post> lists = topicMapper.getPostByTopic(tid);
+        return lists;
+    }
+
+
+
 }
