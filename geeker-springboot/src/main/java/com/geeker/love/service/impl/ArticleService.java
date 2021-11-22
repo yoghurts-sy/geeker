@@ -8,6 +8,7 @@ import com.geeker.love.utils.ResultInfo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -41,7 +42,7 @@ public class ArticleService implements ArticleServe {
         return lists;
     }
 
-
+    @Transactional
     public ResultInfo DingCai(Integer uid, Integer pid, Integer type) {
         ResultInfo resultInfo=new ResultInfo();
         if(articleMapper.getPostById(pid)==null){

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geeker.love.dao.FeedBackMapper">
+<insert id="FeedBack" parameterType="com.geeker.love.pojo.feedback" keyProperty="id" statementType="PREPARED">
+    insert into feedback(to_id,from_id,data,create_time) values (0,#{from_id},#{data},unix_timestamp(now()))
+</insert>
+<select id="getFeedBack" resultType="com.geeker.love.pojo.feedback">
+    select * from feedback where from_id=#{fid}
+</select>
+
+</mapper>

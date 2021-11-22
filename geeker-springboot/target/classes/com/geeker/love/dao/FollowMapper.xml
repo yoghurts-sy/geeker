@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geeker.love.dao.FollowMapper">
+    <insert id="follow" parameterType="com.geeker.love.pojo.follow" statementType="PREPARED" keyProperty="id">
+        insert into follow (follow_id,user_id,create_time) values (#{fid},#{uid},unix_timestamp(now()))
+    </insert>
+    <select id="getFollowById" resultType="com.geeker.love.pojo.follow">
+        select * from follow where follow_id=#{fid} and user_id=#{uid}
+    </select>
+    <delete id="unFollow" parameterType="com.geeker.love.pojo.follow">
+        delete from follow where follow_id=#{fid} and user_id=#{uid}
+    </delete>
+    <select id="friendList" resultType="com.geeker.love.common.dto.UserBaseInfo">
+        SELECT id,username,userpic FROM USER AS X WHERE x.`id`=any(SELECT a.`follow_id` FROM follow AS a,follow AS b WHERE a.`user_id`=#{uid} AND a.`follow_id`=b.`user_id` AND b.`follow_id`=#{uid})
+    </select>
+    <select id="likeList" resultType="com.geeker.love.pojo.User">
+        select id,username,userpic from user as x where x.`id`=any(select follow_id from follow where user_id=#{uid})
+    </select>
+    <select id="fansList" resultType="com.geeker.love.pojo.User">
+        select id,username,userpic from user where id=any(select user_id from follow where follow_id=#{uid})
+    </select>
+
+</mapper>
