@@ -74,4 +74,32 @@ public class uploadUtil {
         return images;
     }
 
+    public static String uploadfile(MultipartFile file, Integer status){
+        if (status == 1) prefix = "blog-image/";
+        else prefix = "avatar/";
+        // 创建 COS 客户端连接
+        COSClient cosClient = new COSClient(credentials, clientConfig);
+
+            String fileName = file.getOriginalFilename();
+            try {
+                String substring = fileName.substring(fileName.lastIndexOf("."));
+                File localFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),substring);
+                file.transferTo(localFile);
+                Date date = new Date();
+                String strDateFormat = "yyyy-MM-dd&HH:mm:ss";
+                SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+                System.out.println(sdf.format(date));
+                fileName = prefix+sdf.format(date)+"myblog"+substring;
+
+                System.out.println(fileName);
+                // 将 文件上传至 COS
+                PutObjectRequest objectRequest = new PutObjectRequest(bucketName,fileName,localFile);
+                cosClient.putObject(objectRequest);
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                cosClient.shutdown();
+            }
+        return URL+fileName;
+    }
 }
