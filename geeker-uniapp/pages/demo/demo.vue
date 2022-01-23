@@ -16,7 +16,7 @@
 			<view class="flex-1 bg-primary text-center" >4</view>
 			<view class="flex-1 bg-primary text-center" >5</view>
 			<view class="flex-1 bg-primary text-center" >6</view>
-			
+
 		</view>
 		
 	</view>
