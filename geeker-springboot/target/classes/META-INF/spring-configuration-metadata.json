@@ -10,7 +10,8 @@
     {
       "name": "yoghurt.jwt.expire",
       "type": "java.lang.Long",
-      "sourceType": "com.geeker.love.utils.JwtUtils"
+      "sourceType": "com.geeker.love.utils.JwtUtils",
+      "defaultValue": 0
     },
     {
       "name": "yoghurt.jwt.header",

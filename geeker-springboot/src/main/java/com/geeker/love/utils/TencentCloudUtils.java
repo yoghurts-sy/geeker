@@ -21,7 +21,7 @@ public class TencentCloudUtils {
      * Tencent Cloud Sms Sendsms
      *
      */
-    public static void sendVerifyCode(String phone) {
+    public static void sendVerifyCode(String phone, String code) {
         try {
             /* 必要步骤：
              * 实例化一个认证对象，入参需要传入腾讯云账户密钥对secretId，secretKey。
@@ -74,7 +74,7 @@ public class TencentCloudUtils {
             req.setSmsSdkAppId(sdkAppId);
 
             /* 短信签名内容: 使用 UTF-8 编码，必须填写已审核通过的签名，签名信息可登录 [短信控制台] 查看 */
-            String signName = "签名内容";
+            String signName = "即刻AtOnce";
             req.setSignName(signName);
 
             /* 国际/港澳台短信 SenderId: 国内短信填空，默认未开通，如需开通请联系 [sms helper] */
@@ -90,7 +90,7 @@ public class TencentCloudUtils {
             req.setExtendCode(extendCode);
 
             /* 模板 ID: 必须填写已审核通过的模板 ID。模板ID可登录 [短信控制台] 查看 */
-            String templateId = "400000";
+            String templateId = "417693";
             req.setTemplateId(templateId);
 
             /* 下发手机号码，采用 E.164 标准，+[国家或地区码][手机号]
@@ -99,7 +99,7 @@ public class TencentCloudUtils {
             req.setPhoneNumberSet(phoneNumberSet);
 
             /* 模板参数: 若无模板参数，则设置为空 */
-            String[] templateParamSet = {"5678"};
+            String[] templateParamSet = {code};
             req.setTemplateParamSet(templateParamSet);
 
             /* 通过 client 对象调用 SendSms 方法发起请求。注意请求方法名与请求对象是对应的
