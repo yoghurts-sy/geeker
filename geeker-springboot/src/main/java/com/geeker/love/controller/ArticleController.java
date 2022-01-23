@@ -2,6 +2,7 @@ package com.geeker.love.controller;
 
 import com.geeker.love.pojo.Topic;
 import com.geeker.love.pojo.post;
+import com.geeker.love.service.ArticleServe;
 import com.geeker.love.service.impl.ArticleService;
 import com.geeker.love.utils.ResultInfo;
 import io.jsonwebtoken.Claims;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/love/api")
 public class ArticleController {
     @Autowired
-    private ArticleService articleService;
+    private ArticleServe articleService;
     @GetMapping("/getpost")
     @ResponseBody
     public ResultInfo getPostByClass(Integer pc_id,Integer page,String token){

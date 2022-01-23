@@ -33,4 +33,6 @@ public class UserController {
     public Result SendVerifyCode(@RequestParam String phone) {
         return userService.SendVerifyCode(phone);
     }
+
+
 }

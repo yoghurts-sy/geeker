@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface uploadFileMapper {
     void uploadPics(@Param("pics") List<image> pics);
+    void updateUpic(@Param("Upic") String URL,@Param("uid") Integer uid);
 }
