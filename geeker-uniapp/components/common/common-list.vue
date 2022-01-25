@@ -37,26 +37,28 @@
 		<view class="flex align-center">
 			<!-- 顶|踩 -->
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
-				hover-class="animate__jello text-main" @click="doSupport('support')">
+				hover-class="animate__jello" @click="doSupport('support')"
+				:class="item.support.type === 'support' ? 'text-main' : ''">
 				<text class="iconfont icon-dianzan2 mr-2"></text>
-				<text>{{item.support.support_count}}</text>
+				<text>{{item.support.support_count > 0 ? item.support.support_count : '喜欢'}}</text>
 			</view>
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
-				hover-class="animate__jello text-main" @click="doSupport('unsupport')">
+				hover-class="animate__jello" @click="doSupport('unsupport')"
+				:class="item.support.type === 'unsupport' ? 'text-main' : ''">
 				<text class="iconfont icon-cai mr-2"></text>
-				<text>{{item.support.unsupport_count}}</text>
+				<text>{{item.support.unsupport_count > 0 ? item.support.unsupport_count : '不喜欢'}}</text>
 			</view>
 			<!-- 评论 -->
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
-				hover-class="animate__jello text-main" @click="doComment">
+				hover-class="animate__jello" @click="doComment">
 				<text class="iconfont icon-pinglun2 mr-2"></text>
-				<text>{{item.comment_count}}</text>
+				<text>{{item.comment_count > 0 ? item.comment_count : '评论'}}</text>
 			</view>
 			<!-- 分享 -->
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
-				hover-class="animate__jello text-main" @click="doShare">
+				hover-class="animate__jello" @click="doShare">
 				<text class="iconfont icon-fenxiang mr-2"></text>
-				<text>{{item.share_count}}</text>
+				<text>{{item.share_count > 0 ? item.share_count : '转发'}}</text>
 			</view>
 		</view>
 	</view>
@@ -83,7 +85,10 @@
 			},
 			// 顶踩操作
 			doSupport(type) {
-				type === 'support' ? console.log("顶") : console.log("踩");
+				this.$emit("doSupport", {
+					type,
+					index: this.index
+				})
 			},
 			// 评论
 			doComment() {
