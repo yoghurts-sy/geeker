@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.geeker.love.dao.AbsenseMapper">
+<mapper namespace="com.geeker.love.dao.AdsenseMapper">
 
-    <select id="getAb" resultType="com.geeker.love.pojo.absense">
-        select * from absense where type=#{type}
+    <select id="getAd" resultType="com.geeker.love.pojo.adsense">
+        select * from adsense where type=#{type}
     </select>
 
 
