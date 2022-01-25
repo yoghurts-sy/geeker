@@ -1,8 +1,10 @@
 package com.geeker.love.pojo;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
-public class absense {
+import java.time.LocalDateTime;
+@Data
+public class adsense {
     private int id;
     private String src;
     private String nrl;
