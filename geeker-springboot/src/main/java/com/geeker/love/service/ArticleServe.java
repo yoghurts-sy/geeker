@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ArticleServe {
     ResultInfo getPostByClass(Integer pc_id,Integer page,Integer uid);
+    ResultInfo getPostByClassMulti(Integer pc_id,Integer page);
     List<post> getPostByUser(Integer uid,Integer page);
     List<post> getAllPostByUser(Integer uid,Integer page);
     ResultInfo DingCai(Integer uid, Integer pid, Integer type);

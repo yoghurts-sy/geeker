@@ -8,3 +8,13 @@ commit时后面跟的信息
 
 **最后加上 by xxx**
 例如by yoghurt
+
+
+
+
+
+
+
+首页：
+
+* 获取post   url 参数 大致说请求类型，返回类型 
