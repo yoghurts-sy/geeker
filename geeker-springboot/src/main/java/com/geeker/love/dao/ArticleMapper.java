@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ArticleMapper {
@@ -23,4 +24,6 @@ public interface ArticleMapper {
     int updateSupport(@Param("uid") Integer uid,
                       @Param("pid") Integer pid,
                       @Param("type") Integer type);
+
+    List<Map<String, Object>> getPostByClassMulti(Integer pc_id);
 }

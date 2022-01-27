@@ -20,10 +20,19 @@ public class ArticleController {
     @GetMapping("/getpost")
     @ResponseBody
     public ResultInfo getPostByClass(Integer pc_id,Integer page,String token){
+        System.out.println(pc_id + " " + page);
         ResultInfo resultInfo=new ResultInfo();
         if(token==null){
-           return articleService.getPostByClass(pc_id,page,0);
+           //return articleService.getPostByClass(pc_id, page,0);
+           return articleService.getPostByClassMulti(pc_id, page);
         }
+        /**
+         * 实现多表联查
+         *      1. 通过user_id查username和userpic
+         *      2. 通过post_id查comment
+         *      3. 通过post_id查support
+         */
+
         Claims claims= (Claims) Jwts.parser()
                 .setSigningKey("geek")
                 .parse(token)

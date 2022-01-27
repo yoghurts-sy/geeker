@@ -11,13 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class ArticleService implements ArticleServe {
     @Autowired
     private ArticleMapper articleMapper;
 
+
+    /**
+     * 实现多表联查
+     *      1. 通过user_id查username和userpic
+     *      2. 通过post_id查comment
+     *      3. 通过post_id查support
+     */
     public ResultInfo getPostByClass(Integer pc_id,Integer page,Integer uid) {
-        ResultInfo resultInfo=new ResultInfo();
+        ResultInfo resultInfo = new ResultInfo();
         PageHelper.startPage(page,5);
         if(uid!=0){
             resultInfo.setCode(200);
@@ -26,6 +35,14 @@ public class ArticleService implements ArticleServe {
             return resultInfo;
         }
         resultInfo.setObj(articleMapper.getPostByClass(pc_id));
+        return resultInfo;
+    }
+
+    public ResultInfo getPostByClassMulti(Integer pc_id,Integer page) {
+        ResultInfo resultInfo = new ResultInfo();
+        PageHelper.startPage(page,5);
+        List<Map<String, Object>> res = articleMapper.getPostByClassMulti(pc_id);
+        resultInfo.setObj(res);
         return resultInfo;
     }
 
