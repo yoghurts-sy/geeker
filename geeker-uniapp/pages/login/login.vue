@@ -98,6 +98,17 @@
 				this.$H.post(url,data).then(res=>{
 					console.log(res);
 					if (res.data.code === '200') {
+												
+						console.log(res.data);
+						console.log(res.data.data);
+						// 修改vuex的state,持久化存储
+						this.$store.commit('login',res.data.data)
+						// 开启socket
+						//this.$store.dispatch('openSocket')
+						// 提示和跳转
+						uni.navigateBack({
+							delta: 1
+						}); 
 						uni.showToast({
 							title: '登录成功',
 							icon: 'none'
