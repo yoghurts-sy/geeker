@@ -14,7 +14,7 @@
 						{{item.username}}
 					</view>
 					<text class="font-sm text-light-muted" style="line-height: 1.5;">
-						{{item.newstime}}
+						{{formatDate(item.newstime*1000)}}
 					</text>
 				</view>
 			</view>
@@ -37,17 +37,18 @@
 		<view class="flex align-center">
 			<!-- 顶|踩 -->
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
-				hover-class="animate__jello" @click="doSupport('support')"
-				:class="item.support.type === 'support' ? 'text-main' : ''">
+				hover-class="animate__jello" @click="doSupport('support')">
+				
 				<text class="iconfont icon-dianzan2 mr-2"></text>
-				<text>{{item.support.support_count > 0 ? item.support.support_count : '喜欢'}}</text>
+				<text>{{item.support_count > 0 ? item.support_count : '喜欢'}}</text>
 			</view>
-			<view class="flex-1 flex align-center justify-center animate__animated faster"
+			<!-- dislike 暂不需要 -->
+			<!-- <view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doSupport('unsupport')"
 				:class="item.support.type === 'unsupport' ? 'text-main' : ''">
 				<text class="iconfont icon-cai mr-2"></text>
 				<text>{{item.support.unsupport_count > 0 ? item.support.unsupport_count : '不喜欢'}}</text>
-			</view>
+			</view> -->
 			<!-- 评论 -->
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doComment">
@@ -55,11 +56,11 @@
 				<text>{{item.comment_count > 0 ? item.comment_count : '评论'}}</text>
 			</view>
 			<!-- 分享 -->
-			<view class="flex-1 flex align-center justify-center animate__animated faster"
+			<!-- <view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doShare">
 				<text class="iconfont icon-fenxiang mr-2"></text>
 				<text>{{item.share_count > 0 ? item.share_count : '转发'}}</text>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -97,6 +98,16 @@
 			// 分享
 			doShare() {
 				console.log("分享")
+			},
+			formatDate(date) {
+			  var date = new Date(date);
+			  var YY = date.getFullYear() + '-';
+			  var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+			  var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+			  var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+			  var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+			  var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+			  return YY + MM + DD +" "+hh + mm + ss;
 			}
 		}
 	}

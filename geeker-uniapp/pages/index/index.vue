@@ -18,18 +18,18 @@
 	<view>
 
 
-		<block v-for="(item, index) in list" :key="index">
+		<!-- <block v-for="(item, index) in list" :key="index"> -->
 			<!-- 列表组件 -->
-			<common-list :item="item" :index="index" @follow="follow" @doSupport="doSupport"></common-list>
+			<!-- <common-list :item="item" :index="index" @follow="follow" @doSupport="doSupport"></common-list> -->
 			<!-- 全局分割线 -->
-			<divider></divider>
-		</block>
+			<!-- <divider></divider> -->
+		<!-- </block> -->
 
 		<!-- 顶部选项卡 -->
 		<scroll-view scroll-x :scroll-into-view="scrollInto" class="scroll-row" style="height: 100rpx;">
 			<view v-for="(item,index) in tabBars" :key="index" class="scroll-row-item px-3 py-2 font-md"
 				:id="'tab'+index" :class="tabIndex === index ? 'text-main font-lg font-weight-bold' : ''"
-				@click="changeTab(index)">{{item.name}}</view>
+				@click="changeTab(index)">{{item.classname}}</view>
 		</scroll-view>
 
 		<swiper :duration="150" :current="tabIndex" @change="onChangeTab" :style="'height:'+scrollHeight+'px;'">
@@ -43,6 +43,7 @@
 							<!-- 列表组件 -->
 							<common-list :item="item2" :index="index2" @follow="follow" @doSupport="doSupport">
 							</common-list>
+							
 							<!-- 全局分割线 -->
 							<divider></divider>
 						</block>
@@ -62,52 +63,7 @@
 </template>
 
 <script>
-	// 演示列表
-	const demo = [{
-								username: "昵称",
-								userpic: "/static/default.jpg",
-								newstime: "2021-11-7",
-								isFollow: false,
-								title: "我是标题",
-								titlepic: "/static/demo/datapic/11.jpg",
-								support: {
-									type: "support",
-									support_count: 0,
-									unsupport_count: 2
-								},
-								comment_count: 2,
-								share_count: 2
-							}, {
-								username: "昵称",
-								userpic: "",
-								newstime: "2021-11-7",
-								isFollow: false,
-								title: "我是标题",
-								titlepic: "",
-								support: {
-									type: "unsupport",
-									support_count: 1,
-									unsupport_count: 2
-								},
-								comment_count: 2,
-								share_count: 2
-							},
-							{
-								username: "昵称",
-								userpic: "",
-								newstime: "2021-11-7",
-								isFollow: false,
-								title: "我是标题",
-								titlepic: "",
-								support: {
-									type: "",
-									support_count: 1,
-									unsupport_count: 2
-								},
-								comment_count: 2,
-								share_count: 2
-							},
-						]
+	
 	import commonList from '@/components/common/common-list.vue'
 	
 	import loadMore from '@/components/common/loadmore.vue'
@@ -120,43 +76,59 @@
 			return {
 				scrollHeight: 0,
 				tabIndex: 0,
-				tabBars: [{
-						name: "关注"
-					},
-					{
-						name: "推荐"
-					},
-					{
-						name: "体育"
-					},
-					{
-						name: "英语"
-					},
-					{
-						name: "随笔"
-					},
-					{
-						name: "随便"
-					},
-					{
-						name: "随便"
-					},
-					{
-						name: "随便"
-					},
-					{
-						name: "随便"
-					},
-					{
-						name: "随便"
-					},
-				],
+				// tabBars 顶部选项卡信息 后端拿到的格式:{"classname":"关注","id":1,"status":0}
+				tabBars: [],
 				scrollInto: "",
 				newsList: [ //每个tab对应newsList里的一个对象  tab内的内容存在list数组中
 				],
-
+				demo: [{
+											username: "昵称",
+											userpic: "/static/default.jpg",
+											newstime: "2021-11-7",
+											isFollow: false,
+											title: "我是标题",
+											titlepic: "/static/demo/datapic/11.jpg",
+											support: {
+												type: "support",
+												support_count: 0,
+												unsupport_count: 2
+											},
+											comment_count: 2,
+											share_count: 2
+										}, {
+											username: "昵称",
+											userpic: "",
+											newstime: "2021-11-7",
+											isFollow: false,
+											title: "我是标题",
+											titlepic: "",
+											support: {
+												type: "unsupport",
+												support_count: 1,
+												unsupport_count: 2
+											},
+											comment_count: 2,
+											share_count: 2
+										},
+										{
+											username: "昵称",
+											userpic: "",
+											newstime: "2021-11-7",
+											isFollow: false,
+											title: "我是标题",
+											titlepic: "",
+											support: {
+												type: "",
+												support_count: 1,
+												unsupport_count: 2
+											},
+											comment_count: 2,
+											share_count: 2
+										},
+									],
 			}
 		},
+		
 		// 监听点击导航栏搜索框
 		onNavigationBarSearchInputClicked() {
 			uni.navigateTo({
@@ -170,8 +142,12 @@
 					this.scrollHeight = res.windowHeight - uni.upx2px(100)
 				}
 			})
-			// 根据选项生成列表
-			this.getData()
+			this.$axios.get("/pc").then(res=>{  //获取顶部选项卡选项
+				console.log(res.data)
+				this.tabBars = res.data
+				// 根据选项生成列表
+				this.getData()
+			})
 
 		},
 		methods: {
@@ -189,18 +165,48 @@
 				}, 2000)
 			},
 			getData() {
-				var arr = []
-				for (let i = 0; i < this.tabBars.length; i++) {
-					// 生成列表模板
-					let item = {
-						// 1.上拉加载更多  2.加载中... 3.没有更多了
-						loadmore: "上拉加载更多",
-						list: []
-					}
-					if(i < 2) item.list = demo
-					arr.push(item)
+				// var arr = []
+				// for (let i = 0; i < this.tabBars.length; i++) {
+				// 	// 生成列表模板
+					// let item = {
+					// 	// 1.上拉加载更多  2.加载中... 3.没有更多了
+					// 	loadmore: "上拉加载更多",
+					// 	list: []
+					// }
+				// 	if(i < 2) item.list = demo
+				// 	arr.push(item)
+				// }
+				// this.newsList = arr
+				
+				// var r = []
+				// this.$axios.get('/getpost?pc_id=1&page=1').then(res=>{
+				// 	let item = {
+				// 		// 1.上拉加载更多  2.加载中... 3.没有更多了
+				// 		loadmore: "上拉加载更多",
+				// 		list: []
+				// 	}
+				// 	item.list = res.data.obj;
+				// 	console.log(item)
+				// 	this.newsList.push(item)
+				// 	console.log(this.newsList)
+				// })
+				
+				
+				
+				for(let i = 0; i < this.tabBars.length; i++ ){
+					var tmp = this.tabBars[i]
+					var url = '/getpost?pc_id=' + tmp.id + '&page=1' 
+					console.log(url)
+					this.$axios.get(url).then(res=>{
+						let item = {
+							// 1.上拉加载更多  2.加载中... 3.没有更多了
+							loadmore: "上拉加载更多",
+							list: []
+						}
+						item.list = res.data.obj
+						this.newsList.push(item)
+					})
 				}
-				this.newsList = arr
 			},
 			follow(index) {
 				this.list[index].isFollow = true

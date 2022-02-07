@@ -8,39 +8,43 @@ const service = axios.create({
 	timeout: 6000, // request timeout
 	crossDomain: true
 })
- 
+
+
+// 由于后端接口返回值并不完全统一先暂时注释掉拦截器
+
+
 // request拦截器,在请求之前做一些处理
-service.interceptors.request.use(config => {
-		//添加请求头
-		//config.headers["accessToken"] = "123";
-		console.log('请求拦截成功')
-		return config;
-	},
-	error => {
-		console.log(error); // for debug
-		return Promise.reject(error);
-	}
-);
+// service.interceptors.request.use(config => {
+// 		//添加请求头
+// 		//config.headers["accessToken"] = "123";
+// 		console.log('请求拦截成功')
+// 		return config;
+// 	},
+// 	error => {
+// 		console.log(error); // for debug
+// 		return Promise.reject(error);
+// 	}
+// );
  
 //配置成功后的拦截器
-service.interceptors.response.use(res => {
-	if (res.data.code == '200') {
-		return res.data
-	} else {
-		return Promise.reject(res.data.msg);
-	}
-}, error => {
-	console.log(error.response)
-	/* if (error.response.status) {
-		switch (error.response.status) {
-			case 401:
-				break;
-			default:
-				break;
-		}
-	} */
-	return Promise.reject(error)
-})
+// service.interceptors.response.use(res => {
+// 	if (res.data.code == '200') {
+// 		return res.data
+// 	} else {
+// 		return Promise.reject(res.data.msg);
+// 	}
+// }, error => {
+// 	console.log(error.response)
+// 	/* if (error.response.status) {
+// 		switch (error.response.status) {
+// 			case 401:
+// 				break;
+// 			default:
+// 				break;
+// 		}
+// 	} */
+// 	return Promise.reject(error)
+// })
  
  
 // 在main.js中放入这段自定义适配器的代码，就可以实现uniapp的app和小程序开发中能使用axios进行跨域网络请求，并支持携带cookie
