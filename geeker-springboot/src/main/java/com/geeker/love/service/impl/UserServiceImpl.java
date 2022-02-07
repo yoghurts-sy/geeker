@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +44,6 @@ public class UserServiceImpl implements UserService {
         String jwt = jwtUtils.generateToken(user.getId());
 
         System.out.println(user);
-
         return Result.success(
                 MapUtil.builder()
                         .put("username", user.getUsername())
