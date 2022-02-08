@@ -69,7 +69,11 @@
 	export default {
 		props: {
 			item: Object,
-			index: Number
+			index: Number,
+			isDetail:{
+				type: Boolean,
+				default: false
+			}
 		},
 		methods: {
 			// 打开个人空间
@@ -82,7 +86,11 @@
 			},
 			// 进入详情页
 			openDetail() {
+				if(this.isDetail) return;
 				console.log("进入详情页")
+				uni.navigateTo({
+					url: '../../pages/detail/detail?detail='+ JSON.stringify(this.item),
+				});
 			},
 			// 顶踩操作
 			doSupport(type) {

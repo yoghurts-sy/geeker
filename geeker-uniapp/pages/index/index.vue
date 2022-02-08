@@ -154,15 +154,28 @@
 			loadmore(index){
 				let item = this.newsList[index]
 				//判断是否可加载
+				console.log(item)
 				if(item.loadmore !== "上拉加载更多") return;
 				
 				item.loadmore = '加载中...';
 				setTimeout(()=>{
 					// 加载数据
-					item.list = [...item.list, ...item.list]
+					var ind = index + 1
+					item.page++
+					var url = '/getpost?pc_id=' + ind + '&page=' + item.page 
+					this.$axios.get(url).then(res=>{
+						console.log(res.data.obj)
+						
+						item.list.push(...res.data.obj)
+						console.log(item)
+					})
+					
+					// item.list = [...item.list, ...item.list]
+					
+					// this.$axios.get()
 					
 					item.loadmore = '上拉加载更多'
-				}, 2000)
+				}, 500)
 			},
 			getData() {
 				// var arr = []
@@ -192,7 +205,6 @@
 				// })
 				
 				
-				
 				for(let i = 0; i < this.tabBars.length; i++ ){
 					var tmp = this.tabBars[i]
 					var url = '/getpost?pc_id=' + tmp.id + '&page=1' 
@@ -201,7 +213,8 @@
 						let item = {
 							// 1.上拉加载更多  2.加载中... 3.没有更多了
 							loadmore: "上拉加载更多",
-							list: []
+							list: [],
+							page:1 // id page 用来按需加载
 						}
 						item.list = res.data.obj
 						this.newsList.push(item)
