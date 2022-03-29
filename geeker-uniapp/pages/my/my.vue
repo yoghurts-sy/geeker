@@ -36,7 +36,9 @@
 			<image src="/static/demo/banner1.jpg" mode="aspectFill"
 			style="height: 170rpx;width: 100%;" class="rounded"></image>
 		</view>
-		
+		<uni-list-item title="我的简历" showExtraIcon @click="openResume">
+			<text slot="icon" class="iconfont icon-user-detail"></text>
+		</uni-list-item>
 		<uni-list-item title="浏览历史" showExtraIcon @click="openHistory">
 			<text slot="icon" class="iconfont icon-liulan"></text>
 		</uni-list-item>
@@ -70,13 +72,13 @@
 		data() {
 			return {
 				myData:[{
-					name:"帖子",
+					name:"沟通过",
 					num:0
 				},{
-					name:"动态",
+					name:"已投简历",
 					num:0
 				},{
-					name:"评论",
+					name:"关注",
 					num:0
 				},{
 					name:"粉丝",
@@ -141,6 +143,11 @@
 			openHistory(){
 				uni.navigateTo({
 					url: '../history/history'
+				});
+			}, 
+			openResume() {
+				uni.navigateTo({
+					url: '../resume/resume'
 				});
 			}
 		}

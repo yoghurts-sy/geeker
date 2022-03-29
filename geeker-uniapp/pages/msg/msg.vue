@@ -92,6 +92,24 @@
 					break;
 			}
 		},
+		onLoad() {
+			// h5，使用h5访问的时候记得跨域
+			// #ifdef H5
+			this.url = `${this.viewerUrl}?file=${encodeURIComponent(this.fileUrl)}`;
+			// #endif
+			
+			// 在安卓和ios手机上
+			// 判断是手机系统：安卓，使用pdf.js
+			// #ifdef APP-PLUS
+			if(plus.os.name === 'Android') {
+				this.url = `${this.viewerUrl}?file=${encodeURIComponent(this.fileUrl)}`;
+			}
+			// ios，直接访问pdf所在路径
+			else {
+				this.url = encodeURIComponent(this.fileUrl);
+			}
+			// #endif
+		},
 		methods: {
 			refresh(){
 				setTimeout(()=>{
