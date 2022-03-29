@@ -47,4 +47,13 @@
     <select id="getSupportById" resultType="com.geeker.love.pojo.support">
         select * from support where user_id=#{uid}
     </select>
-    </mapper>
+
+
+    <select id="getCommentsByPostId" resultType="java.util.Map">
+        SELECT user.username, user.userpic, comment.data,
+            comment.create_time
+        FROM comment, user
+        WHERE comment.user_id = user.id AND post_id=#{post_id}
+        ORDER BY comment.create_time DESC
+    </select>
+</mapper>

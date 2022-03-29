@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,4 +88,9 @@ public class ArticleService implements ArticleServe {
     }
 
 
+    @Override
+    public List<Map> getCommentByPostId(Integer post_id) {
+        List<Map> res = articleMapper.getCommentsByPostId(post_id);
+        return res;
+    }
 }
