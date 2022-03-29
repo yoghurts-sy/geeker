@@ -119,7 +119,33 @@
                 "enablePullDownRefresh": false
             }
             
-        }
+        },
+		{
+		    "path" : "pages/history/history",
+		    "style" : {
+				"navigationBarTitleText":"我的简历",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"type":"menu"
+						}]
+					}
+				}
+			}
+		},
+		{
+		    "path" : "pages/resume/resume",
+		    "style" : {
+				"navigationBarTitleText":"我的简历",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"type":"menu"
+						}]
+					}
+				}
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

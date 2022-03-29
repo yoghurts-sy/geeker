@@ -6,7 +6,6 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex'
 	export default {
 		components: {
 			
@@ -22,20 +21,12 @@
 				url: ''
 			}
 		},
-		
 		onLoad() {
 			/**
-			 * 1. 首先判断是否登录，没有登录则先登录。若登录vuex中是否存在fileUrl，存在则直接显示
+			 * 1. 首先判断vuex中是否存在fileUrl，存在则直接显示
 			 * 2. 如果不存在则询问是否添加简历，右上角的三个点也可以支持修改简历
 			 * 3. 
 			 */
-			/* console.log()
-			if (this.loginStatus === false) {
-				uni.navigateTo({
-					url: '../login/login',
-				});
-				return;
-			} */
 			
 			
 			
@@ -56,18 +47,12 @@
 			}
 			// #endif
 		},
-		computed: {
-			...mapState({
-				loginStatus:state=>state.loginStatus,
-				user:state=>state.user
-			})
-		},
 		onUnload() {
 			
 		},
 		onNavigationBarButtonTap() {
 			uni.showModal({
-				content: '是否要上传新的简历？',
+				content: '是否要清除历史记录？',
 				success: (res)=>{
 					if (res.confirm) {
 						uni.removeStorageSync('history')
