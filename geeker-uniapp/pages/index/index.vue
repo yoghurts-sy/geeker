@@ -146,7 +146,7 @@
 				console.log(res.data)
 				this.tabBars = res.data
 				// 根据选项生成列表
-				this.getData()
+				this.getData(0)
 			})
 
 		},
@@ -174,38 +174,12 @@
 					item.loadmore = '上拉加载更多'
 				}, 500)
 			},
-			getData() {
-				// var arr = []
-				// for (let i = 0; i < this.tabBars.length; i++) {
-				// 	// 生成列表模板
-					// let item = {
-					// 	// 1.上拉加载更多  2.加载中... 3.没有更多了
-					// 	loadmore: "上拉加载更多",
-					// 	list: []
-					// }
-				// 	if(i < 2) item.list = demo
-				// 	arr.push(item)
-				// }
-				// this.newsList = arr
+			getData(index) {
 				
-				// var r = []
-				// this.$axios.get('/getpost?pc_id=1&page=1').then(res=>{
-				// 	let item = {
-				// 		// 1.上拉加载更多  2.加载中... 3.没有更多了
-				// 		loadmore: "上拉加载更多",
-				// 		list: []
-				// 	}
-				// 	item.list = res.data.obj;
-				// 	console.log(item)
-				// 	this.newsList.push(item)
-				// 	console.log(this.newsList)
-				// })
+				if (index >= this.tabBars.length) return;
 				
-				
-				for(let i = 0; i < this.tabBars.length; i++ ){
-					var tmp = this.tabBars[i]
+					var tmp = this.tabBars[index]
 					var url = '/getpost?pc_id=' + tmp.id + '&page=1' 
-					
 					this.$axios.get(url).then(res=>{
 						let item = {
 							// 1.上拉加载更多  2.加载中... 3.没有更多了
@@ -215,9 +189,10 @@
 						}
 						item.list = res.data.obj
 						this.newsList.push(item)
-						console.log(item)
-					})
-				}
+						this.getData(index+1)
+					})	
+					
+				
 			},
 			follow(index) {
 				this.list[index].isFollow = true
