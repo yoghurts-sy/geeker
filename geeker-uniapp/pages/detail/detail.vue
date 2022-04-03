@@ -5,19 +5,21 @@
 		
 		<divider></divider>
 		<view class="p-2 font-md font-weight-bold">
-			最新评论 3
+			评论 {{comments.length}}
 		</view>
 		<view class="px-2">
 			
-			<view class="uni-comment-list">
-					<view class="uni-comment-face"><image src="https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/userpic/4.jpg"></image></view>
+			<view class="uni-comment-list"
+			v-for="(item, index) in comments" :key="index">
+					<view class="uni-comment-face"><image :src="item.userpic"></image></view>
 					<view class="uni-comment-body">
 						<view class="uni-comment-top">
-							<text>小猫咪</text>
+							<text>{{item.username}}</text>
 						</view>
-						<view class="uni-comment-content">前排支持</view>
+						<view class="uni-comment-content">{{item.data}}</view>
 						<view class="uni-comment-date">
-							<view>2天前</view><view class="uni-comment-replay-btn">5回复</view>
+							<view>{{item.create_time | formatTime }}</view>
+							<!-- <view class="uni-comment-replay-btn">5回复</view> -->
 						</view>
 					</view>
 			</view>
@@ -33,6 +35,7 @@
 	
 	import commonList from '@/components/common/common-list.vue';
 	import bottomInput from '@/components/common/bottom-input.vue';
+	import $T from "@/common/time.js";
 	export default {
 		components:{
 			commonList,
@@ -40,13 +43,19 @@
 		},
 		data() {
 			return {
-				info:{}
+				info:{},
+				comments:[]
 			}
 		},
 		onLoad(e){
 			if(e.detail){
 				this.__init(JSON.parse(e.detail))
 				this.info = JSON.parse(e.detail)
+				console.log(this.info)
+				var url = '/comments?post_id=' + this.info.id
+				this.$axios.get(url).then(res=>{
+					this.comments = res.data;
+				})
 			}
 		},
 		methods: {
@@ -56,7 +65,13 @@
 					title:data.title
 				})
 			}
-		}
+		},
+		// 过滤器
+		filters:{
+			formatTime(value){
+				return $T.gettime(value)
+			}
+		},
 	}
 </script>
 

@@ -105,6 +105,9 @@
 				});
 				
 				setTimeout(()=>{
+					this.$axios.get("/scpost?keyword="+"你好"+"&pageNum="+0).then(res=>{
+						console.log(res);
+					})
 					this.searchList = demo;
 					uni.hideLoading()
 				}, 2000);

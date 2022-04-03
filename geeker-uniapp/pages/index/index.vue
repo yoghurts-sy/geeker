@@ -164,10 +164,7 @@
 					item.page++
 					var url = '/getpost?pc_id=' + ind + '&page=' + item.page 
 					this.$axios.get(url).then(res=>{
-						console.log(res.data.obj)
-						
 						item.list.push(...res.data.obj)
-						console.log(item)
 					})
 					
 					// item.list = [...item.list, ...item.list]
@@ -208,7 +205,7 @@
 				for(let i = 0; i < this.tabBars.length; i++ ){
 					var tmp = this.tabBars[i]
 					var url = '/getpost?pc_id=' + tmp.id + '&page=1' 
-					console.log(url)
+					
 					this.$axios.get(url).then(res=>{
 						let item = {
 							// 1.上拉加载更多  2.加载中... 3.没有更多了
@@ -218,6 +215,7 @@
 						}
 						item.list = res.data.obj
 						this.newsList.push(item)
+						console.log(item)
 					})
 				}
 			},
