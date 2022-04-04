@@ -14,6 +14,7 @@
 			<!-- 数据列表 -->
 			<block v-for="(item,index) in searchList" :key="index">
 				<common-list :item="item" :index="index"></common-list>
+				<divider></divider>
 			</block>
 		</template>
 	</view>
@@ -73,6 +74,7 @@
 		},
 		data() {
 			return {
+				searchText:"",
 				list:["what's wrong", `"hello world"`, 'do you'],
 				searchList:[],
 			}
@@ -103,11 +105,12 @@
 					title: '加载中',
 					mask: false
 				});
-				
-				setTimeout(()=>{
-					this.searchList = demo;
-					uni.hideLoading()
-				}, 2000);
+				this.$axios.get("/scpost?keyword="+this.searchText+"&pageNum="+0).then(res=>{
+					console.log(res)
+					this.searchList = res.data.obj
+					console.log(res.data.obj)
+				})
+				uni.hideLoading()
 			},
 		}
 	}
