@@ -1,5 +1,4 @@
 package com.geeker.love.pojo;
-
 import lombok.Data;
 
 @Data
