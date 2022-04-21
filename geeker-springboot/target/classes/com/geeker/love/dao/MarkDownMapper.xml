@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geeker.love.dao.MarkDownMapper">
+    <insert id="upload" parameterType="com.geeker.love.pojo.MarkDown">
+        insert into m_blog (user_id,title,description,content,created,status)
+                    values (#{markDown.user_id},#{markDown.title},#{markDown.description},
+                            #{markDown.content},#{markDown.created},#{markDown.status})
+    </insert>
+    <select id="getMdByUId" resultType="com.geeker.love.pojo.MarkDown">
+        select * from m_blog where user_id=#{uid}
+    </select>
+</mapper>
