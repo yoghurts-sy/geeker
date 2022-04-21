@@ -22,9 +22,9 @@ public class MarkDownService implements MarkDownServe {
     }
 
     @Override
-    public List<MarkDown> getMdByUId(Integer uid,Integer pageNum) {
+    public List<MarkDown> getMd(Integer pageNum) {
         PageHelper.startPage(pageNum,5);
-        List<MarkDown> list=markDownMapper.getMdByUId(uid);
+        List<MarkDown> list=markDownMapper.getMd();
         return list;
     }
 }

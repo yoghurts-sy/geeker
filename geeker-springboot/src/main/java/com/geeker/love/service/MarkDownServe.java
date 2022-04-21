@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MarkDownServe {
     boolean upload(MarkDown markDown);
-    List<MarkDown> getMdByUId(Integer uid, Integer pageNum);
+    List<MarkDown> getMd(Integer pageNum);
 }

@@ -6,7 +6,7 @@
                     values (#{markDown.user_id},#{markDown.title},#{markDown.description},
                             #{markDown.content},#{markDown.created},#{markDown.status})
     </insert>
-    <select id="getMdByUId" resultType="com.geeker.love.pojo.MarkDown">
-        select * from m_blog where user_id=#{uid}
+    <select id="getMd" resultType="com.geeker.love.pojo.MarkDown">
+        select * from m_blog
     </select>
 </mapper>

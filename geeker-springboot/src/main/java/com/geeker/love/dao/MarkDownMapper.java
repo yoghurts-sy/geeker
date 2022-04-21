@@ -9,5 +9,5 @@ import java.util.List;
 @Mapper
 public interface MarkDownMapper {
     boolean upload(@Param("markDown")MarkDown markDown);
-    List<MarkDown> getMdByUId(@Param("uid") Integer uid);
+    List<MarkDown> getMd();
 }

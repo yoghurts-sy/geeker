@@ -16,9 +16,9 @@ public class MarkDownController {
     @Autowired
     MarkDownServe markDownServe;
     @PostMapping("/upload")
-    public ResultInfo upload(@RequestParam(value = "file") MultipartFile file,Integer user_id,String description){
-        String name=file.getOriginalFilename();
-        String title=name.substring(0,name.lastIndexOf("."));
+    public ResultInfo upload(@RequestParam(value = "file") MultipartFile file,Integer user_id,String title,String description){
+        //String name=file.getOriginalFilename();
+      //  String title=name.substring(0,name.lastIndexOf("."));
         String content=null;
         try{
             byte[] bytes=file.getBytes();
@@ -35,8 +35,8 @@ public class MarkDownController {
     }
 
     @GetMapping("/getMd")
-    public ResultInfo getMd(@RequestParam Integer user_id,Integer pageNum){
-      return  ResultInfo.success(markDownServe.getMdByUId(user_id,pageNum));
+    public ResultInfo getMd(Integer pageNum){
+      return  ResultInfo.success(markDownServe.getMd(pageNum));
     }
 
 
