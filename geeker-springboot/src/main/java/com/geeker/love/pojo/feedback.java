@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class feedback {
-    private int id;
-    private  int to_id;
-    private int from_id;
+    private Integer id;
+    private  Integer to_id;
+    private Integer from_id;
     private  String data;
-    private int create_time;
+    private Long create_time;
 }

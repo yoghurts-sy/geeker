@@ -54,10 +54,7 @@
 					</template>
 				</scroll-view>
 			</swiper-item>
-		</swiper>
-		
-		
-		
+		</swiper>	
 	</view>
 </template>
 

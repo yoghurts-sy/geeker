@@ -16,4 +16,11 @@ public class ResultInfo {
         res.setMsg("successful");
         return res;
     }
+    public static ResultInfo fail(Object obj) {
+        ResultInfo res = new ResultInfo();
+        res.setObj(obj);
+        res.setCode(500);
+        res.setMsg("fail");
+        return res;
+    }
 }

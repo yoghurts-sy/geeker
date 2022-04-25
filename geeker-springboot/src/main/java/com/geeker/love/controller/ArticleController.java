@@ -19,7 +19,7 @@ public class ArticleController {
     private ArticleServe articleService;
     @GetMapping("/getpost")
     @ResponseBody
-    public ResultInfo getPostByClass(Integer pc_id,Integer page,String token){
+    public ResultInfo getPostByClass(Integer pc_id, Integer page, String token){
         System.out.println(pc_id + " " + page);
         ResultInfo resultInfo=new ResultInfo();
         if(token==null){

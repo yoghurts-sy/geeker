@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<template v-if="list.length > 0">
-		<block v-for="(item, index) in list" :key="index">
+		<block v-for="(item, index) in list" :key="index"><!-- 遍历消息 -->
 			<msg-list :item="item" :index="index"></msg-list>
 		</block>
 		</template>
