@@ -19,12 +19,21 @@
 				</view>
 			</view>
 
+
+			<!-- 类型标识 -->
+			
+			<!-- <view class="flex align-center justify-center bg-primary rounded text-white ml-5" 
+			style="width: 80rpx; height: 50rpx;"
+			v-if="item.type">招聘</view>
+			<view class="flex align-center justify-center bg-info rounded text-white ml-5" 
+			style="width: 80rpx; height: 50rpx;" v-else>求职</view> -->
+			
 			<!-- 关注按钮 -->
-			<view class="flex align-center justify-center rounded bg-main text-white  animate__animated faster"
+			<!-- <view class="flex align-center justify-center rounded bg-main text-white  animate__animated faster"
 				style="width: 90rpx;height: 50rpx;" v-if="!item.isFollow"
 				hover-class="animate__jello" @click="follow">
 				关注
-			</view>
+			</view> -->
 		</view>
 
 		<!-- 标题 -->
