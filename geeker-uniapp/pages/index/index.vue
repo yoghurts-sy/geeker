@@ -135,6 +135,12 @@
 				url: '../search/search'
 			});
 		},
+		// 监听点击导航栏按钮 因为只有一个按钮 因此不用传入参数
+		onNavigationBarButtonTap(){
+			uni.navigateTo({
+				url:"../add-input/add-input"
+			})
+		},
 		onLoad() {
 			uni.getSystemInfo({
 				success: res => {

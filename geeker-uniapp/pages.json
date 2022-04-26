@@ -146,6 +146,16 @@
 				}
 			}
 		}
+        ,{
+            "path" : "pages/add-input/add-input",
+            "style" :                                                                                    
+            {
+				"app-plus":{
+					"titleNView":false
+				}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
