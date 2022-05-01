@@ -102,7 +102,24 @@
         			}
         		}
         	}
-        }
+        },{
+		    "path" : "pages/user-chat/user-chat",
+		    "style" : {
+				"app-plus":{
+					"bounce":"none",
+					"titleNView":{
+						"buttons":[{
+							"color":"#333333",
+							"colorPressed":"#FD597C",
+							"float":"right",
+							"fontSize":"20px",
+							"fontSrc":"/static/iconfont.ttf",
+							"text":"\ue628"
+						}]
+					}
+				}
+			}
+		}
         ,{
             "path" : "pages/detail/detail",
             "style" :                                                                                    
@@ -145,6 +162,19 @@
 					}
 				}
 			}
+		},
+		{
+		    "path" : "pages/upload-file/upload-file",
+		    "style" : {
+				"navigationBarTitleText":"上传文件",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"type":"menu"
+						}]
+					}
+				}
+			}
 		}
         ,{
             "path" : "pages/add-input/add-input",
@@ -154,7 +184,6 @@
 					"titleNView":false
 				}
             }
-            
         }
     ],
 	"globalStyle": {

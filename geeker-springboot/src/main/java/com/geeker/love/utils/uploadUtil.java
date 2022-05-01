@@ -41,7 +41,7 @@ public class uploadUtil {
     private static ClientConfig clientConfig = new ClientConfig(region);
 
 
-    public static List<image> uploadfile(List<MultipartFile> files, Integer status,int uid){
+    public static List<image> uploadfile(List<MultipartFile> files, Integer status, int uid){
         List<image> images = new ArrayList<>();
         if (status == 1) prefix = "blog-image/";
         else prefix = "avatar/";
@@ -83,13 +83,13 @@ public class uploadUtil {
             String fileName = file.getOriginalFilename();
             try {
                 String substring = fileName.substring(fileName.lastIndexOf("."));
-                File localFile = File.createTempFile(String.valueOf(System.currentTimeMillis()),substring);
+                File localFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), substring);
                 file.transferTo(localFile);
                 Date date = new Date();
                 String strDateFormat = "yyyy-MM-dd&HH:mm:ss";
                 SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
                 System.out.println(sdf.format(date));
-                fileName = prefix+sdf.format(date)+"myblog"+substring;
+                fileName = prefix+sdf.format(date) + "-geekerTempFile" + new Random().nextInt(100) + substring;
 
                 System.out.println(fileName);
                 // 将 文件上传至 COS

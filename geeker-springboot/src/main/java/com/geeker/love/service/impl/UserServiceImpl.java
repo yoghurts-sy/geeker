@@ -46,12 +46,14 @@ public class UserServiceImpl implements UserService {
         System.out.println(user);
         return Result.success(
                 MapUtil.builder()
+                        .put("id", user.getId())
                         .put("username", user.getUsername())
                         .put("avatar", user.getUserpic())
                         .put("phone", user.getPhone())
                         .put("email", user.getEmail())
                         .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
                         .put("token", jwt)
+                        .put("resume", user.getResume())
                         .map()
         );
     }
@@ -85,12 +87,14 @@ public class UserServiceImpl implements UserService {
         String jwt = jwtUtils.generateToken(user.getId());
         return Result.success(
                 MapUtil.builder()
+                        .put("id", user.getId())
                         .put("username", user.getUsername())
                         .put("avatar", user.getUserpic())
                         .put("phone", user.getPhone())
                         .put("email", user.getEmail())
                         .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
                         .put("token", jwt)
+                        .put("resume", user.getResume())
                         .map()
         );
     }

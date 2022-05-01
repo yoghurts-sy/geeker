@@ -1,28 +1,20 @@
 <template>
-	<view>
+	<view v-if="update">
 		
 		<!-- 聊天列表 -->
 		<scroll-view scroll-y="true" style="position: absolute;left: 0;top: 0;right: 0;bottom: 100rpx;" :scroll-into-view="scrollInto" scroll-with-animation>
 			
-			<block v-for="(item,index) in list" :key="index">
+			<block v-for="(item,index) in list" :key="index" >
 				<view :id="'chat'+index">
 					<user-chat-list :item="item" :index="index" 
-					:pretime="index > 0 ? list[index-1].create_time : 0"></user-chat-list>
+					:pretime="index > 0 ? list[index-1].create_time : 0" v-if="update2"
+					></user-chat-list>
 				</view>
 			</block>
+			
 		</scroll-view>
-		
 		<!-- 底部操作条 -->
-		<bottom-input @submit="submit"></bottom-input>
-		<!-- <view style="height: 100rpx;"
-		class="fixed-bottom flex align-center border-top bg-white">
-		
-			<input type="text" v-model="content" class="flex-1 rounded bg-light ml-2" style="padding: 5rpx;" placeholder="文明发言" @confirm="submit"/>
-			
-			<view class="iconfont icon-fabu flex align-center justify-center font-lg animated" hover-class="jello text-main" style="width: 100rpx;" @click="submit"></view>
-			
-		</view> -->
-		
+		<bottom-input @submit="submit"></bottom-input>	
 	</view>
 </template>
 
@@ -37,7 +29,9 @@
 		data() {
 			return {
 				scrollInto:"",
-				list:[]
+				list:[],
+				update:true,
+				update2:true
 			}
 		},
 		// 页面加载前
@@ -56,19 +50,28 @@
 			this.$store.commit('createToUser', ToUser)
 			// 获取当前聊天对象的聊天记录
 			this.$store.dispatch('getChatDetailToUser').then(list=>{
-				console.log('[user-chat]获取当前聊天对象的聊天记录',list);
+				console.log('[user-chat]获取当前聊天对象的聊天记录', list);
 				this.list = list
+				
+				this.update = false;
+				this.update = true;
+				
+				// 开启监听接收聊天信息
+				uni.$on('UserChat', (res)=>{
+					console.log('[user-chat]接收聊天信息', res);
+					if(res.from_id === ToUser.user_id) {
+						this.renderPage({
+							data:res,
+							send:false
+						})
+					}
+				})
+				console.log(this.list)
 			})
-			// 开启监听接收聊天信息
-			uni.$on('UserChat',(res)=>{
-				console.log('[user-chat]接收聊天信息',res);
-				if(res.from_id === ToUser.user_id){
-					this.renderPage({
-						data:res,
-						send:false
-					})
-				}
-			})
+			
+			/* setTimeout(() => {
+				this.$router.go(0)
+			}, 400) */
 		},
 		// 页面加载完成的时候
 		onReady() {
@@ -98,7 +101,8 @@
 					type:"text"
 				})
 				// 请求发送接口
-				this.$H.post('/chat/send',result,{
+				console.log("Result:", result);
+				this.$H.post('/send', result,{
 					token:true
 				}).then(res=>{
 					this.renderPage({
@@ -113,7 +117,7 @@
 					let lastIndex = this.list.length - 1
 					if (lastIndex < 0) return;
 					this.scrollInto = 'chat'+lastIndex
-				},300)
+				}, 300)
 			}
 		}
 	}

@@ -19,31 +19,16 @@ import java.util.List;
 public class FileUploadController {
     @Autowired
     private uploadFileServe uploadFileService;
-    @PostMapping("/upPics")
+
+
+    @PostMapping("/uploadFiles")
     @ResponseBody
-    public ResultInfo upPics(@RequestParam(value = "file")List<MultipartFile> file/*,
+    public ResultInfo upPics(@RequestParam(value = "file") List<MultipartFile> file/*,
                          @RequestParam(value = "token")String token*/){
         ResultInfo result=new ResultInfo();
-      /*  if(token.isEmpty()){
-            result.setCode(400);
-            result.setMsg("token为空!");
-            return  result;
-        }
-        //token验证
-        try{
-            Claims claims= (Claims) Jwts.parser()
-                    .setSigningKey("geek")
-                    .parse(token)
-                    .getBody();
-        }catch (Exception e){
-            result.setCode(402);
-            result.setMsg("用户信息异常");
-            return  result;
-        }*/
-        //
 
         if(file.isEmpty()){
-            System.out.println("图片为空 ");
+            System.out.println("文件为空 ");
             result.setCode(401);
             result.setMsg("图片不能为空");
             return result;
@@ -63,26 +48,9 @@ public class FileUploadController {
     }
     @PostMapping("/updateupic")
     @ResponseBody
-    public ResultInfo updateUpic(@RequestParam(value = "file")MultipartFile file/*,
+    public ResultInfo updateUpic(@RequestParam(value = "file") MultipartFile file/*,
                          @RequestParam(value = "token")String token*/){
         ResultInfo result=new ResultInfo();
-      /*  if(token.isEmpty()){
-            result.setCode(400);
-            result.setMsg("token为空!");
-            return  result;
-        }
-        //token验证
-        try{
-            Claims claims= (Claims) Jwts.parser()
-                    .setSigningKey("geek")
-                    .parse(token)
-                    .getBody();
-        }catch (Exception e){
-            result.setCode(402);
-            result.setMsg("用户信息异常");
-            return  result;
-        }*/
-        //
 
         if(file.isEmpty()){
             System.out.println("图片为空 ");
@@ -90,12 +58,8 @@ public class FileUploadController {
             result.setMsg("图片不能为空");
             return result;
         }
-      /*  Claims claims= (Claims) Jwts.parser()
-                .setSigningKey("geek")
-                .parse(token)
-                .getBody();
-        int uid=Integer.parseInt(claims.getId());*/
         String imageURL= uploadUtil.uploadfile(file,1);
+
         List<image> images=new ArrayList<>();
         images.add(new image(imageURL,1));
         uploadFileService.uploadPics(images);
@@ -104,6 +68,14 @@ public class FileUploadController {
         result.setMsg("图片上传成功");
         result.setObj(imageURL);
         return result;
+    }
+
+
+    @PostMapping("/uploadFile")
+    @ResponseBody
+    public ResultInfo updateFile(@RequestParam(value = "file") MultipartFile file){
+        String fileURL = uploadUtil.uploadfile(file, 1);
+        return ResultInfo.success(fileURL);
     }
 
 }

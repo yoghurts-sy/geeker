@@ -86,7 +86,9 @@
 						password:this.code
 					}
 				} else {
-					// 账号密码登录 13656457563 123456
+					// 账号密码登录 13656457563 123456 Evan Su
+					
+					//   测试账号2 13450772008 123456
 					url = '/login'
 					data = {
 						phone:this.phone,
@@ -100,9 +102,10 @@
 					if (res.data.code === '200') {
 												
 						console.log(res.data);
+						console.log("USER:-->");
 						console.log(res.data.data);
 						// 修改vuex的state,持久化存储
-						this.$store.commit('login',res.data.data)
+						this.$store.commit('login', res.data.data)
 						// 开启socket
 						//this.$store.dispatch('openSocket')
 						// 提示和跳转
@@ -113,6 +116,7 @@
 							title: '登录成功',
 							icon: 'none'
 						});
+						this.$store.dispatch('initUser')
 					} else {
 						uni.showToast({
 							title: res.data.msg,
