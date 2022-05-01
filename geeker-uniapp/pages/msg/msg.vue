@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-if="update">
 		<template v-if="list.length > 0">
 		<block v-for="(item, index) in list" :key="index"><!-- 遍历消息 -->
 			<msg-list :item="item" :index="index"></msg-list>
@@ -24,36 +24,28 @@
 <script>
 	const demo = [
 					{
+						user_id:13,
 						avatar:"../../static/bgimg/4.jpg", //头像
 						username:"昵称",
 						update_time:1644891000606,
 						data:"内容内容内容内容内容内容内容内容内容内容内容内容内容", //内容
 						noread:20, //未读数
 					},{
+						user_id:16,
 						avatar:"../../static/bgimg/4.jpg", //头像
 						username:"昵称",
 						update_time:1644891000606,
 						data:"内容内容内容内容内容内容内容内容内容内容内容内容内容", //内容
 						noread:20, //未读数
 					},{
+						user_id:19,
 						avatar:"../../static/bgimg/4.jpg", //头像
 						username:"昵称",
 						update_time:1644891000606,
 						data:"内容内容内容内容内容内容内容内容内容内容内容内容内容", //内容
 						noread:20, //未读数
 					},{
-						avatar:"../../static/bgimg/4.jpg", //头像
-						username:"昵称",
-						update_time:1644891000606,
-						data:"内容内容内容内容内容内容内容内容内容内容内容内容内容", //内容
-						noread:20, //未读数
-					},{
-						avatar:"../../static/bgimg/4.jpg", //头像
-						username:"昵称",
-						update_time:1644891000606,
-						data:"内容内容内容内容内容内容内容内容内容内容内容内容内容", //内容
-						noread:20, //未读数
-					},{
+						user_id:22,
 						avatar:"../../static/bgimg/4.jpg", //头像
 						username:"昵称",
 						update_time:1644891000606,
@@ -65,6 +57,7 @@
 	import msgList from "@/components/msg/msg-list.vue"
 	import Nothing from "@/components/common/Nothing.vue"
 	import uniPopup from "@/components/uni-ui/uni-popup/uni-popup.vue"
+	import { mapState } from 'vuex'
 	export default {
 		components:{
 			msgList,
@@ -73,12 +66,20 @@
 		},
 		data() {
 			return {
-				list:[]
+				list:[],
+				update:true
 			}
 		},
 		onLoad(){
-			this.list = demo
+			this.$store.dispatch('getChatList').then(res=>{
+				this.list = res
+				this.update = false
+				this.update = true
+			})
 		},
+		computed:{
+		}
+		,
 		onPullDownRefresh(){
 			this.refresh();
 		},

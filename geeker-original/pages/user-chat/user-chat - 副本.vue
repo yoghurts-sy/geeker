@@ -7,9 +7,11 @@
 			<block v-for="(item,index) in list" :key="index">
 				<view :id="'chat'+index">
 					<user-chat-list :item="item" :index="index" 
-					:pretime="index > 0 ? list[index-1].create_time : 0"></user-chat-list>
+					:pretime="index > 0 ? list[index-1].create_time : 0"
+					></user-chat-list>
 				</view>
 			</block>
+			
 		</scroll-view>
 		
 		<!-- 底部操作条 -->
@@ -53,7 +55,7 @@
 			}
 			let ToUser = JSON.parse(e.user)
 			// 创建聊天对象
-			this.$store.commit('createToUser', ToUser)
+			this.$store.commit('createToUser',ToUser)
 			// 获取当前聊天对象的聊天记录
 			this.$store.dispatch('getChatDetailToUser').then(list=>{
 				console.log('[user-chat]获取当前聊天对象的聊天记录',list);

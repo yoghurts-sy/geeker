@@ -59,7 +59,7 @@ export default {
 		options.url = url
 		options.data = data
 		options.method = 'GET'
-		console.log(options)
+		//console.log(options)
 		return this.request(options)
 	},
 	post(url,data = {},options = {}){

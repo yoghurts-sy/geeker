@@ -100,9 +100,10 @@
 					if (res.data.code === '200') {
 												
 						console.log(res.data);
+						console.log("USER:-->");
 						console.log(res.data.data);
 						// 修改vuex的state,持久化存储
-						this.$store.commit('login',res.data.data)
+						this.$store.commit('login', res.data.data)
 						// 开启socket
 						//this.$store.dispatch('openSocket')
 						// 提示和跳转
@@ -113,6 +114,7 @@
 							title: '登录成功',
 							icon: 'none'
 						});
+						this.$store.dispatch('initUser')
 					} else {
 						uni.showToast({
 							title: res.data.msg,
