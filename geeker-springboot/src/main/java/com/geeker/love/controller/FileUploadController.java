@@ -21,7 +21,7 @@ public class FileUploadController {
     private uploadFileServe uploadFileService;
     @PostMapping("/upPics")
     @ResponseBody
-    public ResultInfo upPics(@RequestParam(value = "file")List<MultipartFile> file/*,
+    public ResultInfo upPics(@RequestParam(value = "file") List<MultipartFile> file/*,
                          @RequestParam(value = "token")String token*/){
         ResultInfo result=new ResultInfo();
       /*  if(token.isEmpty()){
@@ -63,7 +63,7 @@ public class FileUploadController {
     }
     @PostMapping("/updateupic")
     @ResponseBody
-    public ResultInfo updateUpic(@RequestParam(value = "file")MultipartFile file/*,
+    public ResultInfo updateUpic(@RequestParam(value = "file") MultipartFile file/*,
                          @RequestParam(value = "token")String token*/){
         ResultInfo result=new ResultInfo();
       /*  if(token.isEmpty()){

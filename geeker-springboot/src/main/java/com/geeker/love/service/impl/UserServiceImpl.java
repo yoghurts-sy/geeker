@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         System.out.println(user);
         return Result.success(
                 MapUtil.builder()
+                        .put("id", user.getId())
                         .put("username", user.getUsername())
                         .put("avatar", user.getUserpic())
                         .put("phone", user.getPhone())
@@ -85,6 +86,7 @@ public class UserServiceImpl implements UserService {
         String jwt = jwtUtils.generateToken(user.getId());
         return Result.success(
                 MapUtil.builder()
+                        .put("id", user.getId())
                         .put("username", user.getUsername())
                         .put("avatar", user.getUserpic())
                         .put("phone", user.getPhone())

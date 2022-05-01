@@ -2,10 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.geeker.love.dao.MessageMapper">
     <insert id="sendMessage" parameterType="com.geeker.love.pojo.MessageBean">
-        insert into feedback(to_id,from_id,data,create_time) values (#{message.to_id},
+        insert into feedback(to_id, from_id, data, create_time) values (#{message.to_id},
         #{message.from_id},#{message.data},#{message.time})
     </insert>
     <select id="queryMessage" resultType="com.geeker.love.pojo.MessageBean">
         select * from feedback where from_id=#{from_id} and to_id=#{to_id} order by create_time
+    </select>
+
+    <!--
+
+     queryChatList
+    SELECT id, to_id, from_id, DATA, create_time
+        FROM
+        (SELECT * FROM feedback
+        WHERE from_id = 13 OR to_id = 13
+        ORDER BY create_time) AS temp
+        GROUP BY to_id;
+    -->
+    <select id="queryChatList" resultType="java.util.Map">
+        SELECT id, to_id, from_id, data, create_time update_time
+        FROM
+        (SELECT * FROM feedback
+        WHERE from_id = #{user_id} OR to_id = #{user_id}
+        ORDER BY create_time DESC) AS temp
+        GROUP BY to_id
+        ORDER BY create_time;
+    </select>
+
+    <select id="getToUserDetail" resultType="java.util.Map">
+        select id user_id, userpic avatar, username
+        from user
+        where id = #{to_id}
+    </select>
+
+    <!--
+
+    -->
+
+    <select id="queryChatDetails" resultType="java.util.Map">
+        SELECT from_id user_id, data, create_time FROM(
+        SELECT * FROM feedback
+        WHERE to_id = #{to_id} AND from_id = #{from_id}
+        UNION
+        SELECT * FROM feedback
+        WHERE to_id = #{from_id} AND from_id = #{to_id}) AS temp2
+        ORDER BY create_time;
     </select>
 </mapper>

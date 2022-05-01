@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,18 +31,27 @@ public class ChatEndPoint {
 
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         this.httpSession = httpSession;
-        System.out.println(httpSession.getId());
 
         if (user_id == null) {
             try {
-                this.session.getBasicRemote().sendText("Please bind at first!");
+                Map<String, String> map = new HashMap<>();
+                map.put("type", "bind");
+                map.put("status", "false");
+                map.put("user_id", "null");
+                String res = JSON.toJSONString(map);
+                this.session.getBasicRemote().sendText(res);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("user_id:" + user_id + " has connected!");
+            Map<String, String> map = new HashMap<>();
+            map.put("type", "bind");
+            map.put("status", "true");
+            map.put("user_id", user_id);
+            String res = JSON.toJSONString(map);
             try {
-                this.session.getBasicRemote().sendText("user_id:" + user_id + " has connected!");
+                this.session.getBasicRemote().sendText(res);
                 onLineUsers.put(user_id, this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,8 +73,8 @@ public class ChatEndPoint {
     public static void sendMessage(MessageBean message) {
         String to_id =  message.getTo_id() + "";
         ChatEndPoint chatEndPoint = onLineUsers.get(to_id);
-        Session session = chatEndPoint.session;
-        if (null != session) {
+        if (null != chatEndPoint) {
+            Session session = chatEndPoint.session;
             try {
                 if (session.isOpen()) {
                     synchronized(session){

@@ -5,6 +5,7 @@
 			// 检测更新
 			// 网络监听
 			// 初始化数据
+			this.$store.dispatch('initUser')
 		},
 		onShow: function() {
 			console.log('App Show')

@@ -48,6 +48,9 @@ import $C from '@/common/config.js';
 import $http from '@/common/request.js';
 import $U from '@/common/util.js';
 
+import axios from '@/axios/axios.js';
+Vue.prototype.$axios = axios;
+
 export default new Vuex.Store({
 	state:{
 		// 登录
@@ -85,7 +88,7 @@ export default new Vuex.Store({
 		// Socket连接状态
 		IsOpen:false,
 		// SocketTask
-		SocketTask:false,
+		SocketTask:{},
 		// 是否上线（会员id绑定客户端id，验证用户身份，通过则绑定）
 		IsOnline:false, 
 		// 当前聊天对象（进入聊天页面获取）
@@ -105,6 +108,9 @@ export default new Vuex.Store({
 				total += item.noread
 			})
 			return total
+		},
+		getChatLists(state) {
+			return state.chatList;
 		}
 	},
 	mutations:{
@@ -121,7 +127,7 @@ export default new Vuex.Store({
 			}
 		},
 		// 登录
-		login(state,user){
+		login(state, user){
 			state.loginStatus = true
 			state.user = user
 			state.token = state.user.token
@@ -153,8 +159,8 @@ export default new Vuex.Store({
 			}
 		},
 		// 存储会话列表
-		saveChatList(state,list){
-			uni.setStorageSync('chatlist_'+state.user.id,JSON.stringify(list))
+		saveChatList(state, list){
+			uni.setStorageSync('chatlist_'+state.user.id, JSON.stringify(list))
 		},
 		// 删除会话列表
 		clearChatList(state,list){
@@ -162,24 +168,28 @@ export default new Vuex.Store({
 			state.chatList = []
 		},
 		// 存储与某个用户聊天内容列表
-		saveChatDetail(state,{list,toId}){
+		saveChatDetail(state,{list, toId}){
 			// chatdetail_[当前用户id]_[聊天对象id]
 			let myId = state.user.id
 			toId = toId ? toId : state.ToUser.user_id
 			let key = 'chatdetail_'+myId+'_'+toId
-			uni.setStorageSync(key,JSON.stringify(list))
+			uni.setStorageSync(key, JSON.stringify(list))
 		},
 	},
 	actions:{
 		// 初始化登录状态
-		initUser({state,dispatch}){
+		initUser({state, dispatch}){
 			let user = uni.getStorageSync('user');
 			if(user){
 				state.user = JSON.parse(user)
 				state.loginStatus = true
 				state.token = state.user.token
 				// 打开socket
+				
+				console.log("initUser-logined")
 				dispatch('openSocket')
+			} else {
+				console.log("initUser-unlogin")
 			}
 		},
 		// 关闭socket
@@ -190,11 +200,16 @@ export default new Vuex.Store({
 		},
 		// 打开socket
 		openSocket({ state,dispatch }){
+			let user = state.user;
+			console.log("openSocket")
+			if(!user) return
 			// 防止重复连接
 			if(state.IsOpen) return
 			// 连接
+			let _thisId = user.id;
+			let _url = "ws://" + "localhost:8585" + '/love/api/connect/' + _thisId
 			state.SocketTask = uni.connectSocket({
-			    url: $C.websocketUrl,
+			    url: _url,
 			    complete: ()=> {}
 			});
 			if (!state.SocketTask) return;
@@ -222,13 +237,24 @@ export default new Vuex.Store({
 			})
 			// 监听接收信息
 			state.SocketTask.onMessage((e)=>{
-				console.log('接收消息',e);
+				console.log('接收消息', e);
 				// 字符串转json
 				let res = JSON.parse(e.data);
 				// 绑定返回结果
 				if (res.type == 'bind'){
 					// 用户绑定
-					return dispatch('userBind',res.data)
+					if (res.status === 'false') {
+						console.log('绑定失败');
+						return;
+					}
+					console.log('绑定成功');
+					state.IsOnline = true
+					// 初始化会话列表
+					dispatch('initChatList')
+					// 获取未读信息
+					dispatch('getUnreadMessages')
+					//return dispatch('userBind', res.data)
+					return;
 				}
 				// 处理接收信息
 				if (res.type !== 'text') return;
@@ -247,38 +273,10 @@ export default new Vuex.Store({
 			   dispatch('handleChatMessage',res)
 			})
 		},
-		// 用户绑定
-		userBind({state,dispatch},client_id){
-			$http.post('/chat/bind',{
-				type:"bind",
-				client_id:client_id
-			},{
-				token:true
-			}).then(data=>{
-				/*
-					{
-						"type":"bind",
-						"status":true
-					}
-				*/
-				console.log('绑定成功',data);
-				// 开始上线
-				if(data.status && data.type === 'bind'){
-					// 改为上线状态
-					state.IsOnline = true
-					// 初始化会话列表
-					dispatch('initChatList')
-					// 获取未读信息
-					dispatch('getUnreadMessages')
-				}
-			}).catch(err=>{
-				// 失败 退出登录，重新链接等处理
-			})
-		},
 		// 获取未读信息
 		getUnreadMessages({state,dispatch}){
 			console.log('获取未读信息中...');
-			$http.post('/chat/get',{},{
+			/* $http.post('/chat/get',{},{
 				token:true,
 			}).then((data)=>{
 				console.log('获取未读信息成功',data);
@@ -286,33 +284,33 @@ export default new Vuex.Store({
 					// 处理接收消息
 					dispatch('handleChatMessage',msg)
 				})
-			});
+			}); */
 		},
 		// 初始化会话列表
-		async initChatList({state,dispatch,commit}){
+		async initChatList({state, dispatch, commit}){
 			state.chatList = await dispatch('getChatList')
-			console.log('初始化会话列表',state.chatList);
+			console.log('初始化会话列表', state.chatList);
 			dispatch('updateTabbarBadge')
 		},
 		// 处理接收消息
-		handleChatMessage({state,dispatch},data){
-			console.log('处理接收消息',data);
+		handleChatMessage({state,dispatch}, data){
+			console.log('处理接收消息', data);
 			// 全局通知接口
-			uni.$emit('UserChat',data);
-			// 存储到chatdetail
-			dispatch('updateChatDetailToUser',{
+			uni.$emit('UserChat', data);
+			 // 存储到chatdetail
+			dispatch('updateChatDetailToUser', {
 				data,
 				send:false
 			})
 			// 更新会话列表
-			dispatch('updateChatList',{
+			dispatch('updateChatList', {
 				data,
 				send:false
 			})
 		},
 		// 更新聊天会话列表
-		async updateChatList({state,dispatch,commit},{data,send}){
-			console.log('更新聊天会话列表',data);
+		async updateChatList({state,dispatch,commit}, {data, send}){
+			console.log('更新聊天会话列表', data);
 			// 是否是本人发送
 			let isMySend = send
 			console.log(isMySend ? '本人发送的信息' : '不是本人发送的');
@@ -331,13 +329,13 @@ export default new Vuex.Store({
 				})
 				// 忽略本人发送
 				if (!isMySend) {
-					obj.noread = 1;
+					obj.noread = 1;//接收消息
 				}
 				console.log('不存在当前会话,创建',obj);
 				// 追加头部
 				chatList.unshift(obj);
 			} else {
-				// 存在：将当前会话置顶,修改当前会话的data和time显示
+				// 存在：将当前会话置顶, 修改当前会话的data和time显示
 				let item = chatList[i]
 				item.data = data.data
 				item.type = data.type
@@ -348,29 +346,57 @@ export default new Vuex.Store({
 				}
 				console.log('存在当前会话',item);
 				// 置顶当前会话
-				chatList = $U.__toFirst(chatList,i)
+				chatList = $U.__toFirst(chatList, i)
 			}
 			// 存储到本地存储
 			state.chatList = chatList
-			commit('saveChatList',chatList)
-			// 不处于聊天当中,更新未读数
+			commit('saveChatList', chatList)
+			// 不处于聊天当中, 更新未读数
 			if(data.from_id !== state.ToUser.user_id && !isMySend){
 				await dispatch('updateTabbarBadge')
 			}
 		},
 		// 获取所有聊天会话列表
 		getChatList({state}){
-			let list = uni.getStorageSync('chatlist_'+state.user.id);
-			return list ? JSON.parse(list) : []
+			let list = uni.getStorageSync('chatlist_' + state.user.id);
+			let resStr = "";
+			if (list === "") {
+				$http.get("/getChatList", {
+					"user_id":state.user.id
+				}, {}).then(res=>{
+					uni.setStorageSync('chatlist_' + state.user.id, JSON.stringify(res.data.obj))
+					//uni.setStorageSync('chatList', JSON.stringify(res.data.obj))
+					return res.data.obj;
+				})
+			} else {
+				return list ? JSON.parse(list) : []
+			}
 		},
-		// 获取与某个用户聊天内容列表
-		getChatDetailToUser({state},toId = 0){
+		// 获取与某个用户聊天内容列表 here
+		getChatDetailToUser({state}, toId = 0){
 			// chatdetail_[当前用户id]_[聊天对象id]
 			let myId = state.user.id
 			toId = toId ? toId : state.ToUser.user_id
 			let key = 'chatdetail_'+myId+'_'+toId
 			let list = uni.getStorageSync(key)
-			return list ? JSON.parse(list) : []
+			console.log(typeof list)
+			console.log(list === "")
+			if (list === "") {
+				//Vue.prototype.$axios = axios;
+				//$http.get
+				
+				$http.get("/getChatDetails", {
+					"to_id":toId,
+					"from_id":state.user.id
+				}, {
+				}).then(res=>{
+					console.log("getChatDetailToUser", res.data.obj);
+					uni.setStorageSync(key, JSON.stringify(res.data.obj))
+					return res.data.obj;
+				})
+			} else {
+				return list ? JSON.parse(list) : []
+			}
 		},
 		// 消息转聊天会话对象
 		formatChatListObject({state},{data,send}){
@@ -391,8 +417,8 @@ export default new Vuex.Store({
 			console.log(e);
 			return {
 				user_id:e.send ? state.user.id : data.from_id,
-				avatar:e.send ? state.user.userpic : data.from_userpic,
-				username:e.send ? state.user.username:data.from_username,
+				avatar:e.send ? state.user.avatar : data.from_userpic,
+				username:e.send ? state.user.username : data.from_username,
 				data:data.data,
 				type:data.type, 
 				create_time:new Date().getTime()
@@ -415,17 +441,17 @@ export default new Vuex.Store({
 				text: total > 99 ? '99+' : total.toString()
 			});
 		},
-		// 更新与某个用户聊天内容列表
-		async updateChatDetailToUser({state,dispatch,commit},e){
-			 console.log('更新与某个用户聊天内容列表',e);
+		// 更新与某个用户聊天内容列表 !!!
+		async updateChatDetailToUser({state,dispatch,commit}, e){
+			 console.log('更新与某个用户聊天内容列表', e);
 			 let data = e.data
 			 let toId = e.send ? state.ToUser.user_id : data.from_id
 			 // 获取与某个用户聊天内容的历史记录
-			 let list = await dispatch('getChatDetailToUser',toId)
-			 list.push(await dispatch('formatChatDetailObject',e))
+			 let list = await dispatch('getChatDetailToUser', toId)
+			 list.push(await dispatch('formatChatDetailObject', e))
 			 // 存储到本地存储
 			 commit('saveChatDetail',{
-			 	list,toId
+			 	list, toId
 			 })
 		},
 		// 发送消息
@@ -438,8 +464,8 @@ export default new Vuex.Store({
 			*/
 			console.log('发送消息');
 			// 组织发送消息格式
-			let sendData = await dispatch('formatSendData',data)
-			console.log('发送消息数据格式',sendData);
+			let sendData = await dispatch('formatSendData', data)
+			console.log('发送消息数据格式', sendData);
 			/*
 			{
 				to_id:1,      // 接收人 
@@ -469,7 +495,7 @@ export default new Vuex.Store({
 				to_id:state.ToUser.user_id,
 				from_id:state.user.id,
 				from_username:state.user.username,
-				from_userpic:state.user.userpic ? state.user.userpic : '/static/default.jpg',
+				from_userpic:state.user.avatar ? state.user.avatar : '/static/default.jpg',
 				type:data.type,
 				data:data.data,
 				time:new Date().getTime()
