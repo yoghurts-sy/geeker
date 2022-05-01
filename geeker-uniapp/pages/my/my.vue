@@ -146,9 +146,15 @@
 				});
 			}, 
 			openResume() {
-				uni.navigateTo({
-					url: '../resume/resume'
-				});
+				let resume = this.$store.state.user.resume;
+				if (resume !== "") {
+					uni.navigateTo({
+						url: '../resume/resume'
+					});
+				} else {
+					
+				}
+				
 			}
 		}
 	}

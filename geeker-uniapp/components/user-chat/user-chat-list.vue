@@ -27,6 +27,9 @@
 			index:Number,
 			pretime:[Number,String]
 		},
+		onLoad() {
+		}
+		,
 		computed: {
 			// 是否是登录用户本人
 			isSelf() {

@@ -86,7 +86,9 @@
 						password:this.code
 					}
 				} else {
-					// 账号密码登录 13656457563 123456
+					// 账号密码登录 13656457563 123456 Evan Su
+					
+					//   测试账号2 13450772008 123456
 					url = '/login'
 					data = {
 						phone:this.phone,
