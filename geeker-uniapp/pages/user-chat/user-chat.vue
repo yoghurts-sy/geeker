@@ -53,6 +53,9 @@
 				console.log('[user-chat]获取当前聊天对象的聊天记录', list);
 				this.list = list
 				
+				this.update = false;
+				this.update = true;
+				
 				// 开启监听接收聊天信息
 				uni.$on('UserChat', (res)=>{
 					console.log('[user-chat]接收聊天信息', res);
@@ -65,6 +68,10 @@
 				})
 				console.log(this.list)
 			})
+			
+			/* setTimeout(() => {
+				this.$router.go(0)
+			}, 400) */
 		},
 		// 页面加载完成的时候
 		onReady() {

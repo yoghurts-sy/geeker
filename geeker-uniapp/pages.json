@@ -162,6 +162,19 @@
 					}
 				}
 			}
+		},
+		{
+		    "path" : "pages/upload-file/upload-file",
+		    "style" : {
+				"navigationBarTitleText":"上传文件",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"type":"menu"
+						}]
+					}
+				}
+			}
 		}
         ,{
             "path" : "pages/add-input/add-input",

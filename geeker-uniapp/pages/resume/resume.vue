@@ -24,20 +24,8 @@
 		},
 		
 		onLoad() {
-			/**
-			 * 1. 首先判断是否登录，没有登录则先登录。若登录vuex中是否存在fileUrl，存在则直接显示
-			 * 2. 如果不存在则询问是否添加简历，右上角的三个点也可以支持修改简历
-			 * 3. 
-			 */
-			/* console.log()
-			if (this.loginStatus === false) {
-				uni.navigateTo({
-					url: '../login/login',
-				});
-				return;
-			} */
-			
-			
+			let tempURL = this.$store.state.user.resume;
+			this.fileUrl = tempURL;
 			
 			// h5，使用h5访问的时候记得跨域
 			// #ifdef H5

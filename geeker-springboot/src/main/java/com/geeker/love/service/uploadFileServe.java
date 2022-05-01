@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface uploadFileServe {
     void uploadPics(List<image> image);
-    void updateUpic(String URL,Integer uid);
+    void updateUpic(String URL, Integer uid);
 }

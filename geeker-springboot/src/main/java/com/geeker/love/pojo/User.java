@@ -11,6 +11,7 @@ public class User {
     private String email;
     private Integer status;
     private Long create_time;
+    private String resume;
     /**
      *   时间戳转化为为格式时间
      *     Date date = new Date();

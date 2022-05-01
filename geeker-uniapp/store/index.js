@@ -270,7 +270,7 @@ export default new Vuex.Store({
 				}
 				*/
 			   // 处理接收消息
-			   dispatch('handleChatMessage',res)
+			   dispatch('handleChatMessage', res)
 			})
 		},
 		// 获取未读信息

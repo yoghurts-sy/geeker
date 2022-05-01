@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
                         .put("email", user.getEmail())
                         .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
                         .put("token", jwt)
+                        .put("resume", user.getResume())
                         .map()
         );
     }
@@ -93,6 +94,7 @@ public class UserServiceImpl implements UserService {
                         .put("email", user.getEmail())
                         .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
                         .put("token", jwt)
+                        .put("resume", user.getResume())
                         .map()
         );
     }
