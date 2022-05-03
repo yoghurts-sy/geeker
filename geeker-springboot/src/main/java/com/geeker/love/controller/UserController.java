@@ -4,8 +4,12 @@ import com.geeker.love.common.dto.LoginDto;
 import com.geeker.love.common.exception.GeekerException;
 import com.geeker.love.common.lang.Result;
 import com.geeker.love.service.UserService;
+import com.geeker.love.utils.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/love/api")
@@ -34,5 +38,20 @@ public class UserController {
         return userService.SendVerifyCode(phone);
     }
 
+    @PostMapping("/saveResume")
+    public ResultInfo saveResume(@RequestBody Map<String, Object> map) {
+        String user_id = map.get("user_id") + "";
+        String resume = (String) map.get("resume");
+        for (String s : map.keySet()) {
+            System.out.println(s);
+        }
+        String res = userService.SaveResume(Long.parseLong(user_id), resume);
+        return ResultInfo.success(res);
+    }
 
+    @PostMapping("/userInfo")
+    public ResultInfo userInfo(@RequestBody Map<String, Object> map) {
+        String user_id = map.get("user_id") + "";
+        return ResultInfo.success(userService.QueryUserByUserId(Integer.parseInt(user_id)));
+    }
 }
