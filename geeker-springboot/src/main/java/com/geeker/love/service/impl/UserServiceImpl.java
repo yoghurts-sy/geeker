@@ -114,6 +114,16 @@ public class UserServiceImpl implements UserService {
         return userMapper.queryUserByUserId(id);
     }
 
+    @Override
+    public String SaveResume(Long user_id, String resume) {
+        int res = userMapper.SaveResume(user_id, resume);
+        if (res > 0) {
+            return "保存成功";
+        } else {
+            return "保存失败";
+        }
+    }
+
 
     private static boolean checkPhone(String phone) {
         Pattern pattern = Pattern
@@ -125,4 +135,6 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+
 }

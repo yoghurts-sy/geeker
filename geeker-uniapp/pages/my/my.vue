@@ -36,16 +36,16 @@
 			<image src="/static/demo/banner1.jpg" mode="aspectFill"
 			style="height: 170rpx;width: 100%;" class="rounded"></image>
 		</view>
-		<uni-list-item title="我的简历" showExtraIcon @click="openResume">
+		<uni-list-item title="我的简历"  showExtraIcon @click="openResume">
 			<text slot="icon" class="iconfont icon-user-detail"></text>
 		</uni-list-item>
-		<uni-list-item title="浏览历史" showExtraIcon @click="openHistory">
+		<uni-list-item title="浏览历史"  showExtraIcon @click="openHistory">
 			<text slot="icon" class="iconfont icon-liulan"></text>
 		</uni-list-item>
-		<uni-list-item title="社区认证" showExtraIcon>
+		<uni-list-item title="社区认证"  showExtraIcon>
 			<text slot="icon" class="iconfont icon-huiyuanvip"></text>
 		</uni-list-item>
-		<uni-list-item title="审核帖子" showExtraIcon>
+		<uni-list-item title="审核帖子"  showExtraIcon>
 			<text slot="icon" class="iconfont icon-keyboard"></text>
 		</uni-list-item>
 		<!-- #ifdef MP -->
@@ -73,16 +73,16 @@
 			return {
 				myData:[{
 					name:"沟通过",
-					num:0
+					num:2
 				},{
 					name:"已投简历",
 					num:0
 				},{
-					name:"关注",
+					name:"浏览",
 					num:0
 				},{
-					name:"粉丝",
-					num:0
+					name:"被浏览",
+					num:1
 				}]
 			}
 		},
@@ -104,20 +104,8 @@
 			}
 		},
 		onShow() {
-			if(this.loginStatus){
-				this.getCounts()
-			}
 		},
 		watch: {
-			loginStatus(newValue, oldValue) {
-				if(newValue){
-					this.getCounts()
-				} else {
-					this.myData.forEach(item=>{
-						item.num = 0
-					})
-				}
-			}
 		},
 		methods: {
 			// 获取用户相关数据
@@ -147,12 +135,22 @@
 			}, 
 			openResume() {
 				let resume = this.$store.state.user.resume;
-				if (resume !== "") {
+				console.log("resume", resume);
+				if (resume !== null && resume !== "") {
 					uni.navigateTo({
-						url: '../resume/resume'
+						url: '../resume/resume?url=' + resume
 					});
 				} else {
-					
+					uni.showModal({
+						content: '暂无简历，是否要上传简历？',
+						success: (res)=>{
+							if (res.confirm) {
+								uni.navigateTo({
+									url: '../upload-file/upload-file?type=resume'
+								});
+							}
+						}
+					});
 				}
 				
 			}

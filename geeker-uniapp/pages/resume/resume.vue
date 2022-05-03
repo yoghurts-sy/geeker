@@ -23,9 +23,19 @@
 			}
 		},
 		
-		onLoad() {
-			let tempURL = this.$store.state.user.resume;
-			this.fileUrl = tempURL;
+		onLoad(e) {
+			if (!e.url) {
+				uni.navigateBack({
+					delta: 1
+				});
+				return uni.showToast({
+					title: '参数错误！',
+					icon: 'none'
+				});
+			}
+			console.log(e.url)
+			this.fileUrl = e.url
+			
 			
 			// h5，使用h5访问的时候记得跨域
 			// #ifdef H5
@@ -45,10 +55,6 @@
 			// #endif
 		},
 		computed: {
-			...mapState({
-				loginStatus:state=>state.loginStatus,
-				user:state=>state.user
-			})
 		},
 		onUnload() {
 			
@@ -58,8 +64,9 @@
 				content: '是否要上传新的简历？',
 				success: (res)=>{
 					if (res.confirm) {
-						uni.removeStorageSync('history')
-						this.list = []
+						uni.navigateTo({
+							url: '../upload-file/upload-file?type=resume'
+						});
 					}
 				}
 			});

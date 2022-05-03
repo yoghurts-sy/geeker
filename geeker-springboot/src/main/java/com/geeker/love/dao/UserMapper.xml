@@ -34,4 +34,10 @@
         delete from blacklist where black_id=#{bid} and user_id=#{uid}
     </delete>
 
+    <update id="SaveResume">
+        update user
+        set resume = #{resume}
+        where id = #{user_id}
+    </update>
+
     </mapper>

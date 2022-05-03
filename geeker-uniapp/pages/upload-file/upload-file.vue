@@ -26,9 +26,25 @@
 	            option: {},
 	            tabIndex: 0,
 	            percent: '',
-	            list:[]
+	            list:[],
+				type:''
 	        }
 	    },
+		onLoad(e){
+			if(!e.type){
+				uni.navigateBack({
+					delta: 1
+				});
+				return uni.showToast({
+					title: '上传方式参数没有传递',
+					icon: 'none'
+				});
+			}
+			let type = e.type;
+			console.log('上传方式参数', type);
+			this.type = type;
+		}
+		,
 	    onReady() {
 	        // 初始化参数并创建上传DOM
 			let baseUrl = 'http://localhost:8585/love/api';
@@ -76,6 +92,37 @@
 				if (res !== undefined) {
 					res = JSON.parse(res.responseText)
 					console.log(res.obj)
+					
+					let type = this.type;
+					if (type !== '') {
+						if (type === 'resume') {
+							this.$store.state.user.resume = res.obj;
+							let id = this.$store.state.user.id;
+							//saveResume
+							this.$H.post('/saveResume', {
+								user_id:id,
+								resume:res.obj
+							}).then(res=>{
+								uni.navigateBack({
+									delta: 1
+								});
+								uni.showToast({
+									title: '上传成功！',
+									icon: 'none',
+									duration:'1000'
+								});
+							})
+						}
+						
+					} else {
+						uni.navigateBack({
+							delta: 1
+						});
+						uni.showToast({
+							title: '上传方式参数没有传递',
+							icon: 'none'
+						});
+					}
 				}
 	        }
 	    }
