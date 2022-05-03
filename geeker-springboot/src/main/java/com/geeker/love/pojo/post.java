@@ -12,7 +12,7 @@ public class post {
     private int sharenum;
     private String path;
     private int type;
-    private int create_time;
+    private long create_time;
     private int post_class_id;
     private int share_id;
     private int isopen;

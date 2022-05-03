@@ -10,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -92,5 +93,17 @@ public class ArticleController {
         result=articleService.DingCai(13,pid,type);
         return result;
 
+    }
+
+    @PostMapping("/addpost")
+    @ResponseBody
+    public ResultInfo addPost(@RequestBody post post){
+        post.setCreate_time(new Date().getTime());
+        int n=articleService.addPost(post);
+        if(n!=0){
+           return ResultInfo.success("上传成功");
+        }else{
+            return ResultInfo.fail("上传失败");
+        }
     }
 }

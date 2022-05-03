@@ -28,4 +28,5 @@ public interface ArticleMapper {
     List<Map<String, Object>> getPostByClassMulti(Integer pc_id);
 
     List<Map> getCommentsByPostId(Integer post_id);
+    int addPost(@Param("post") post post);
 }
