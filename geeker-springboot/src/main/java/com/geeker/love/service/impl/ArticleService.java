@@ -93,4 +93,11 @@ public class ArticleService implements ArticleServe {
         List<Map> res = articleMapper.getCommentsByPostId(post_id);
         return res;
     }
+
+    @Override
+    public int addPost(post post) {
+        return articleMapper.addPost(post);
+    }
+
+
 }

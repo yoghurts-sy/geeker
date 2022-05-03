@@ -56,4 +56,10 @@
         WHERE comment.user_id = user.id AND post_id=#{post_id}
         ORDER BY comment.create_time DESC
     </select>
+    
+    <insert id="addPost" parameterType="com.geeker.love.pojo.post">
+        insert into post (user_id,title,titlepic,content,sharenum,path,type,create_time,post_class_id,share_id,isopen)
+        values (#{post.user_id},#{post.title},#{post.titlepic},#{post.content},#{post.sharenum},
+        #{post.path},#{post.type},#{post.create_time},#{post.post_class_id},#{post.share_id},#{post.isopen})
+    </insert>
 </mapper>
