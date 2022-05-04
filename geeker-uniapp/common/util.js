@@ -89,12 +89,6 @@ export default {
 			newstime:v.create_time,
 			title:v.title,
 			titlepic:v.titlepic,
-			isFollow:isFollow,
-			support:{
-				type:support, // 顶
-				support_count:v.ding_count,
-				unsupport_count:v.cai_count
-			},
 			comment_count:v.comment_count,
 			share_num:v.sharenum
 		}

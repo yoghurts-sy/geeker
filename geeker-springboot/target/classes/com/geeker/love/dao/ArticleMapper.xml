@@ -23,7 +23,7 @@
         LEFT JOIN support AS s ON p.id = s.post_id
         WHERE p.post_class_id=#{pc_id}
         GROUP BY p.id
-        ORDER BY p.create_time
+        ORDER BY p.create_time DESC
     </select>
 
  <select id="getPostByUser" resultType="com.geeker.love.pojo.post">

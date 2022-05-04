@@ -18,6 +18,8 @@
 					</text>
 				</view>
 			</view>
+			
+			
 
 
 			<!-- 类型标识 -->
@@ -35,6 +37,12 @@
 				关注
 			</view> -->
 		</view>
+		
+		<view class="flex flex-wrap">
+			<view class="border rounded font mx-2 my-1 px-2"
+			v-for="(item,index) in list" :key="index"
+			hover-class="bg-light">{{item}}</view>
+		</view>
 
 		<!-- 标题 -->
 		<view class="font-md my-1" @click="openDetail">{{item.title}}</view>
@@ -42,6 +50,9 @@
 		<image v-if="item.titlepic" :src="item.titlepic" @click="openDetail"
 			style="height: 350rpx; width: 100%;border-bottom: 5rpx;">
 		</image>
+		
+		
+		
 		<!-- 图标按钮 -->
 		<view class="flex align-center">
 			<!-- 顶|踩 -->
@@ -82,6 +93,11 @@
 			isDetail:{
 				type: Boolean,
 				default: false
+			}
+		},
+		data() {
+			return {
+				list:["java", "python", 'go']
 			}
 		},
 		methods: {

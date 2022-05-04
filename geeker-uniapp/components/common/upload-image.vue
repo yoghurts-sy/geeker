@@ -1,6 +1,6 @@
 <template>
-	<view>
-		<view class="uni-uploader">
+	<view class="px-2">
+		<view class="uni-uploader" v-if="show">
 			<view class="uni-uploader-head">
 				<view class="uni-uploader-title">点击可预览选好的图片</view>
 				<view class="uni-uploader-info">{{imageList.length}}/9</view>
@@ -8,17 +8,15 @@
 			<view class="uni-uploader-body">
 				<view class="uni-uploader__files">
 					<block v-for="(image,index) in imageList" :key="index">
+						
 						<view class="uni-uploader__file position-relative">
-							<image class="uni-uploader__img rounded" 
-							:src="image" :data-src="image" @tap="previewImage"
-							mode="aspectFill"></image>
-							<!-- mode用来保证图片纵横比 -->
-							<view class="position-absolute top-0 right-0  rounded"
-							style="padding: 0 15rpx; background-color: rgba(0,0,0,0.5);"
-							@click.stop="deleteImage(index)">
+							<image class="uni-uploader__img rounded" :src="image.url" :data-src="image.url" @tap="previewImage" mode="aspectFill"></image>
+							
+							<view class="position-absolute top-0 right-0 rounded" style="padding: 0 15rpx;background-color: rgba(0,0,0,0.5);" @click.stop="deleteImage(index)">
 								<text class="iconfont icon-shanchu text-white"></text>
 							</view>
 						</view>
+						
 					</block>
 					<view class="uni-uploader__input-box rounded">
 						<view class="uni-uploader__input" @tap="chooseImage"></view>
@@ -41,7 +39,13 @@
 		['compressed', 'original']
 	]
 	export default {
-		props:["list"],
+		props: {
+			list:Array,
+			show:{
+				type:Boolean,
+				default:true
+			}
+		},
 		data() {
 			return {
 				title: 'choose/previewImage',
@@ -57,7 +61,7 @@
 		created() {
 			this.imageList = this.list
 		},
-		onUnload() {
+		destroyed() {
 			this.imageList = [],
 				this.sourceTypeIndex = 2,
 				this.sourceType = ['拍照', '相册', '拍照或相册'],
@@ -66,26 +70,22 @@
 				this.countIndex = 8;
 		},
 		methods: {
-			
 			// 删除图片
 			deleteImage(index){
 				uni.showModal({
 					title: '提示',
-					content: '是否删除该图片',
+					content: '是否要删除该图片？',
 					showCancel: true,
 					cancelText: '不删除',
 					confirmText: '删除',
 					success: res => {
-						if (res.confirm){
+						if (res.confirm) {
 							this.imageList.splice(index,1)
-							this.$emit("change", this.imageList) //图片列表发生改变 就通知add-input修改列表
+							this.$emit('change',this.imageList)
 						}
 					},
-					fail: () => {},
-					complete: () => {}
 				});
-				
-				},
+			},
 			chooseImage: async function() {
 				// #ifdef APP-PLUS
 				// TODO 选择相机或相册时 需要弹出actionsheet，目前无法获得是相机还是相册，在失败回调中处理
@@ -109,20 +109,47 @@
 					sizeType: sizeType[this.sizeTypeIndex],
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
-						this.$emit("change", this.imageList)
+						// 上传图片
+						console.log('chooseImage success, temp path is', res.tempFilePaths[0]);
+						
+						res.tempFilePaths.forEach(item=>{
+							uni.uploadFile({
+								url: 'http://localhost:8585/love/api/uploadFile',
+								filePath: item,
+								name: 'file',
+								formData:{
+									'user':'test'
+								},
+								success: (result) => {
+									console.log('uploadImage success, res is:', JSON.parse(result.data) )
+									var data = JSON.parse(result.data)
+									uni.showToast({
+										title: '上传成功',
+										icon: 'success',
+										duration: 1000
+									});
+									this.imageList.push({url:data.obj})
+									console.log(this.imageList);
+									this.$emit('change',this.imageList)
+								},
+								fail: (err) => {
+									console.log('uploadImage fail', err);
+									uni.showModal({
+										content: err.errMsg,
+										showCancel: false
+									});
+								}
+							});
+							
+						})
 					},
 					fail: (err) => {
-						console.log("err: ",err);
 						// #ifdef APP-PLUS
 						if (err['code'] && err.code !== 0 && this.sourceTypeIndex === 2) {
 							this.checkPermission(err.code);
 						}
 						// #endif
 						// #ifdef MP
-						if(err.errMsg.indexOf('cancel') !== '-1'){
-							return;
-						}
 						uni.getSetting({
 							success: (res) => {
 								let authStatus = false;
@@ -209,10 +236,10 @@
 
 <style>
 	.cell-pd {
-		padding: 22rpx 30rpx;
+		padding: 22upx 30upx;
 	}
 
 	.list-pd {
-		margin-top: 50rpx;
+		margin-top: 50upx;
 	}
 </style>

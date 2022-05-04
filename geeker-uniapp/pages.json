@@ -32,7 +32,11 @@
 		}
 	    ,{
             "path" : "pages/news/news",
-            "style" : {}
+            "style" : {
+				"app-plus":{
+					"titleNView":false
+				}
+			}
         }
         ,{
             "path" : "pages/msg/msg",
@@ -184,6 +188,24 @@
 					"titleNView":false
 				}
             }
+        },{
+            "path" : "pages/topic-nav/topic-nav",
+            "style" : {
+				"navigationBarTitleText":"话题分类"
+			}
+        }
+        ,{
+            "path" : "pages/topic-detail/topic-detail",
+            "style" : {
+				"app-plus":{
+					"titleNView":{
+						"type":"transparent",
+						"buttons":[{
+							"type":"menu"
+						}]
+					}
+				}
+			}
         }
     ],
 	"globalStyle": {

@@ -26,11 +26,23 @@
 		<!-- </block> -->
 
 		<!-- 顶部选项卡 -->
-		<scroll-view scroll-x :scroll-into-view="scrollInto" class="scroll-row" style="height: 100rpx;">
-			<view v-for="(item,index) in tabBars" :key="index" class="scroll-row-item px-3 py-2 font-md"
+		<!-- <scroll-view scroll-x :scroll-into-view="scrollInto" 
+		class="scroll-row border-bottom border-light-secondary" 
+		style="height: 100rpx;">
+			<view v-for="(item,index) in tabBars" :key="index" 
+			class="scroll-row-item px-3 py-2 font-md"
 				:id="'tab'+index" :class="tabIndex === index ? 'text-main font-lg font-weight-bold' : ''"
 				@click="changeTab(index)">{{item.classname}}</view>
-		</scroll-view>
+		</scroll-view> -->
+		
+		<view 
+		class="align-center justify-between border-bottom border-light-secondary flex w-100" 
+		style="height: 100rpx;">
+			<view v-for="(item,index) in tabBars" :key="index" 
+			class="px-3 py-2 font-md"
+				:id="'tab'+index" :class="tabIndex === index ? 'text-main font-lg font-weight-bold' : ''"
+				@click="changeTab(index)">{{item.classname}}</view>
+		</view>
 
 		<swiper :duration="150" :current="tabIndex" @change="onChangeTab" :style="'height:'+scrollHeight+'px;'">
 			<swiper-item v-for="(item,index) in newsList" :key="index">
