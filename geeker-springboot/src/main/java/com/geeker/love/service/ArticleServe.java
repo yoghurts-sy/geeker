@@ -13,4 +13,5 @@ public interface ArticleServe {
     List<post> getAllPostByUser(Integer uid,Integer page);
     ResultInfo DingCai(Integer uid, Integer pid, Integer type);
     List<Map>  getCommentByPostId(Integer post_id);
+    int addPost(post post);
 }

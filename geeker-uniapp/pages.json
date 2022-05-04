@@ -142,9 +142,9 @@
             
         },
 		{
-		    "path" : "pages/history/history",
+		    "path" : "pages/user-space/user-space",
 		    "style" : {
-				"navigationBarTitleText":"我的简历",
+				"navigationBarTitleText":"信息详情",
 				"app-plus":{
 					"titleNView":{
 						"buttons":[{
@@ -157,7 +157,7 @@
 		{
 		    "path" : "pages/resume/resume",
 		    "style" : {
-				"navigationBarTitleText":"我的简历",
+				"navigationBarTitleText":"简历",
 				"app-plus":{
 					"titleNView":{
 						"buttons":[{

@@ -9,4 +9,5 @@ public interface UserService {
     Result PhoneCodeLogin(String phone, String code) throws GeekerException;
     Result SendVerifyCode(String phone);
     User QueryUserByUserId(Integer id);
+    String SaveResume(Long user_id, String resume);
 }

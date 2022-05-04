@@ -17,4 +17,6 @@ public interface UserMapper {
     blacklist getBlackListById(@Param("bid") Integer bid,@Param("uid") Integer uid);
     int insertBlackList(@Param("bid") Integer bid,@Param("uid") Integer uid);
     int deleteBlackList(@Param("bid") Integer bid,@Param("uid") Integer uid);
+
+    int SaveResume(@Param("user_id") Long user_id, @Param("resume") String resume);
 }
