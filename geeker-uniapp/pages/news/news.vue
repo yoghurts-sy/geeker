@@ -70,12 +70,17 @@
 	import uniNavBar from '@/components/uni-ui/uni-nav-bar/uni-nav-bar.vue';
 	import commonList from '@/components/common/common-list.vue';
 	import loadMore from '@/components/common/loadmore.vue';
+	
+	import hotCate from '@/components/news/hot-cate.vue';
+	import topicList from '@/components/news/topic-list.vue';
 	import noThing from '@/components/common/no-thing.vue';
 	export default {
 		components: {
 			uniNavBar,
 			commonList,
 			loadMore,
+			hotCate,
+			topicList,
 			noThing
 		},
 		data() {
@@ -97,7 +102,19 @@
 				
 				topicList:[],
 				
-				swiperList:[]
+				swiperList:[
+					{
+						id:0, 
+						src:"https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/banner1.jpg",
+					},
+					{
+						id:1, 
+						src:"https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/banner2.jpg",
+					},{
+						id:2, 
+						src:"https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/banner3.jpg",
+					},
+				]
 			}
 		},
 		onLoad() {
@@ -136,8 +153,8 @@
 			},
 			// 获取热门分类
 			getTopicNav(){
-				this.$H.get('/topicclass').then(res=>{
-					this.hotCate = res.list.map(item=>{
+				this.$axios.get('/tc').then(res=>{
+					this.hotCate = res.data.map(item=>{
 						return {
 							id:item.id,
 							name:item.classname
@@ -147,8 +164,8 @@
 			},
 			// 获取热门话题
 			getHotTopic(){
-				this.$H.get('/hottopic').then(res=>{
-					this.topicList = res.list.map(item=>{
+				this.$H.get('/top10').then(res=>{
+					this.topicList = res.data.map(item=>{
 						return {
 							id:item.id,
 							cover:item.titlepic,
@@ -162,9 +179,9 @@
 			},
 			// 获取轮播图
 			getSwipers(){
-				this.$H.get('/adsense/0').then(res=>{
-					this.swiperList = res.list
-				})
+				// this.$H.get('/adsense/0').then(res=>{
+				// 	this.swiperList = res.list
+				// })
 			},
 			// 打开发布页
 			openAddInput(){
