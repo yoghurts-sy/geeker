@@ -98,7 +98,8 @@ public class ArticleController {
     @PostMapping("/addpost")
     @ResponseBody
     public ResultInfo addPost(@RequestBody post post){
-        post.setCreate_time(new Date().getTime());
+       String time= String.valueOf(new Date().getTime()).substring(0,10);
+        post.setCreate_time(Long.parseLong(time));
         int n=articleService.addPost(post);
         if(n!=0){
            return ResultInfo.success("上传成功");
