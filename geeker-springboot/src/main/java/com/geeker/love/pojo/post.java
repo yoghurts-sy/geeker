@@ -16,4 +16,5 @@ public class post {
     private int post_class_id;
     private int share_id;
     private int isopen;
+    private int topic_id;
 }
