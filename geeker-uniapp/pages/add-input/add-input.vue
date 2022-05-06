@@ -26,6 +26,15 @@
 				{{post_class_name ? "所属分类："+post_class_name : "请选择分类"}}
 			</view>
 		</view>
+		
+		<!-- 选中的标签 -->
+		<view class="font-md px-2 py-1 flex">
+			<view class="border px-3 py main-color main-border-color flex align-center justify-center" style="border-radius: 50rpx;">
+				<text class="iconfont icon-huati mr-1"></text>
+				{{post_tag ? "所属标签："+post_tag : "请选择标签"}}
+			</view>
+		</view>
+		
 		<!-- 选中的话题 -->
 		<view class="font-md px-2 py-1 flex">
 			<view class="border px-3 py main-color main-border-color flex align-center justify-center" style="border-radius: 50rpx;">
@@ -39,16 +48,23 @@
 		
 		<!-- 底部操作条 -->
 		<view class="fixed-bottom bg-white flex align-center" style="height: 85rpx;">
+			<!-- 选择分类 -->
 			<picker mode="selector" :range="range" 
 			@change="choosePostClass">
-				<view class="iconfont icon-caidan footer-btn animated"
-				hover-class="jello"></view>
+				<view class="iconfont icon-caidan footer-btn animate__animated"
+				hover-class="animate__jello"></view>
+			</picker>
+			<!-- 选择标签 -->
+			<picker mode="selector" :range="list"
+			@change="choosePostTag">
+				<view class="iconfont icon-zengjia1 footer-btn animate__animated"
+				hover-class="animate__jello"></view>
 			</picker>
 			
-			<view class="iconfont icon-huati footer-btn animated"
-			hover-class="jello" @click="chooseTopic"></view>
-			<view class="iconfont icon-tupian footer-btn animated"
-			hover-class="jello" @click="iconClickEvent('uploadImage')"></view>
+			<view class="iconfont icon-huati footer-btn animate__animated"
+			hover-class="animate__jello" @click="chooseTopic"></view>
+			<view class="iconfont icon-tupian footer-btn animate__animated"
+			hover-class="animate__jello" @click="iconClickEvent('uploadImage')"></view>
 			
 			<view class="bg-main text-white ml-auto flex justify-center align-center rounded mr-2 animated" hover-class="jello" style="width: 140rpx;height: 60rpx;" @click="submit">发送</view>
 		</view>
@@ -77,7 +93,9 @@
 					title:""
 				},
 				post_class_list:[],
-				post_class_index:-1
+				post_class_index:-1,
+				list:["Java", "Python", "Go"],
+				list_index:-1,
 			}
 		},
 		computed: {
@@ -101,6 +119,11 @@
 			post_class_name(){
 				if(this.post_class_index !== -1){
 					return this.post_class_list[this.post_class_index].classname
+				}
+			},
+			post_tag(){
+				if(this.list_index !== -1){
+					return this.list[this.list_index]
 				}
 			},
 			imgListIds(){
@@ -189,7 +212,7 @@
 					content:this.content,
 					type:0,
 					sharenum:0,
-					path:"",
+					path: this.$store.state.user.path ? this.$store.state.user.path : "未知",
 					user_id:this.$store.state.user.id,
 				}
 				console.log(item);
@@ -218,6 +241,10 @@
 			// 选择文章分类
 			choosePostClass(e){
 				this.post_class_index = e.detail.value
+			},
+			// 选择文章标签
+			choosePostTag(e){
+				this.list_index = e.detail.value
 			},
 			// 选择话题
 			chooseTopic(){
