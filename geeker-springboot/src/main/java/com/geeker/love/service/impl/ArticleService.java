@@ -3,6 +3,7 @@ package com.geeker.love.service.impl;
 import com.geeker.love.dao.ArticleMapper;
 import com.geeker.love.pojo.post;
 import com.geeker.love.pojo.support;
+import com.geeker.love.pojo.topic_post;
 import com.geeker.love.service.ArticleServe;
 import com.geeker.love.utils.ResultInfo;
 import com.github.pagehelper.PageHelper;
@@ -96,7 +97,16 @@ public class ArticleService implements ArticleServe {
 
     @Override
     public int addPost(post post) {
-        return articleMapper.addPost(post);
+        int n=articleMapper.addPost(post);
+        if(n==0){
+            return 0;
+        }
+        return articleMapper.selectByCreateTime(post.getCreate_time());
+    }
+
+    @Override
+    public int addTopicPost(topic_post tp) {
+       return articleMapper.addTP(tp);
     }
 
 

@@ -1,6 +1,7 @@
 package com.geeker.love.service;
 
 import com.geeker.love.pojo.post;
+import com.geeker.love.pojo.topic_post;
 import com.geeker.love.utils.ResultInfo;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface ArticleServe {
     ResultInfo DingCai(Integer uid, Integer pid, Integer type);
     List<Map>  getCommentByPostId(Integer post_id);
     int addPost(post post);
+    public int addTopicPost(topic_post tp);
 }

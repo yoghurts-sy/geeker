@@ -3,6 +3,7 @@ package com.geeker.love.dao;
 import com.geeker.love.pojo.Topic;
 import com.geeker.love.pojo.post;
 import com.geeker.love.pojo.support;
+import com.geeker.love.pojo.topic_post;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +30,6 @@ public interface ArticleMapper {
 
     List<Map> getCommentsByPostId(Integer post_id);
     int addPost(@Param("post") post post);
+    int selectByCreateTime(@Param("time") Long time);
+    int addTP(@Param("tp") topic_post tp);
 }

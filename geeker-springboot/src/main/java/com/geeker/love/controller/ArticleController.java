@@ -2,6 +2,7 @@ package com.geeker.love.controller;
 
 import com.geeker.love.pojo.Topic;
 import com.geeker.love.pojo.post;
+import com.geeker.love.pojo.topic_post;
 import com.geeker.love.service.ArticleServe;
 import com.geeker.love.service.impl.ArticleService;
 import com.geeker.love.utils.ResultInfo;
@@ -99,9 +100,13 @@ public class ArticleController {
     @ResponseBody
     public ResultInfo addPost(@RequestBody post post){
        String time= String.valueOf(new Date().getTime()).substring(0,10);
-        post.setCreate_time(Long.parseLong(time));
-        int n=articleService.addPost(post);
-        if(n!=0){
+       Long create_time=Long.parseLong(time);
+        post.setCreate_time(create_time);
+        int post_id=articleService.addPost(post);
+        if(post_id!=0){
+            int topic_id=post.getTopic_id();
+            topic_post tp=new topic_post(topic_id,post_id,create_time);
+            articleService.addTopicPost(tp);
            return ResultInfo.success("上传成功");
         }else{
             return ResultInfo.fail("上传失败");

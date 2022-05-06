@@ -62,4 +62,11 @@
         values (#{post.user_id},#{post.title},#{post.titlepic},#{post.content},#{post.sharenum},
         #{post.path},#{post.type},#{post.create_time},#{post.post_class_id},#{post.share_id},#{post.isopen})
     </insert>
+    <select id="selectByCreateTime" resultType="java.lang.Integer">
+        select id from post where create_time=#{time}
+    </select>
+    <insert id="addTP" parameterType="com.geeker.love.pojo.topic_post">
+        insert into topic_post (topic_id,post_id,create_time) values
+        (#{tp.topic_id},#{tp.post_id},#{tp.create_time})
+    </insert>
 </mapper>
