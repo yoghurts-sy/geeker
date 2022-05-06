@@ -24,6 +24,14 @@
 			<text class="iconfont icon-jinru"></text>
 		</view>
 		
+		
+		<!-- 标签 -->
+		<view class="flex flex-wrap px-4">
+			<view class="border  rounded font font-weight-normal mx-2 my-1 px-2"
+			v-for="(item,index) in list" :key="index"
+			hover-class="bg-light">{{item}}</view>
+		</view>
+		
 		<view class="flex align-center px-3 py-2">
 			<view class="flex-1 flex flex-column align-center justify-center"
 			v-for="(item,index) in myData" :key="index">
@@ -83,7 +91,8 @@
 				},{
 					name:"被浏览",
 					num:1
-				}]
+				}],
+				list:["Java", "Python", 'Go']
 			}
 		},
 		onNavigationBarButtonTap() {
