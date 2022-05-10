@@ -1,6 +1,7 @@
 package com.geeker.love.service.impl;
 
 import com.geeker.love.dao.ArticleMapper;
+import com.geeker.love.pojo.comment;
 import com.geeker.love.pojo.post;
 import com.geeker.love.pojo.support;
 import com.geeker.love.pojo.topic_post;
@@ -107,6 +108,16 @@ public class ArticleService implements ArticleServe {
     @Override
     public int addTopicPost(topic_post tp) {
        return articleMapper.addTP(tp);
+    }
+
+    @Override
+    public int addComment(comment comment) {
+        return articleMapper.addComment(comment);
+    }
+
+    @Override
+    public support getSupport(Integer uid, Integer pid) {
+        return articleMapper.getSupport(uid,pid);
     }
 
 
