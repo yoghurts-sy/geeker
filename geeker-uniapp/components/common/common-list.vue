@@ -147,5 +147,7 @@
 </script>
 
 <style>
-
+	.support-active{
+		color: #FF4A6A;
+	}
 </style>
