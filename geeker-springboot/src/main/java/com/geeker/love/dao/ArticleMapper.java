@@ -1,9 +1,6 @@
 package com.geeker.love.dao;
 
-import com.geeker.love.pojo.Topic;
-import com.geeker.love.pojo.post;
-import com.geeker.love.pojo.support;
-import com.geeker.love.pojo.topic_post;
+import com.geeker.love.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +29,5 @@ public interface ArticleMapper {
     int addPost(@Param("post") post post);
     int selectByCreateTime(@Param("time") Long time);
     int addTP(@Param("tp") topic_post tp);
+    int addComment(@Param("comment") comment comment);
 }
