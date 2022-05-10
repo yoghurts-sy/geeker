@@ -65,7 +65,7 @@ public class ArticleController {
 
     @PostMapping("/dingcai")
     @ResponseBody
-    public ResultInfo DingCai(/*@RequestParam(value = "token") String token,*/
+    public ResultInfo DingCai(@RequestParam(value = "uid") Integer uid,
                               @RequestParam(value = "pid") Integer pid,
                               @RequestParam(value = "type") Integer type){
         ResultInfo result=new ResultInfo();
@@ -91,7 +91,7 @@ public class ArticleController {
                 .getBody();
         int uid=Integer.parseInt(claims.getId());*/
                                    // uid
-        result=articleService.DingCai(13,pid,type);
+        result=articleService.DingCai(uid,pid,type);
         return result;
 
     }
@@ -110,6 +110,16 @@ public class ArticleController {
            return ResultInfo.success("上传成功");
         }else{
             return ResultInfo.fail("上传失败");
+        }
+    }
+
+    @GetMapping("/getsup")
+    public ResultInfo getSup(@RequestParam(value = "uid") Integer uid,
+                             @RequestParam(value = "pid") Integer pid){
+        if(articleService.getSupport(uid, pid)==null){
+            return ResultInfo.success(0);  // 0代表该用户没有给该post点赞
+        }else{
+            return ResultInfo.success(1); // 1代表点了
         }
     }
 }

@@ -69,4 +69,9 @@
         insert into topic_post (topic_id,post_id,create_time) values
         (#{tp.topic_id},#{tp.post_id},#{tp.create_time})
     </insert>
+    <insert id="addComment" parameterType="com.geeker.love.pojo.comment">
+        insert into comment (user_id,fid,fnum,data,create_time,post_id)
+        values (#{comment.user_id},#{comment.fid},#{comment.fnum},#{comment.data},#{comment.create_time},
+        #{comment.post_id})
+    </insert>
 </mapper>
