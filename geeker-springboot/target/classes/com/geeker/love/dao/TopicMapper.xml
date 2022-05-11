@@ -10,6 +10,7 @@
 
     <select id="getPostByTopic" resultType="com.geeker.love.pojo.post">
         select * from post where id in (select post_id from topic_post where topic_id=#{topic_id})
+        order by create_time desc
     </select>
 
     </mapper>

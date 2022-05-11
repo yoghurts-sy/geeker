@@ -90,7 +90,10 @@
 		computed: {
 			...mapState({
 				user:state=>state.user
-			})
+			}),
+		},
+		beforeCreate() {
+			console.log("beforeCreate");
 		},
 		methods: {
 			// 打开个人空间
