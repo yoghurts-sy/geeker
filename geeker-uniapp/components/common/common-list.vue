@@ -57,7 +57,8 @@
 		<view class="flex align-center">
 			<!-- 顶|踩 -->
 			<view class="flex-1 flex align-center justify-center animate__animated faster"
-				hover-class="animate__jello" @click="doSupport('support')">
+				hover-class="animate__jello" @click="doSupport('support')"
+				:class="support_type === true ? 'support-active' : ''">
 				
 				<text class="iconfont icon-dianzan2 mr-2"></text>
 				<text>{{item.support_count > 0 ? item.support_count : '喜欢'}}</text>
@@ -90,6 +91,10 @@
 		props: {
 			item: Object,
 			index: Number,
+			support_type:{
+				type:Boolean,
+				default:false
+			},
 			isDetail:{
 				type: Boolean,
 				default: false
@@ -119,9 +124,17 @@
 			},
 			// 顶踩操作
 			doSupport(type) {
-				this.$emit("doSupport", {
-					type,
-					index: this.index
+				var formdata = new FormData();
+				formdata.append("uid", this.$store.state.user.id)
+				formdata.append("pid", this.item.id)
+				formdata.append("type", 0)
+				console.log(formdata);
+				this.$axios.post("/dingcai",formdata).then(res=>{
+					console.log(res);
+					if(res.data.msg==="成功") {
+						this.item.support_count = this.item.support_count+1
+						this.support_type = true
+					}
 				})
 			},
 			// 评论

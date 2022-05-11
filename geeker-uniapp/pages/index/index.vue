@@ -53,7 +53,7 @@
 						<!-- 遍历list -->
 						<block v-for="(item2, index2) in item.list" :key="index2">
 							<!-- 列表组件 -->
-							<common-list :item="item2" :index="index2" @follow="follow" @doSupport="doSupport">
+							<common-list :item="item2"  :index="index2" @follow="follow" @doSupport="doSupport">
 							</common-list>
 							
 							<!-- 全局分割线 -->
@@ -211,7 +211,6 @@
 						this.getData(index+1)
 						console.log(this.newsList);
 					})	
-					
 				
 			},
 			follow(index) {
