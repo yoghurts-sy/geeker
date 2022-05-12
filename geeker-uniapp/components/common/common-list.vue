@@ -102,7 +102,7 @@
 		},
 		data() {
 			return {
-				list:["java", "python", 'go']
+				list:["Java", "Python", 'go']
 			}
 		},
 		methods: {
