@@ -6,17 +6,16 @@ import com.geeker.love.common.exception.GeekerException;
 import com.geeker.love.common.lang.Result;
 import com.geeker.love.dao.UserMapper;
 import com.geeker.love.pojo.User;
+import com.geeker.love.pojo.UserInfo;
 import com.geeker.love.service.UserService;
-import com.geeker.love.utils.FormatTimeUtils;
-import com.geeker.love.utils.JwtUtils;
-import com.geeker.love.utils.RedisUtils;
-import com.geeker.love.utils.nullOrNot;
+import com.geeker.love.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,6 +43,9 @@ public class UserServiceImpl implements UserService {
         String jwt = jwtUtils.generateToken(user.getId());
 
         System.out.println(user);
+
+        UserInfo userInfo = userMapper.getUserInfo(user.getId());
+
         return Result.success(
                 MapUtil.builder()
                         .put("id", user.getId())
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
                         .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
                         .put("token", jwt)
                         .put("resume", user.getResume())
+                        .put("userInfo", userInfo)
                         .map()
         );
     }
@@ -84,6 +87,8 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("user"+user);
 
+        UserInfo userInfo = userMapper.getUserInfo(user.getId());
+
         String jwt = jwtUtils.generateToken(user.getId());
         return Result.success(
                 MapUtil.builder()
@@ -95,6 +100,7 @@ public class UserServiceImpl implements UserService {
                         .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
                         .put("token", jwt)
                         .put("resume", user.getResume())
+                        .put("userInfo", userInfo)
                         .map()
         );
     }
@@ -111,7 +117,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User QueryUserByUserId(Integer id) {
-        return userMapper.queryUserByUserId(id);
+        User user = userMapper.queryUserByUserId(id);
+        return user;
+    }
+
+    @Override
+    public ResultInfo QueryUserByUserIdMap(Integer id) {
+        User user = userMapper.queryUserByUserId(id);
+        UserInfo userInfo = userMapper.getUserInfo(id);
+
+        return ResultInfo.success(MapUtil.builder()
+                .put("id", user.getId())
+                .put("username", user.getUsername())
+                .put("userpic", user.getUserpic())
+                .put("phone", user.getPhone())
+                .put("email", user.getEmail())
+                .put("createTime", FormatTimeUtils.format(user.getCreate_time()))
+                .put("resume", user.getResume())
+                .put("sex", userInfo.getSex())
+                .put("grade", userInfo.getGrade())
+                .put("language", userInfo.getLanguage())
+                .put("school", userInfo.getSchool())
+                .put("major", userInfo.getMajor())
+                .map());
     }
 
     @Override

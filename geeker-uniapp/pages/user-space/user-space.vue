@@ -11,7 +11,7 @@
 			<view class="pl-3 flex flex-column flex-1">
 				<view class="flex align-center">
 					<view class="flex-1 flex flex-column align-center justify-center" v-for="(item,index) in counts" :key="index">
-						<text class="font-lg font-weight-bold">{{item.num|formatNum}}</text>
+						<text class="font-lg font-weight-bold">{{item.num}}</text>
 						<text class="font text-muted">{{item.name}}</text>
 					</view>
 				</view>
@@ -47,9 +47,14 @@
 			<view class="animated fast fadeIn">
 				<view class="p-3 border-bottom">
 					<view class="font-md">用户信息</view>
-					<view class="font">账号昵称：{{userinfo.username}}</view>
-					<view class="font">账号电话：{{userinfo.phone}}</view>
-					<view class="font">账号邮箱：{{userinfo.email}}</view>
+					<view class="font">昵称：{{userinfo.username}}</view>
+					<view class="font">电话：{{userinfo.phone}}</view>
+					<view class="font">邮箱：{{userinfo.email}}</view>
+					<view class="font">性别：{{userinfo.sexStr}}</view>
+					<view class="font">学院：{{userinfo.school}}</view>
+					<view class="font">专业：{{userinfo.major}}</view>
+					<view class="font">年级：{{userinfo.grade}}</view>
+					<view class="font">技术栈：{{userinfo.language}}</view>
 				</view>
 			</view>
 		</template>
@@ -79,7 +84,7 @@
 </template>
 
 <script>
-	const emotionArray = ['保密', '未婚', '已婚']
+	const emotionArray = ['保密', '未婚', '已婚'];
 	import commonList from '@/components/common/common-list.vue';
 	import uniPopup from '@/components/uni-ui/uni-popup/uni-popup.vue';
 	import $T from '@/common/time.js';
@@ -99,7 +104,12 @@
 					userpic:"/static/default.jpg",
 					username:"",
 					phone:"",
-					email:""
+					email:"",
+					sexStr:"暂未填写",
+					language:"暂未填写",
+					school:"暂未填写",
+					major:"暂未填写",
+					grade:"暂未填写"
 				},
 				counts:[{
 					name:"帖子",
@@ -127,6 +137,7 @@
 					loadmore:"上拉加载更多",
 					page:1
 				}],
+				sexArray:['保密', '男', '女']
 			}
 		},
 		onNavigationBarButtonTap() {
@@ -146,8 +157,9 @@
 			this.$H.post('/userInfo', {
 				user_id:id
 			}).then(res=>{
-				console.obj
+				console.log(res.data.obj)
 				this.userinfo = res.data.obj;
+				this.userinfo.sexStr = this.sexArray[this.userinfo.sex]
 			})
 		},
 		onUnload() {

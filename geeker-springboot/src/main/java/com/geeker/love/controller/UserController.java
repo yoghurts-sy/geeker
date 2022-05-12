@@ -52,6 +52,6 @@ public class UserController {
     @PostMapping("/userInfo")
     public ResultInfo userInfo(@RequestBody Map<String, Object> map) {
         String user_id = map.get("user_id") + "";
-        return ResultInfo.success(userService.QueryUserByUserId(Integer.parseInt(user_id)));
+        return userService.QueryUserByUserIdMap(Integer.parseInt(user_id));
     }
 }

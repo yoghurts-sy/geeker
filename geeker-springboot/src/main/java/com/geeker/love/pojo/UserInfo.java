@@ -6,10 +6,9 @@ import lombok.Data;
 public class UserInfo {
     private Integer id;
     private Integer user_id;
-    private Integer age;
     private Integer sex;
-    private Integer qg;
-    private String job;
-    private String path;
-    private String birthday;
+    private String grade;
+    private String language;
+    private String school;
+    private String major;
 }

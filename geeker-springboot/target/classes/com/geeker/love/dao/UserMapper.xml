@@ -2,7 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.geeker.love.dao.UserMapper">
     <select id="queryUserByUserId" resultType="com.geeker.love.pojo.User">
-        select distinct * from user where id = #{id}
+        select distinct *
+        from user
+        where id =  #{id}
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.geeker.love.pojo.UserInfo">
+        update userinfo
+        set sex = #{uInfo.sex}, grade = #{uInfo.grade},
+        language = #{uInfo.language}, school = #{uInfo.school},
+        major = #{uInfo.major}
+        where user_id = #{uInfo.user_id}
+    </update>
+
+
+    <insert id="initUserInfo">
+        insert into userinfo(user_id)
+        value (#{user_id})
+    </insert>
+
+    <select id="getUserInfo" resultType="com.geeker.love.pojo.UserInfo">
+        select * from userinfo
+        where user_id = #{user_id}
     </select>
 
 
@@ -14,9 +35,6 @@
         insert into user(username, phone, status, create_time) value ('第一次登录', #{phone}, 1, #{create_time})
     </insert>
 
-    <update id="updateUserInfo" parameterType="com.geeker.love.pojo.UserInfo">
-        update userinfo set age=#{uInfo.age},sex=#{uInfo.sex},qg=#{uInfo.qg},job=#{uInfo.job},path=#{uInfo.path},birthday=#{uInfo.birthday} where user_id=#{uid}
-    </update>
 
     <update id="updatePassword" parameterType="com.geeker.love.pojo.User">
         update user set password=#{newPw} where id=#{uid}

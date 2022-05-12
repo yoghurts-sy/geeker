@@ -11,39 +11,26 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/love/api")
 public class UserInfoController {
+
     @Autowired
     private UserInfoServe userInfoServe;
-    @PostMapping("/updateuinfo")
-    public ResultInfo updateUserInfo(/*@RequestParam String token,*/
-            @RequestBody UserInfo userInfo){
-        ResultInfo result=new ResultInfo();
-       /*   if(token.isEmpty()){
-            result.setCode(400);
-            result.setMsg("token为空!");
-            return  result;
-        }
-        //token验证
-       try{
-            Claims claims= (Claims) Jwts.parser()
-                    .setSigningKey("geek")
-                    .parse(token)
-                    .getBody();
-        }catch (Exception e){
-            result.setCode(402);
-            result.setMsg("用户信息异常");
-            return  result;
-        }
-          Claims claims= (Claims) Jwts.parser()
-                .setSigningKey("geek")
-                .parse(token)
-                .getBody();
-        int uid=Integer.parseInt(claims.getId());*/
-        userInfoServe.updateUserInfo(userInfo,17);
-        result.setMsg("修改成功 ");
+
+
+    @PostMapping("/updateUserInfo")
+    public ResultInfo updateUserInfo(@RequestBody UserInfo userInfo){
+        ResultInfo result = new ResultInfo();
+        userInfoServe.updateUserInfo(userInfo);
+        result.setMsg("修改成功");
         result.setCode(200);
         return result;
-
     }
+
+    @GetMapping("/getUserInfo")
+    public ResultInfo updateUserInfo(@RequestParam Integer user_id){
+        return ResultInfo.success(userInfoServe.getUserInfo(user_id));
+    }
+
+
     @PostMapping("/updatepw")
     public ResultInfo updatePassword(/*@RequestParam String token,*/
                                      @RequestParam String oldPw,

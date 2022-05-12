@@ -103,7 +103,7 @@ public class ArticleController {
        Long create_time=Long.parseLong(time);
         post.setCreate_time(create_time);
         int post_id=articleService.addPost(post);
-        if(post_id!=0){
+        if(post_id != 0){
             int topic_id=post.getTopic_id();
             topic_post tp=new topic_post(topic_id,post_id,create_time);
             articleService.addTopicPost(tp);
