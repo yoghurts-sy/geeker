@@ -19,18 +19,18 @@
 			<view class="flex flex-column flex-1 px-2">
 				<text class="font-lg font-weight-bold text-dark">{{user.username}}</text>
 				<text class="font text-muted">
-					总帖子{{myData[0].num}}  今日发帖{{myData[1].num}}</text>
+					技术栈 {{user.userInfo.language}}</text>
 			</view>
 			<text class="iconfont icon-jinru"></text>
 		</view>
 		
 		
-		<!-- 标签 -->
+		<!-- 
 		<view class="flex flex-wrap px-4">
 			<view class="border  rounded font font-weight-normal mx-2 my-1 px-2"
 			v-for="(item,index) in list" :key="index"
 			hover-class="bg-light">{{item}}</view>
-		</view>
+		</view> -->
 		
 		<view class="flex align-center px-3 py-2">
 			<view class="flex-1 flex flex-column align-center justify-center"
@@ -47,22 +47,23 @@
 		<uni-list-item title="我的简历"  showExtraIcon @click="openResume">
 			<text slot="icon" class="iconfont icon-user-detail"></text>
 		</uni-list-item>
+		<uni-list-item title="个人资料"  showExtraIcon @click="openUserInfo">
+			<text slot="icon" class="iconfont icon-huiyuanvip"></text>
+		</uni-list-item>
 		<uni-list-item title="浏览历史"  showExtraIcon @click="openHistory">
 			<text slot="icon" class="iconfont icon-liulan"></text>
 		</uni-list-item>
-		<uni-list-item title="社区认证"  showExtraIcon>
-			<text slot="icon" class="iconfont icon-huiyuanvip"></text>
-		</uni-list-item>
+		
 		<uni-list-item title="审核帖子"  showExtraIcon>
 			<text slot="icon" class="iconfont icon-keyboard"></text>
 		</uni-list-item>
-		<!-- #ifdef MP -->
+		<!-- #ifdef MP
 		<navigator url="../user-set/user-set" hover-class="none">
 		<uni-list-item title="我的设置" showExtraIcon>
 			<text slot="icon" class="iconfont icon-shezhi"></text>
 		</uni-list-item>
 		</navigator>
-		<!-- #endif -->
+		#endif -->
 		
 		
 	</view>
@@ -141,7 +142,13 @@
 				uni.navigateTo({
 					url: '../history/history'
 				});
-			}, 
+			},
+			openUserInfo() {
+				uni.navigateTo({
+					url: '../user-userinfo/user-userinfo'
+				});
+			}
+			,
 			openResume() {
 				let resume = this.$store.state.user.resume;
 				console.log("resume", resume);

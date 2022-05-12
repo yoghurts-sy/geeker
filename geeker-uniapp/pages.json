@@ -193,6 +193,11 @@
             "style" : {
 				"navigationBarTitleText":"话题分类"
 			}
+        },{
+            "path" : "pages/user-userinfo/user-userinfo",
+            "style" : {
+				"navigationBarTitleText":"修改资料"
+			}
         }
         ,{
             "path" : "pages/topic-detail/topic-detail",

@@ -16,8 +16,10 @@ import static io.jsonwebtoken.Jwts.builder;
 public class UserInfoService implements UserInfoServe {
     @Autowired
     private UserMapper userMapper;
-    public int updateUserInfo(UserInfo userInfo, Integer uid) {
-        return userMapper.updateUserInfo(userInfo,uid);
+
+
+    public Integer updateUserInfo(UserInfo userInfo) {
+        return userMapper.updateUserInfo(userInfo);
     }
 
     @Transactional
@@ -75,5 +77,10 @@ public class UserInfoService implements UserInfoServe {
         resultInfo.setCode(200);
         resultInfo.setMsg("删除成功");
         return resultInfo;
+    }
+
+    @Override
+    public UserInfo getUserInfo(Integer user_id) {
+        return userMapper.getUserInfo(user_id);
     }
 }

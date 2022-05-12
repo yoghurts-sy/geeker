@@ -40,7 +40,7 @@
 				{{status?'账号密码登录':'验证码登陆'}}
 			</view>
 			<text style="color: #6c757d; margin-left: 20rpx; margin-right: 20rpx;">|</text>
-			<view>登录遇到问题</view>
+			<view @click="register">注册即刻账号</view>
 		</view>
 		<view class="other-login-box">
 			<view style="color: #dddddd;">————</view>
@@ -104,6 +104,7 @@
 						console.log(res.data);
 						console.log("USER:-->");
 						console.log(res.data.data);
+						
 						// 修改vuex的state,持久化存储
 						this.$store.commit('login', res.data.data)
 						// 开启socket
@@ -124,6 +125,8 @@
 						});
 					}
 				});
+				
+				
 			},
 			changeStatus() {
 				this.status = !this.status;
@@ -143,6 +146,9 @@
 						duration:2000
 					});
 				})
+			},
+			register() {
+				console.log("register");
 			}
 		}
 	}
