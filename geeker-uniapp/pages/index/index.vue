@@ -154,6 +154,11 @@
 			})
 		},
 		onLoad() {
+			uni.$on('update',data=>{
+				console.log(data);
+				this.newsList = [];
+				this.getData(0);
+			})
 			
 			uni.getSystemInfo({
 				success: res => {
@@ -209,7 +214,6 @@
 						item.list = res.data.obj
 						this.newsList.push(item)
 						this.getData(index+1)
-						console.log(this.newsList);
 					})	
 				
 			},

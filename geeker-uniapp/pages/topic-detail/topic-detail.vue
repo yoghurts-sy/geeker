@@ -3,14 +3,14 @@
 		<topic-info :info="info"></topic-info>
 		<divider></divider>
 		
-		<view class="p-2 flex align-center border-bottom"
+		<!-- <view class="p-2 flex align-center border-bottom"
 		hover-class="bg-light" v-for="(item,index) in hotList"
 		:key="index">
 			<text class="iconfont icon-xihuan text-main"></text>
 			<text class="font text-dark text-ellipsis ">
 				{{item.title}}
 			</text>
-		</view>
+		</view> -->
 		<divider></divider>
 		
 		<!-- tab -->
