@@ -19,11 +19,10 @@
 			<view class="flex flex-column flex-1 px-2">
 				<text class="font-lg font-weight-bold text-dark">{{user.username}}</text>
 				<text class="font text-muted">
-					技术栈 {{user.userInfo}}</text>
+					技术栈 {{user.userInfo.language === null ? '暂未填写，请尽快完善个人资料' : user.userInfo.language}}</text>
 			</view>
 			<text class="iconfont icon-jinru"></text>
 		</view>
-		
 		
 		<!-- 
 		<view class="flex flex-wrap px-4">
@@ -44,17 +43,23 @@
 			<image src="/static/demo/banner1.jpg" mode="aspectFill"
 			style="height: 170rpx;width: 100%;" class="rounded"></image>
 		</view>
-		<uni-list-item title="我的简历"  showExtraIcon @click="openResume">
+		<uni-list-item title="登录即刻查看更多" v-if="!loginStatus"  showExtraIcon>
 			<text slot="icon" class="iconfont icon-user-detail"></text>
 		</uni-list-item>
-		<uni-list-item title="个人资料"  showExtraIcon @click="openUserInfo">
+		<uni-list-item title="关于即刻Geeker" v-if="!loginStatus"  showExtraIcon>
 			<text slot="icon" class="iconfont icon-huiyuanvip"></text>
 		</uni-list-item>
-		<uni-list-item title="浏览历史"  showExtraIcon @click="openHistory">
+		<uni-list-item title="我的简历" v-if="loginStatus"  showExtraIcon @click="openResume">
+			<text slot="icon" class="iconfont icon-user-detail"></text>
+		</uni-list-item>
+		<uni-list-item title="个人资料" v-if="loginStatus"  showExtraIcon @click="openUserInfo">
+			<text slot="icon" class="iconfont icon-huiyuanvip"></text>
+		</uni-list-item>
+		<uni-list-item title="浏览历史" v-if="loginStatus"  showExtraIcon @click="openHistory">
 			<text slot="icon" class="iconfont icon-liulan"></text>
 		</uni-list-item>
 		
-		<uni-list-item title="审核帖子"  showExtraIcon>
+		<uni-list-item title="审核帖子" v-if="user.status === 2" showExtraIcon>
 			<text slot="icon" class="iconfont icon-keyboard"></text>
 		</uni-list-item>
 		<!-- #ifdef MP
@@ -82,7 +87,7 @@
 			return {
 				myData:[{
 					name:"沟通过",
-					num:2
+					num:0
 				},{
 					name:"已投简历",
 					num:0
@@ -91,7 +96,7 @@
 					num:0
 				},{
 					name:"被浏览",
-					num:1
+					num:0
 				}],
 				list:["Java", "Python", 'Go']
 			}
@@ -162,7 +167,7 @@
 					});
 				} else {
 					uni.showModal({
-						content: '暂无简历，是否要上传简历？',
+						content: '暂无简历，是否要上传PDF简历？',
 						success: (res)=>{
 							if (res.confirm) {
 								uni.navigateTo({

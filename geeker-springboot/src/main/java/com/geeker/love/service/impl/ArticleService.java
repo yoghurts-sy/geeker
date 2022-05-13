@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ArticleService implements ArticleServe {
@@ -42,11 +39,42 @@ public class ArticleService implements ArticleServe {
         return resultInfo;
     }
 
-    public ResultInfo getPostByClassMulti(Integer pc_id,Integer page) {
+    public ResultInfo getPostByClassMulti(Integer pc_id, Integer page) {
         ResultInfo resultInfo = new ResultInfo();
         PageHelper.startPage(page,5);
         List<Map<String, Object>> res = articleMapper.getPostByClassMulti(pc_id);
-        resultInfo.setObj(res);
+        List<Map<String, Object>> newRes = new ArrayList<>();
+        for (Map<String, Object> re : res) {
+            String language = (String)re.get("language");
+            List<String> languages = new ArrayList<>();
+            if (language != null && !language.equals("")) {
+                String[] split = language.split(":");
+                languages.addAll(Arrays.asList(split));
+            }
+            re.put("language", languages);
+            newRes.add(re);
+        }
+        resultInfo.setObj(newRes);
+        return resultInfo;
+    }
+
+    @Override
+    public ResultInfo getPostByClassMultiRecommendation(String lang, Integer page) {
+        ResultInfo resultInfo = new ResultInfo();
+        PageHelper.startPage(page,5);
+        List<Map<String, Object>> res = articleMapper.getPostByClassMultiRecommendation("%" + lang + "%");
+        List<Map<String, Object>> newRes = new ArrayList<>();
+        for (Map<String, Object> re : res) {
+            String language = (String)re.get("language");
+            List<String> languages = new ArrayList<>();
+            if (language != null && !language.equals("")) {
+                String[] split = language.split(":");
+                languages.addAll(Arrays.asList(split));
+            }
+            re.put("language", languages);
+            newRes.add(re);
+        }
+        resultInfo.setObj(newRes);
         return resultInfo;
     }
 
@@ -98,8 +126,8 @@ public class ArticleService implements ArticleServe {
 
     @Override
     public int addPost(post post) {
-        int n=articleMapper.addPost(post);
-        if(n==0){
+        int n = articleMapper.addPost(post);
+        if(n == 0){
             return 0;
         }
         return articleMapper.selectByCreateTime(post.getCreate_time());

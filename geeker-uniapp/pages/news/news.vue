@@ -164,6 +164,14 @@
 			},
 			// 打开发布页
 			openAddInput(){
+				if (this.$store.state.user.id === undefined) {
+					uni.showToast({
+						title: '请先登录！',
+						icon: 'none',
+						duration:2000
+					});
+					return;
+				}
 				uni.navigateTo({
 					url: '../add-input/add-input',
 				});

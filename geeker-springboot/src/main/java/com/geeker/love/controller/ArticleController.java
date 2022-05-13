@@ -19,14 +19,16 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     private ArticleServe articleService;
+
     @GetMapping("/getpost")
     @ResponseBody
-    public ResultInfo getPostByClass(Integer pc_id, Integer page, String token){
-        System.out.println(pc_id + " " + page);
-        ResultInfo resultInfo=new ResultInfo();
-        if(token==null){
-           //return articleService.getPostByClass(pc_id, page,0);
-           return articleService.getPostByClassMulti(pc_id, page);
+    public ResultInfo getPostByClass(Integer pc_id, Integer page, String language, String token){
+        if (token == null) {
+           if (pc_id != 2) {
+               return articleService.getPostByClassMulti(pc_id, page);
+           } else {
+               return articleService.getPostByClassMultiRecommendation(language, page);
+           }
         }
         /**
          * 实现多表联查
@@ -42,6 +44,13 @@ public class ArticleController {
         int uid=Integer.parseInt(claims.getId());
         return articleService.getPostByClass(pc_id,page,uid);
     }
+
+
+
+
+
+
+
 
     @GetMapping("/openpost")
     @ResponseBody
@@ -102,13 +111,13 @@ public class ArticleController {
        String time= String.valueOf(new Date().getTime()).substring(0,10);
        Long create_time=Long.parseLong(time);
         post.setCreate_time(create_time);
-        int post_id=articleService.addPost(post);
-        if(post_id != 0){
+        int post_id = articleService.addPost(post);
+        if (post_id != 0) {
             int topic_id=post.getTopic_id();
-            topic_post tp=new topic_post(topic_id,post_id,create_time);
+            topic_post tp = new topic_post(topic_id, post_id, create_time);
             articleService.addTopicPost(tp);
-           return ResultInfo.success("上传成功");
-        }else{
+            return ResultInfo.success("上传成功");
+        } else {
             return ResultInfo.fail("上传失败");
         }
     }

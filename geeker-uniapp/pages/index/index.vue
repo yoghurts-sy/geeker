@@ -91,6 +91,7 @@
 				// tabBars 顶部选项卡信息 后端拿到的格式:{"classname":"关注","id":1,"status":0}
 				tabBars: [],
 				scrollInto: "",
+				lang:"",
 				newsList: [ //每个tab对应newsList里的一个对象  tab内的内容存在list数组中
 				],
 				demo: [{
@@ -149,6 +150,15 @@
 		},
 		// 监听点击导航栏按钮 因为只有一个按钮 因此不用传入参数
 		onNavigationBarButtonTap(){
+			if (this.$store.state.user.id === undefined) {
+				uni.showToast({
+					title: '请先登录！',
+					icon: 'none',
+					duration:2000
+				});
+				return;
+			}
+			
 			uni.navigateTo({
 				url:"../add-input/add-input"
 			})
@@ -172,7 +182,7 @@
 				// 根据选项生成列表
 				this.getData(0)
 			})
-
+			this.lang = this.$store.state.user.userInfo.language
 		},
 		methods: {
 			loadmore(index){
@@ -187,6 +197,9 @@
 					var ind = index + 1
 					item.page++
 					var url = '/getpost?pc_id=' + ind + '&page=' + item.page 
+					if (ind == 2) {
+						url += '&language=' + this.lang
+					}
 					this.$axios.get(url).then(res=>{
 						item.list.push(...res.data.obj)
 					})
@@ -204,6 +217,9 @@
 				
 					var tmp = this.tabBars[index]
 					var url = '/getpost?pc_id=' + tmp.id + '&page=1' 
+					if (tmp.id == 2) {
+						url += '&language=' + this.lang
+					}
 					this.$axios.get(url).then(res=>{
 						let item = {
 							// 1.上拉加载更多  2.加载中... 3.没有更多了
@@ -211,6 +227,7 @@
 							list: [],
 							page:1 // id page 用来按需加载
 						}
+						console.log(res.data.obj)
 						item.list = res.data.obj
 						this.newsList.push(item)
 						this.getData(index+1)
