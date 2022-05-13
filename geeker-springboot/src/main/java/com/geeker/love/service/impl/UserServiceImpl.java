@@ -21,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
                         .put("token", jwt)
                         .put("resume", user.getResume())
                         .put("userInfo", userInfo)
+                        .put("status", user.getStatus())
                         .map()
         );
     }
@@ -103,6 +105,7 @@ public class UserServiceImpl implements UserService {
                         .put("token", jwt)
                         .put("resume", user.getResume())
                         .put("userInfo", userInfo)
+                        .put("status", user.getStatus())
                         .map()
         );
     }
@@ -141,6 +144,7 @@ public class UserServiceImpl implements UserService {
                 .put("language", userInfo.getLanguage())
                 .put("school", userInfo.getSchool())
                 .put("major", userInfo.getMajor())
+                .put("status", user.getStatus())
                 .map());
     }
 
@@ -155,6 +159,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public ResultInfo registerUser(String nickname, String phone, String password) {
         password = DigestUtils.md5Hex(password);
         System.out.println(password);
@@ -169,8 +174,12 @@ public class UserServiceImpl implements UserService {
         String time = FormatTimeUtils.getCurrentTime() + "";
         time = time.substring(0, 10);
 
+
         Integer res = userMapper.insertRegisterUser(phone, nickname, password, Long.parseLong(time));
-        if (res > 0) {
+        Integer id = userMapper.queryIdByCreateTime(Long.parseLong(time));
+        Integer res2 = userMapper.initUserInfo(id);
+
+        if (res > 0 && res2 > 0) {
             return ResultInfo.success("注册成功！");
         } else {
             return ResultInfo.fail("注册失败！");

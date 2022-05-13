@@ -29,4 +29,6 @@ public interface UserMapper {
 
     Integer insertRegisterUser(@Param("phone") String phone, @Param("nickname") String nickname,
                                @Param("password") String password, @Param("create_time") Long create_time);
+
+    Integer queryIdByCreateTime(@Param("create_time") Long create_time);
 }

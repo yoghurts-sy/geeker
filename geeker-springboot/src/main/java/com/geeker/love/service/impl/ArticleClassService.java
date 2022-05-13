@@ -13,7 +13,7 @@ public class ArticleClassService implements ArticleClassServe {
     @Autowired
     private ArticleClassMapper articleClassMapper;
     public List<ArticleClass> GetArticleClass() {
-        List<ArticleClass> ac=articleClassMapper.getArticleClass();
+        List<ArticleClass> ac = articleClassMapper.getArticleClass();
         return ac;
     }
 }

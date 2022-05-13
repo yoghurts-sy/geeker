@@ -5,7 +5,7 @@
 			<!-- 头像昵称 -->
 			<view class="flex align-center">
 				<!-- 头像 -->
-				<image class="rounded-circle mr-2" :src="item.userpic" @click="openSpace"
+				<image class="rounded-circle mr-2" :src="item.userpic ? item.userpic : '/static/default.jpg'" @click="openSpace"
 					style="width: 65rpx;height: 65rpx;" lazy-load>
 				</image>
 				<!-- 昵称 发布时间 -->
@@ -40,7 +40,7 @@
 		
 		<view class="flex flex-wrap">
 			<view class="border rounded font mx-2 my-1 px-2"
-			v-for="(item,index) in list" :key="index"
+			v-for="(item,index) in item.language" :key="index"
 			hover-class="bg-light">{{item}}</view>
 		</view>
 

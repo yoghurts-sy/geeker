@@ -24,6 +24,7 @@ public interface ArticleMapper {
                       @Param("type") Integer type);
 
     List<Map<String, Object>> getPostByClassMulti(Integer pc_id);
+    List<Map<String, Object>> getPostByClassMultiRecommendation(@Param("language") String language);
 
     List<Map> getCommentsByPostId(Integer post_id);
     int addPost(@Param("post") post post);

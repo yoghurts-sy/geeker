@@ -7,8 +7,8 @@
 			<text class="font-md text-dark">#{{item.title}}#</text>
 			<text class="font text-secondary">{{item.desc}}</text>
 			<view class="flex align-center font text-secondary">
-				<text class="mr-2">动态：{{item.news_count}}</text>
-				<text>今日：{{item.today_count}}</text>
+				<text class="mr-2"> 动态 {{item.news_count}}</text>
+				<text> 今日 {{item.today_count}}</text>
 			</view>
 		</view>
 	</view>

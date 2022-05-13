@@ -17,4 +17,6 @@ public class post {
     private int share_id;
     private int isopen;
     private int topic_id;
+
+    private String language;
 }

@@ -269,10 +269,12 @@
 					mask: false
 				});
 				console.log(this.imageList);
+				console.log(this.tags);
 				var item = {
-					titlepic:this.imageList ===[] ? this.imageList[0].url : "",
+					titlepic : this.imageList.length === 0 ? "" : this.imageList[0].url,
 					title:this.content,
 					isopen:this.isopen,
+					language:this.tags,
 					topic_id:this.topic.id,
 					post_class_id:this.post_class_id,
 					share_id:0,

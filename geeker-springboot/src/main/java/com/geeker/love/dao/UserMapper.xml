@@ -62,4 +62,10 @@
         where id = #{user_id}
     </update>
 
+
+    <select id="queryIdByCreateTime" resultType="java.lang.Integer">
+        select id from user
+        where create_time = #{create_time}
+    </select>
+
     </mapper>

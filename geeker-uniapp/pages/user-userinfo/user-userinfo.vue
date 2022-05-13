@@ -194,7 +194,7 @@
 					uni.navigateBack({
 						delta: 1
 					});
-					
+					uni.$emit('update', {msg:'页面更新'})
 				})
 			}
 		}
