@@ -8,7 +8,7 @@
 		</view>
 		
 		<view class="action-box">
-			{{status ? '手机验证登录' : '账号密码登录'}}
+			手机注册登录
 		</view>
 		
 		<view class="input-box">
@@ -16,26 +16,23 @@
 				<view style="align-items: center; justify-content: center; padding-left: 10rpx; padding-right: 20rpx;">+86</view>
 				<input type="text" v-model="phone" placeholder="请输入手机号"/>
 			</view>
-			<template v-if="!status">
-				<view class="password-box">
-					<input type="password" v-model="password" placeholder="请输入密码"/>
-					<view class="forget-box" @click="forgetPassword">忘记密码？</view>
-				</view>
-			</template>
-			<template v-else>
-				<view class="password-box">
-					<input type="text" v-model="code" placeholder="请输入验证码"/>
-					<view class="get-code-box" @click="getCode">获取验证码</view>
-				</view>
-			</template>
+			<view class="phone-box">
+				<input type="text" v-model="nickname" placeholder="请输入昵称"/>
+			</view>
+			<view class="password-box">
+				<input type="password" v-model="password" placeholder="请输入密码"/>
+			</view>
+			<view class="password-box">
+				<input type="password" v-model="password2" placeholder="请再次确认密码"/>
+			</view>
 		</view>
 		
 		<view class="login-box">
 			<button type="primary"  @click="login" >
-				⚡ 即刻开始
+				⚡ 即刻注册
 			</button>
 		</view>
-		<view class="code-login-box">
+		<!-- <view class="code-login-box">
 			<view style="" @click="changeStatus">
 				{{status?'账号密码登录':'验证码登陆'}}
 			</view>
@@ -46,7 +43,7 @@
 			<view style="color: #dddddd;">————</view>
 			<view style="margin-left: 20rpx; margin-right: 20rpx;">社交账号登录</view>	
 			<view style="color: #dddddd;">————</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -58,11 +55,10 @@
 		},
 		data() {
 			return {
-				status:false,
-				loading:false,
 				phone:'',
 				password:'',
-				code:''
+				password2:'',
+				nickname:''
 			}
 		},
 		onLoad() {
@@ -75,82 +71,47 @@
 				});
 			},
 			login() {
+				if (this.password !== this.password2) {
+					uni.showToast({
+						title: '两次输入的密码不一致！',
+						icon: 'none'
+					});
+					return;
+				} else if (this.nickname === '') {
+					uni.showToast({
+						title: '昵称不能为空！',
+						icon: 'none'
+					});
+					return;
+				}
+				
+				
 				let url = ""
 				let data = ""
-				if(this.status){
-					// 手机验证码登录
-					//if (!this.validate()) return;
-					url = '/codelogin'
-					data = {
-						phone:this.phone,
-						password:this.code
-					}
-				} else {
-					// 账号密码登录 13656457563 123456 Evan Su
-					
-					//   测试账号2 13450772008 123456
-					url = '/login'
-					data = {
-						phone:this.phone,
-						password:this.password
-					}
+				url = '/register'
+				data = {
+					phone:this.phone,
+					password:this.password,
+					nickname:this.nickname
 				}
-				// 提交后端
-				this.loading = true
-				this.$H.post(url,data).then(res=>{
+				
+				this.$H.post(url, data).then(res=>{
 					console.log(res);
-					if (res.data.code === '200') {
-												
-						console.log(res.data);
-						console.log("USER:-->");
-						console.log(res.data.data);
-						
-						// 修改vuex的state,持久化存储
-						this.$store.commit('login', res.data.data)
-						// 开启socket
-						//this.$store.dispatch('openSocket')
-						// 提示和跳转
+					if (res.data.code === 200) {
+						uni.showToast({
+							title: '注册成功',
+							icon: 'none'
+						});
 						uni.navigateBack({
 							delta: 1
 						}); 
-						uni.showToast({
-							title: '登录成功',
-							icon: 'none'
-						});
-						this.$store.dispatch('initUser')
 					} else {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none'
 						});
 					}
-				});
-				
-				
-			},
-			changeStatus() {
-				this.status = !this.status;
-			},
-			forgetPassword() {
-				console.log("forgetPassword!");
-			},
-			getCode() {
-				let param = new FormData;
-				param.append("phone", this.phone);
-				this.$axios.post('/sendcode', param).then(res=>{
-					console.log(res)
-					let msg = res.data
-					uni.showToast({
-						title: msg,
-						icon: 'none',
-						duration:2000
-					});
-				})
-			},
-			register() {
-				uni.navigateTo({
-					url: '../user-register/register',
-				});//18477192784
+				});				
 			}
 		}
 	}

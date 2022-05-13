@@ -26,4 +26,7 @@ public interface UserMapper {
     int SaveResume(@Param("user_id") Long user_id, @Param("resume") String resume);
 
     UserInfo getUserInfo(@Param("user_id") Integer user_id);
+
+    Integer insertRegisterUser(@Param("phone") String phone, @Param("nickname") String nickname,
+                               @Param("password") String password, @Param("create_time") Long create_time);
 }

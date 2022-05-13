@@ -35,6 +35,10 @@
         insert into user(username, phone, status, create_time) value ('第一次登录', #{phone}, 1, #{create_time})
     </insert>
 
+    <insert id="insertRegisterUser">
+        insert into user(username, password, phone, status, create_time) value (#{nickname}, #{password}, #{phone}, 1, #{create_time})
+    </insert>
+
 
     <update id="updatePassword" parameterType="com.geeker.love.pojo.User">
         update user set password=#{newPw} where id=#{uid}
