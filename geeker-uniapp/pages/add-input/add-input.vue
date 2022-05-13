@@ -19,6 +19,8 @@
 		<!-- #endif -->
 		<!-- 文本域 -->
 		<textarea v-model="content" placeholder="说一句话吧" class="uni-textarea px-2"/>
+		
+		
 		<!-- 选中的分类 -->
 		<view class="font-md px-2 py-1 flex">
 			<view class="border px-3 py main-color main-border-color flex align-center justify-center" style="border-radius: 50rpx;">
@@ -31,7 +33,7 @@
 		<view class="font-md px-2 py-1 flex">
 			<view class="border px-3 py main-color main-border-color flex align-center justify-center" style="border-radius: 50rpx;">
 				<text class="iconfont icon-huati mr-1"></text>
-				{{post_tag ? "所属标签："+post_tag : "请选择标签"}}
+				{{tags ? "所属技术栈："+ tags : "请选择技术栈"}}
 			</view>
 		</view>
 		
@@ -41,6 +43,18 @@
 				<text class="iconfont icon-huati mr-1"></text>
 				{{topic.title ? "所属话题："+topic.title : "请选择话题"}}
 			</view>
+		</view>
+		
+		<!-- 选择技术栈 -->
+		<view class="uni-list" v-if="showChooseTags">
+					<checkbox-group @change="checkboxChange">
+						<label class="uni-list-cell uni-list-cell-pd" v-for="item in items" :key="item.value">
+							<view>
+								<checkbox :value="item.value" :checked="item.checked" />
+							</view>
+							<view>{{item.name}}</view>
+						</label>
+					</checkbox-group>
 		</view>
 		
 		<!-- 多图上传 -->
@@ -55,11 +69,10 @@
 				hover-class="animate__jello"></view>
 			</picker>
 			<!-- 选择标签 -->
-			<picker mode="selector" :range="list"
-			@change="choosePostTag">
+			<view @click="choosePostTag">
 				<view class="iconfont icon-zengjia1 footer-btn animate__animated"
 				hover-class="animate__jello"></view>
-			</picker>
+			</view>
 			
 			<view class="iconfont icon-huati footer-btn animate__animated"
 			hover-class="animate__jello" @click="chooseTopic"></view>
@@ -83,6 +96,8 @@
 		},
 		data() {
 			return {
+				showChooseTags:false,
+				tags:"",
 				content:"",
 				imageList:[],
 				// 是否已经弹出提示框
@@ -96,7 +111,38 @@
 				post_class_index:-1,
 				list:["Java", "Python", "Go"],
 				list_index:-1,
+				items: [{
+							value: 'Java',
+							name: 'Java'
+						},
+						{
+							value: 'Python',
+							name: 'Python'
+						},
+						{
+							value: 'Go',
+							name: 'Go'
+						},
+						{
+							value: 'C++',
+							name: 'C++'
+						},
+						{
+							value: '算法',
+							name: '算法'
+						},
+						{
+							value: '前端',
+							name: '前端'
+						},
+						{
+							value:"后端",
+							name:"后端"
+						}
+					],
+				
 			}
+				
 		},
 		computed: {
 			show() {
@@ -183,6 +229,27 @@
 			uni.$off('chooseTopic',(e)=>{})
 		},
 		methods: {
+			
+			checkboxChange: function (e) { 
+				// 选择技术栈  以字符串存储在this.tags中 以':'分隔 
+				// 必须至少选择一个技术栈
+				var items = this.items,
+				values = e.detail.value;
+				var str = "";
+				for (var i = 0, lenI = items.length; i < lenI; ++i) {
+					const item = items[i]
+					if(values.includes(item.value)){
+						this.$set(item,'checked',true)
+						str = str + item.value + ":";
+					}else{
+						this.$set(item,'checked',false)
+					}
+				}
+				if (str!==""){
+					this.tags = str.slice(0,-1);
+				}
+			},
+						
 			// 发布
 			submit(){
 				if(this.topic.id == 0){
@@ -203,7 +270,7 @@
 				});
 				console.log(this.imageList);
 				var item = {
-					titlepic:this.imageList[0].url,
+					titlepic:this.imageList ===[] ? this.imageList[0].url : "",
 					title:this.content,
 					isopen:this.isopen,
 					topic_id:this.topic.id,
@@ -225,9 +292,12 @@
 					});
 					console.log(res);
 					this.showBack = true
+					//update是可以自定义的事件名,触发全局的自定义事件，附加参数都会传给监听器回调函数。
+					
 					uni.navigateBack({
 						delta: 1
 					});
+					uni.$emit('update',{msg:'页面更新'})
 				}).catch(err=>{
 					uni.hideLoading()
 				})
@@ -243,8 +313,8 @@
 				this.post_class_index = e.detail.value
 			},
 			// 选择文章标签
-			choosePostTag(e){
-				this.list_index = e.detail.value
+			choosePostTag(){
+				this.showChooseTags = !this.showChooseTags;
 			},
 			// 选择话题
 			chooseTopic(){

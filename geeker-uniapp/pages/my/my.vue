@@ -12,14 +12,14 @@
 		</template>
 
 		<!-- 已登录 -->
-		<view v-else class="flex align-center p-2" hover-class="bg-light">
+		<view v-else class="flex align-center p-2" hover-class="bg-light" @click="test">
 			<image :src="avatar"
 			style="width: 100rpx;height: 100rpx;"
 			class="rounded-circle"></image>
 			<view class="flex flex-column flex-1 px-2">
 				<text class="font-lg font-weight-bold text-dark">{{user.username}}</text>
 				<text class="font text-muted">
-					技术栈 {{user.userInfo.language}}</text>
+					技术栈 {{user.userInfo}}</text>
 			</view>
 			<text class="iconfont icon-jinru"></text>
 		</view>
@@ -118,6 +118,10 @@
 		watch: {
 		},
 		methods: {
+			
+			test(){
+				console.log(this.user);
+			},
 			// 获取用户相关数据
 			getCounts(){
 				this.$H.get('/user/getcounts/'+this.user.id,{},{
