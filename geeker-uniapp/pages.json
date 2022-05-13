@@ -78,6 +78,16 @@
 					"titleNView":false // true为自带返回键
 				}
             }
+        },{
+            "path" : "pages/user-register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"app-plus":{
+					"titleNView":false // true为自带返回键
+				}
+            }
         }
         ,{
             "path" : "pages/search/search",

@@ -20,6 +20,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -152,10 +154,33 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public ResultInfo registerUser(String nickname, String phone, String password) {
+        password = DigestUtils.md5Hex(password);
+        System.out.println(password);
+        if (!checkPhone(phone)) {
+            return ResultInfo.fail("手机号码格式不正确");
+        }
+
+        User user = userMapper.queryUserByPhone(phone);
+        if (user != null) { // 用户第一次登录，走注册逻辑，存下他的手机号码
+            return ResultInfo.fail("注册失败，该手机号码已被注册！");
+        }
+        String time = FormatTimeUtils.getCurrentTime() + "";
+        time = time.substring(0, 10);
+
+        Integer res = userMapper.insertRegisterUser(phone, nickname, password, Long.parseLong(time));
+        if (res > 0) {
+            return ResultInfo.success("注册成功！");
+        } else {
+            return ResultInfo.fail("注册失败！");
+        }
+    }
+
 
     private static boolean checkPhone(String phone) {
         Pattern pattern = Pattern
-                .compile("^(13[0-9]|15[0-9]|153|15[6-9]|180|18[23]|18[5-9])\\d{8}$");
+                .compile("^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$");
         Matcher matcher = pattern.matcher(phone);
 
         if (matcher.matches()) {

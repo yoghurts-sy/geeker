@@ -54,4 +54,13 @@ public class UserController {
         String user_id = map.get("user_id") + "";
         return userService.QueryUserByUserIdMap(Integer.parseInt(user_id));
     }
+
+    @PostMapping("/register")
+    public ResultInfo register(@RequestBody Map<String, Object> map) {
+        String phone = (String) map.get("phone");
+        String nickname = (String) map.get("nickname");
+        String password = (String) map.get("password");
+        return userService.registerUser(nickname, phone, password);
+    }
+
 }

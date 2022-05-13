@@ -12,4 +12,5 @@ public interface UserService {
     User QueryUserByUserId(Integer id);
     ResultInfo QueryUserByUserIdMap(Integer id);
     String SaveResume(Long user_id, String resume);
+    ResultInfo registerUser(String nickname, String phone, String password);
 }

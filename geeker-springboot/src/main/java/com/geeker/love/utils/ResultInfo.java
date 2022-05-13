@@ -18,9 +18,8 @@ public class ResultInfo {
     }
     public static ResultInfo fail(Object obj) {
         ResultInfo res = new ResultInfo();
-        res.setObj(obj);
         res.setCode(500);
-        res.setMsg("fail");
+        res.setMsg((String) obj);
         return res;
     }
 }
