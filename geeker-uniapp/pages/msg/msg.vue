@@ -77,7 +77,9 @@
 				this.list = res
 				this.update = false
 				this.update = true
+				console.log('getChatList', this.list)
 			})
+			
 		},
 		computed:{
 		}
@@ -87,9 +89,11 @@
 				console.log("改变")
 				/* this.chatList = this.$store.state.chatList
 				this.value++;
-				console.log(this.value) */
+				console.log(this.value)
+				 
+				 重新push
+				 */
 				let pages = getCurrentPages();
-				console.log()
 				if (pages.length == 1) {
 					uni.reLaunch({
 					    url: '../msg/msg'

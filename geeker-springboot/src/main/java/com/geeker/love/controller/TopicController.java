@@ -1,8 +1,12 @@
 package com.geeker.love.controller;
 import com.geeker.love.pojo.Topic;
 import com.geeker.love.pojo.post;
+import com.geeker.love.service.TopicServe;
 import com.geeker.love.service.impl.TopicService;
+import com.geeker.love.utils.ResultInfo;
 import com.sun.istack.internal.NotNull;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -11,6 +15,9 @@ import java.util.List;
 public class TopicController {
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private TopicServe topicServe;
 
     @GetMapping("/top10")
     @ResponseBody
@@ -36,6 +43,15 @@ public class TopicController {
         List<post> posts= topicService.getPostByTopic(topic_id,pageNum);
         return posts;
     }
+
+    @GetMapping("/getTopic")
+    @ResponseBody
+    public ResultInfo getTopicByTopicID(Integer topic_id, Integer page){
+
+
+        return topicServe.getTopicByTopicId(topic_id, page);
+    }
+
 
 
 }
