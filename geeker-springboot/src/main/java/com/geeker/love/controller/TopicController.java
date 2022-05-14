@@ -47,8 +47,6 @@ public class TopicController {
     @GetMapping("/getTopic")
     @ResponseBody
     public ResultInfo getTopicByTopicID(Integer topic_id, Integer page){
-
-
         return topicServe.getTopicByTopicId(topic_id, page);
     }
 
