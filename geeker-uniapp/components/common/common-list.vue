@@ -108,7 +108,15 @@
 		methods: {
 			// 打开个人空间
 			openSpace() {
-				console.log("打开个人空间")
+				console.log(this.item)
+				let user = {
+					user_id : this.item.id,
+					username : this.item.username,
+					userpic : this.item.userpic
+				}
+				uni.navigateTo({
+					url:"/pages/user-chat/user-chat?user="+JSON.stringify(user)
+				})
 			},
 			// 关注
 			follow() {

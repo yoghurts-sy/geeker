@@ -13,4 +13,34 @@
         order by create_time desc
     </select>
 
-    </mapper>
+    <select id="getPostByTopicId" resultType="java.util.Map">
+        SELECT DISTINCT p.id, u.username, u.userpic, p.create_time newstime,
+                p.title, p.titlepic, p.language, count(DISTINCT c.id) comment_count, count(DISTINCT s.id) support_count
+        FROM post AS p
+        LEFT JOIN comment AS c ON p.id = c.post_id
+        LEFT JOIN user AS u ON p.user_id = u.id
+        LEFT JOIN support AS s ON p.id = s.post_id
+        WHERE exists (
+		select * from
+		topic_post WHERE
+		topic_id = #{topic_id} and p.id = post_id)
+        GROUP BY p.id
+        ORDER BY p.create_time DESC
+    </select>
+
+    <!--
+    SELECT DISTINCT p.id, u.username, u.userpic, p.create_time newstime,
+                p.title, p.titlepic, p.language, count(DISTINCT c.id) comment_count, count(DISTINCT s.id) support_count
+        FROM post AS p
+        LEFT JOIN comment AS c ON p.id = c.post_id
+        LEFT JOIN user AS u ON p.user_id = u.id
+        LEFT JOIN support AS s ON p.id = s.post_id
+        WHERE p.id in (
+		select post_id from topic_post where
+		topic_id = 2
+        )
+        GROUP BY p.id
+        ORDER BY p.create_time DESC;
+    -->
+
+</mapper>

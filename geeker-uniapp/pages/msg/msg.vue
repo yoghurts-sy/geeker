@@ -77,7 +77,9 @@
 				this.list = res
 				this.update = false
 				this.update = true
+				console.log('getChatList', this.list)
 			})
+			
 		},
 		computed:{
 		}
@@ -92,7 +94,6 @@
 				 重新push
 				 */
 				let pages = getCurrentPages();
-				console.log()
 				if (pages.length == 1) {
 					uni.reLaunch({
 					    url: '../msg/msg'

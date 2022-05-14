@@ -4,17 +4,23 @@ import com.geeker.love.dao.TopicMapper;
 import com.geeker.love.pojo.Topic;
 import com.geeker.love.pojo.post;
 import com.geeker.love.service.TopicServe;
+import com.geeker.love.utils.ResultInfo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TopicService implements TopicServe {
     @Autowired
     private TopicMapper topicMapper;
+
+
     public List<Topic> get10Topic(){
         return topicMapper.get10Topic();
     }
@@ -33,6 +39,14 @@ public class TopicService implements TopicServe {
         return lists;
     }
 
+    @Override
+    public ResultInfo getTopicByTopicId(Integer topic_id, Integer page) {
+        ResultInfo resultInfo = new ResultInfo();
+        PageHelper.startPage(page,5);
+        List<Map<String, Object>> res = topicMapper.getPostByTopicId(topic_id);
+        resultInfo.setObj(res);
+        return resultInfo;
+    }
 
 
 }

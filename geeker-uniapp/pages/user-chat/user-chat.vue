@@ -31,9 +31,12 @@
 				scrollInto:"",
 				list:[],
 				update:true,
-				update2:true
+				update2:true,
+				first:0,
+				toUser:Object
 			}
-		},
+		}
+		,
 		// 页面加载前
 		onLoad(e) {
 			if(!e.user){
@@ -46,6 +49,7 @@
 				});
 			}
 			let ToUser = JSON.parse(e.user)
+			this.toUser = ToUser;
 			// 创建聊天对象
 			this.$store.commit('createToUser', ToUser)
 			// 获取当前聊天对象的聊天记录
@@ -66,12 +70,10 @@
 						})
 					}
 				})
-				console.log(this.list)
+				if (this.list === undefined) {
+					this.list = [];
+				}
 			})
-			
-			/* setTimeout(() => {
-				this.$router.go(0)
-			}, 400) */
 		},
 		onBackPress() {
 			console.log("返回")
@@ -95,7 +97,7 @@
 		methods: {
 			// 渲染到页面
 			renderPage(e){
-				this.$store.dispatch('formatChatDetailObject',e).then(msg=>{
+				this.$store.dispatch('formatChatDetailObject', e).then(msg=>{
 					this.list.push(msg)
 					// 滚动到底部
 					this.pageToBottom()
@@ -113,6 +115,9 @@
 				this.$H.post('/send', result,{
 					token:true
 				}).then(res=>{
+					if (this.list === undefined) {
+						console.log("第一次发消息")
+					} 
 					this.renderPage({
 						data:result,
 						send:true

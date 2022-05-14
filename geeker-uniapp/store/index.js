@@ -331,7 +331,7 @@ export default new Vuex.Store({
 				if (!isMySend) {
 					obj.noread = 1;//接收消息
 				}
-				console.log('不存在当前会话,创建',obj);
+				console.log('不存在当前会话,创建', obj);
 				// 追加头部
 				chatList.unshift(obj);
 			} else {
@@ -392,6 +392,7 @@ export default new Vuex.Store({
 				}).then(res=>{
 					console.log("getChatDetailToUser", res.data.obj);
 					uni.setStorageSync(key, JSON.stringify(res.data.obj))
+					console.log("初始化消息", res)
 					return res.data.obj;
 				})
 			} else {
@@ -403,7 +404,7 @@ export default new Vuex.Store({
 			// 接收消息
 			return {
 				user_id:send ? state.ToUser.user_id : data.from_id,
-				avatar:send ? state.ToUser.avatar : data.from_userpic,
+				avatar:send ? state.ToUser.userpic : data.from_userpic,
 				username:send ? state.ToUser.username : data.from_username,
 				update_time:data.time, // 最新消息时间戳
 				data:data.data,
@@ -490,9 +491,11 @@ export default new Vuex.Store({
 		   return sendData
 		},
 		// 组织发送格式
-		formatSendData({state},data){
+		formatSendData({state}, data){
 			return {
-				to_id:state.ToUser.user_id,
+				to_id : state.ToUser.user_id,
+				to_userpic : state.ToUser.userpic,
+				to_username : state.ToUser.username,
 				from_id:state.user.id,
 				from_username:state.user.username,
 				from_userpic:state.user.avatar ? state.user.avatar : '/static/default.jpg',
