@@ -23,16 +23,16 @@
 				</view>
 			</view>
 			<!-- 轮播图 -->
-			<swiper class="px-2 pb-2" :indicator-dots="true" 
+			<!-- <swiper class="px-2 pb-2" :indicator-dots="true" 
 			:autoplay="true" 
 			:interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in swiperList"
-				:key="index">
+				:key="index">s
 					<image :src="item.src"
 					style="height: 300rpx;" 
 					class="w-100 rounded"></image>
 				</swiper-item>
-			</swiper>
+			</swiper> -->
 			<divider></divider>
 			<!-- 最近更新 -->
 			<view class="p-2 font-md">最近更新</view>

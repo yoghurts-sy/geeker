@@ -31,13 +31,13 @@
 			hover-class="bg-light">{{item}}</view>
 		</view> -->
 		
-		<view class="flex align-center px-3 py-2">
+		<!-- <view class="flex align-center px-3 py-2">
 			<view class="flex-1 flex flex-column align-center justify-center"
 			v-for="(item,index) in myData" :key="index">
 				<text class="font-lg font-weight-bold">{{item.num}}</text>
 				<text class="font text-muted">{{item.name}}</text>
 			</view>
-		</view>
+		</view> -->
 		
 		<view class="px-3 py-2">
 			<image src="/static/demo/banner1.jpg" mode="aspectFill"
