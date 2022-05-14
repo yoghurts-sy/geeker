@@ -73,6 +73,14 @@
 				this.$router.go(0)
 			}, 400) */
 		},
+		onBackPress() {
+			console.log("返回")
+			uni.reLaunch({
+			    url: '../msg/msg'
+			});
+			return true
+		}
+		,
 		// 页面加载完成的时候
 		onReady() {
 			this.pageToBottom()

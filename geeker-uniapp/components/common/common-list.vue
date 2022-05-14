@@ -56,13 +56,13 @@
 		<!-- 图标按钮 -->
 		<view class="flex align-center">
 			<!-- 顶|踩 -->
-			<view class="flex-1 flex align-center justify-center animate__animated faster"
+			<!-- <view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doSupport('support')"
 				:class="support_type === true ? 'support-active' : ''">
 				
 				<text class="iconfont icon-dianzan2 mr-2"></text>
 				<text>{{item.support_count > 0 ? item.support_count : '喜欢'}}</text>
-			</view>
+			</view> -->
 			<!-- dislike 暂不需要 -->
 			<!-- <view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doSupport('unsupport')"
@@ -71,11 +71,11 @@
 				<text>{{item.support.unsupport_count > 0 ? item.support.unsupport_count : '不喜欢'}}</text>
 			</view> -->
 			<!-- 评论 -->
-			<view class="flex-1 flex align-center justify-center animate__animated faster"
+			<!-- <view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doComment">
 				<text class="iconfont icon-pinglun2 mr-2"></text>
 				<text>{{item.comment_count > 0 ? item.comment_count : '评论'}}</text>
-			</view>
+			</view> -->
 			<!-- 分享 -->
 			<!-- <view class="flex-1 flex align-center justify-center animate__animated faster"
 				hover-class="animate__jello" @click="doShare">

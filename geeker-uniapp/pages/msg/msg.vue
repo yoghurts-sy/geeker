@@ -2,7 +2,7 @@
 	<view v-if="update">
 		<template v-if="list.length > 0">
 		<block v-for="(item, index) in list" :key="index"><!-- 遍历消息 -->
-			<msg-list :item="item" :index="index"></msg-list>
+			<msg-list :item="item" :index="index" :key='value'></msg-list>
 		</block>
 		</template>
 		<template v-else>
@@ -67,7 +67,9 @@
 		data() {
 			return {
 				list:[],
-				update:true
+				update:true,
+				update2:true,
+				value:0
 			}
 		},
 		onLoad(){
@@ -78,6 +80,22 @@
 			})
 		},
 		computed:{
+		}
+		,
+		watch:{
+			'$store.state.chatList'(){
+				console.log("改变")
+				/* this.chatList = this.$store.state.chatList
+				this.value++;
+				console.log(this.value) */
+				let pages = getCurrentPages();
+				console.log()
+				if (pages.length == 1) {
+					uni.reLaunch({
+					    url: '../msg/msg'
+					});
+				}
+			}
 		}
 		,
 		onPullDownRefresh(){
@@ -97,7 +115,7 @@
 			refresh(){
 				setTimeout(()=>{
 						uni.stopPullDownRefresh(); //停止刷新
-					},2000
+					}, 2000
 				)
 			},
 			popupEvent(e){

@@ -344,7 +344,7 @@ export default new Vuex.Store({
 				if(!isMySend && state.ToUser.user_id !== item.user_id){
 					item.noread++
 				}
-				console.log('存在当前会话',item);
+				console.log('存在当前会话', item);
 				// 置顶当前会话
 				chatList = $U.__toFirst(chatList, i)
 			}
@@ -427,7 +427,7 @@ export default new Vuex.Store({
 		// 更新未读数
 		updateTabbarBadge({state,getters}){
 			let total = getters.totalNoread
-			console.log('更新未读数',total);
+			console.log('更新未读数', total);
 			// 未读数为0,移除
 			if(total === 0){
 				console.log('移除未读数');
@@ -502,7 +502,7 @@ export default new Vuex.Store({
 			}
 		},
 		// 读取当前会话(去除未读数,更新tabbar)
-		readChatMessage({state,commit,dispatch},item){
+		readChatMessage({state,commit,dispatch}, item){
 			/*
 			{
 				"user_id": 331,
@@ -515,17 +515,23 @@ export default new Vuex.Store({
 				"time": 1578226151777
 			}
 			*/
-			console.log('读取当前会话(去除未读数,更新tabbar)',item);
+		   uni.setTabBarBadge({
+				index:2,
+				text: '0'
+		   });
+			console.log('读取当前会话(去除未读数,更新tabbar)', item);
 			// 没有未读信息
-			if (item.noread === 0) return;
+			//if (item.noread === 0) return;
 			// 拿到当前会话 设置未读数为0
 			state.chatList.forEach((v)=>{
+				console.log(v);
 				if(v.user_id == item.user_id){
 					v.noread = 0
 				}
 			})
 			// 存储
-			commit('saveChatList',state.chatList)
+			console.log("新的", state.chatList)
+			commit('saveChatList', state.chatList)
 			// 更新未读数
 			dispatch('updateTabbarBadge')
 		},
