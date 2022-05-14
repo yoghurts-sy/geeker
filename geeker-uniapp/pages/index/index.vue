@@ -202,6 +202,8 @@
 					}
 					this.$axios.get(url).then(res=>{
 						item.list.push(...res.data.obj)
+						console.log(res.data.obj.length);
+						if(res.data.obj.length<5) item.loadmore = "没有更多了"
 					})
 					
 					// item.list = [...item.list, ...item.list]

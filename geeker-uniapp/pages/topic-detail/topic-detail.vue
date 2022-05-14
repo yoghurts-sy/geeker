@@ -182,14 +182,14 @@
 				let no = this.tabIndex + 1
 				let page = this['page'+no]
 				let isrefresh = page === 1
-				this.$H.get('/bytopic?topic_id='+this.info.id+'&pageNum='+page)
+				this.$H.get('/getTopic?topic_id='+this.info.id+'&page='+page)
 				.then(res=>{
 					console.log("res:");
 					console.log(res);
 					// let list = res.data.map(v=>{
 					// 	return this.$U.formatCommonList(v)
 					// })
-					let list = res.data;
+					let list = res.data.obj;
 					console.log("list:");
 					console.log(list);
 					
