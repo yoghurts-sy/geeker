@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-list-item title="头像" @click="changeUserpic">
+		<!-- <uni-list-item title="头像" @click="changeUserpic">
 			<view class="flex align-center" slot="right">
 				<image :src="user.userpic ? user.userpic : '/static/default.jpg'"
 				style="width: 100rpx;height: 100rpx;"
@@ -19,7 +19,7 @@
 				<text>{{sexText}}</text>
 				<text class="iconfont icon-bianji1 ml-2"></text>
 			</view>
-		</uni-list-item>
+		</uni-list-item> -->
 		<picker mode="date" :value="birthday" @change="onDateChange">
 			<uni-list-item title="生日">
 				<view class="flex align-center" slot="right">
@@ -28,6 +28,26 @@
 				</view>
 			</uni-list-item>
 		</picker>
+		<!-- <uni-list-item title="头像" @click="changeUserpic">
+			<view class="flex align-center" slot="right">
+				<image :src="user.userpic ? user.userpic : '/static/default.jpg'"
+				style="width: 100rpx;height: 100rpx;"
+				class="rounded-circle"></image>
+				<text class="iconfont icon-bianji1 ml-2"></text>
+			</view>
+		</uni-list-item>
+		<uni-list-item title="昵称">
+			<view class="flex align-center" slot="right">
+				<input class="uni-input text-right" v-model="username" />
+				<text class="iconfont icon-bianji1 ml-2"></text>
+			</view>
+		</uni-list-item>
+		<uni-list-item title="性别" @click="changeSex">
+			<view class="flex align-center" slot="right">
+				<text>{{sexText}}</text>
+				<text class="iconfont icon-bianji1 ml-2"></text>
+			</view>
+		</uni-list-item> -->
 		<uni-list-item title="情感" @click="changeEmotion">
 			<view class="flex align-center" slot="right">
 				<text>{{emotionText}}</text>
