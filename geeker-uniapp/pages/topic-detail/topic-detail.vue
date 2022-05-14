@@ -189,7 +189,7 @@
 					// let list = res.data.map(v=>{
 					// 	return this.$U.formatCommonList(v)
 					// })
-					let list = res.data;
+					let list = res.data.obj;
 					console.log("list:");
 					console.log(list);
 					
