@@ -307,7 +307,8 @@
 			// 获取所有文章分类
 			getPostClass(){
 				this.$H.get('/pc').then(res=>{
-					this.post_class_list = res.data
+					this.post_class_list = res.data;
+					this.post_class_list.splice(1,1); // 删除推荐分类
 				})
 			},
 			// 选择文章分类

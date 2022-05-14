@@ -47,7 +47,8 @@
 		<!-- 标题 -->
 		<view class="font-md my-1" @click="openDetail">{{item.title}}</view>
 		<!-- 图片 -->
-		<image v-if="item.titlepic" :src="item.titlepic" @click="openDetail"
+		<image mode="widthFix"
+		 v-if="item.titlepic" :src="item.titlepic" @click="openDetail"
 			style="height: 350rpx; width: 100%;border-bottom: 5rpx;">
 		</image>
 		
