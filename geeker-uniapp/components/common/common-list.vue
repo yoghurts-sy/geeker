@@ -45,7 +45,7 @@
 		</view>
 
 		<!-- 标题 -->
-		<view class="font-md my-1" @click="openDetail">{{item.title}}</view>
+		<view class="font-md my-1" @click="openDetail" style="white-space:pre-line;">{{item.title}}</view>
 		<!-- 图片 -->
 		<image mode="widthFix"
 		 v-if="item.titlepic" :src="item.titlepic" @click="openDetail"
@@ -128,6 +128,7 @@
 			openDetail() {
 				if(this.isDetail) return;
 				console.log("进入详情页")
+				console.log(this.item);
 				uni.navigateTo({
 					url: '../../pages/detail/detail?detail='+ JSON.stringify(this.item),
 				});

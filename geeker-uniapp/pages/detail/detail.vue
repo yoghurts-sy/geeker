@@ -11,7 +11,7 @@
 			
 			<view class="uni-comment-list"
 			v-for="(item, index) in comments" :key="index">
-					<view class="uni-comment-face"><image :src="item.userpic"></image></view>
+					<view class="uni-comment-face"><image mode="aspectFill" :src="item.userpic"></image></view>
 					<view class="uni-comment-body">
 						<view class="uni-comment-top">
 							<text>{{item.username}}</text>
