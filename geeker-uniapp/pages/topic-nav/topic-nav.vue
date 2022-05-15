@@ -128,6 +128,7 @@
 				this.$H.get('/topic?tc_id='+id+'&pageNum='+page)
 				.then(res=>{
 					console.log("id:"+id+ ", page:"+page);
+					console.log(res);
 					let list = res.data.map(v=>{
 						return {
 							id:v.id,
@@ -141,7 +142,7 @@
 			
 					this.newsList[index].list = isrefresh ? [...list] : [...this.newsList[index].list,...list];
 					
-					this.newsList[index].loadmore  = list.length < 5 ? '没有更多了' : '上拉加载更多';
+					this.newsList[index].loadmore  = list.length < 10 ? '没有更多了' : '上拉加载更多';
 					
 					if (isrefresh) {
 						this.newsList[index].firstLoad = true

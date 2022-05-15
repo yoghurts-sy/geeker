@@ -47,7 +47,7 @@
 		,
 	    onReady() {
 	        // 初始化参数并创建上传DOM
-			let baseUrl = 'http://localhost:8585/love/api';
+			let baseUrl = 'http://121.5.168.45:8585/love/api';
 	        this.option = {
 	            // #ifdef APP-PLUS
 	            cuWebview: this.$mp.page.$getAppWebview(), // app必传 
