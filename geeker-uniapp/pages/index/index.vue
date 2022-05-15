@@ -163,6 +163,10 @@
 				url:"../add-input/add-input"
 			})
 		},
+		pullDown(e){
+			this.refresh();
+			console.log("下拉刷新", e)
+		},
 		onLoad() {
 			uni.$on('update',data=>{
 				console.log(data);
@@ -310,6 +314,15 @@
 				this.tabIndex = index
 				// 滚动到指定元素
 				this.scrollInto = 'tab' + index
+			},
+			refresh() {
+				setTimeout(()=>{
+						uni.stopPullDownRefresh(); //停止刷新
+					}, 2000
+				)
+				uni.reLaunch({
+				    url: '../index/index'
+				});
 			}
 
 		}
