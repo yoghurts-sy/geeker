@@ -182,7 +182,12 @@
 				// 根据选项生成列表
 				this.getData(0)
 			})
-			this.lang = this.$store.state.user.userInfo.language
+			if (this.$store.state.user.userInfo === undefined) {
+				this.lang = ""
+			} else {
+				this.lang = this.$store.state.user.userInfo.language
+			}
+			
 		},
 		methods: {
 			loadmore(index){
@@ -199,6 +204,9 @@
 					var url = '/getpost?pc_id=' + ind + '&page=' + item.page 
 					if (ind == 2) {
 						url += '&language=' + this.lang
+						if (this.lang === "") {
+							return;
+						}
 					}
 					this.$axios.get(url).then(res=>{
 						item.list.push(...res.data.obj)
@@ -221,20 +229,44 @@
 					var url = '/getpost?pc_id=' + tmp.id + '&page=1' 
 					if (tmp.id == 2) {
 						url += '&language=' + this.lang
+						console.log("lang", this.lang)
+						if (this.lang === "") {
+							let item = {
+								// 1.上拉加载更多  2.加载中... 3.没有更多了
+								loadmore: "上拉加载更多",
+								list: [],
+								page:1 // id page 用来按需加载
+							}
+							this.newsList.push(item)
+							this.getData(index+1)
+						} else {
+							this.$axios.get(url).then(res=>{
+								let item = {
+									// 1.上拉加载更多  2.加载中... 3.没有更多了
+									loadmore: "上拉加载更多",
+									list: [],
+									page:1 // id page 用来按需加载
+								}
+								console.log(res.data.obj)
+								item.list = res.data.obj
+								this.newsList.push(item)
+								this.getData(index+1)
+							})	
+						}	
+					} else {
+						this.$axios.get(url).then(res=>{
+							let item = {
+								// 1.上拉加载更多  2.加载中... 3.没有更多了
+								loadmore: "上拉加载更多",
+								list: [],
+								page:1 // id page 用来按需加载
+							}
+							console.log(res.data.obj)
+							item.list = res.data.obj
+							this.newsList.push(item)
+							this.getData(index+1)
+						})	
 					}
-					this.$axios.get(url).then(res=>{
-						let item = {
-							// 1.上拉加载更多  2.加载中... 3.没有更多了
-							loadmore: "上拉加载更多",
-							list: [],
-							page:1 // id page 用来按需加载
-						}
-						console.log(res.data.obj)
-						item.list = res.data.obj
-						this.newsList.push(item)
-						this.getData(index+1)
-					})	
-				
 			},
 			follow(index) {
 				this.list[index].isFollow = true

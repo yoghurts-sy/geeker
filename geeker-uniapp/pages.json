@@ -13,7 +13,7 @@
 							"backgroundColor":"#F5F4F2",
 							"borderRadius":"4px",
 							"disabled":true,
-							"placeholder":"搜索帖子",
+							"placeholder":"搜索项目招聘",
 							"placeholderColor":"#6D6C67"
 						},
 						"buttons":[

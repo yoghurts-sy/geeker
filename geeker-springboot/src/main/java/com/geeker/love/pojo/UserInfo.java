@@ -11,4 +11,5 @@ public class UserInfo {
     private String language;
     private String school;
     private String major;
+    private String username;
 }

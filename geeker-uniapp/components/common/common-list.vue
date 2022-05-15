@@ -110,8 +110,9 @@
 			// 打开个人空间
 			openSpace() {
 				console.log(this.item)
+				if (this.$store.state.user.id === undefined || this.$store.state.user.id === this.item.user_id) return;
 				let user = {
-					user_id : this.item.id,
+					user_id : this.item.user_id,
 					username : this.item.username,
 					userpic : this.item.userpic
 				}

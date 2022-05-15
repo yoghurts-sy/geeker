@@ -11,4 +11,5 @@ public interface UserInfoServe {
     ResultInfo deleteBlackList(Integer bid,Integer uid);
 
     UserInfo getUserInfo(Integer user_id);
+    ResultInfo updateUserImage(Integer user_id, String url);
 }

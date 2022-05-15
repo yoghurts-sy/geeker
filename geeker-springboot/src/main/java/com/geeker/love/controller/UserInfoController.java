@@ -3,10 +3,12 @@ package com.geeker.love.controller;
 import com.geeker.love.pojo.UserInfo;
 import com.geeker.love.service.UserInfoServe;
 import com.geeker.love.utils.ResultInfo;
+import com.geeker.love.utils.uploadUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/love/api")
@@ -24,6 +26,14 @@ public class UserInfoController {
         result.setCode(200);
         return result;
     }
+
+    @GetMapping("/updateUserpic")
+    public ResultInfo updateUserpic(@RequestParam String url, @RequestParam Integer user_id){
+        return userInfoServe.updateUserImage(user_id, url);
+    }
+
+
+
 
     @GetMapping("/getUserInfo")
     public ResultInfo updateUserInfo(@RequestParam Integer user_id){

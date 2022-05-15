@@ -155,6 +155,7 @@ export default new Vuex.Store({
 				state.user.userInfo.language = obj.language,
 				state.user.userInfo.school = obj.school,
 				state.user.userInfo.major = obj.major,
+				state.user.username = obj.username,
 				uni.setStorageSync('user', JSON.stringify(state.user));
 			}
 		},
@@ -207,7 +208,7 @@ export default new Vuex.Store({
 			if(state.IsOpen) return
 			// 连接
 			let _thisId = user.id;
-			let _url = "ws://" + "localhost:8585" + '/love/api/connect/' + _thisId
+			let _url = "ws://" + "121.5.168.45:8585" + '/love/api/connect/' + _thisId
 			state.SocketTask = uni.connectSocket({
 			    url: _url,
 			    complete: ()=> {}

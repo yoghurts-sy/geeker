@@ -4,9 +4,6 @@ import com.geeker.love.pojo.post;
 import com.geeker.love.service.TopicServe;
 import com.geeker.love.service.impl.TopicService;
 import com.geeker.love.utils.ResultInfo;
-import com.sun.istack.internal.NotNull;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -49,7 +46,4 @@ public class TopicController {
     public ResultInfo getTopicByTopicID(Integer topic_id, Integer page){
         return topicServe.getTopicByTopicId(topic_id, page);
     }
-
-
-
 }

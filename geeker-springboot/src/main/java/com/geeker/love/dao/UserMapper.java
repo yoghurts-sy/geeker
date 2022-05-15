@@ -31,4 +31,8 @@ public interface UserMapper {
                                @Param("password") String password, @Param("create_time") Long create_time);
 
     Integer queryIdByCreateTime(@Param("create_time") Long create_time);
+
+    Integer updateUserImage(@Param("user_id") Integer user_id, @Param("url") String url);
+
+    Integer updateUsername(@Param("user_id") Integer user_id, @Param("username") String username);
 }
