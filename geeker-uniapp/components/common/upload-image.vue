@@ -114,7 +114,7 @@
 						
 						res.tempFilePaths.forEach(item=>{
 							uni.uploadFile({
-								url: 'http://localhost:8585/love/api/uploadFile',
+								url: 'http://121.5.168.45:8585/love/api/uploadFile',
 								filePath: item,
 								name: 'file',
 								formData:{

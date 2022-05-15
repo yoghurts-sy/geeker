@@ -28,7 +28,7 @@ public class TopicService implements TopicServe {
         return topicMapper.getTopic(tc_id);
     }
     public List<Topic> getTopicsByPages(Integer tc_id,Integer page){
-        PageHelper.startPage(page,5);
+        PageHelper.startPage(page,10);
         List<Topic> lists = topicMapper.getTopic(tc_id);
 
         return lists;

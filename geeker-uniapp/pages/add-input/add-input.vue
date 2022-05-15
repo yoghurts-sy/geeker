@@ -349,6 +349,8 @@
 			// 选中图片
 			changeImage(e){
 				this.imageList = e
+				console.log(e);
+				console.log(this.imageList);
 			},
 			// 保存操作
 			store(){
