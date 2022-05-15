@@ -186,6 +186,7 @@ export default new Vuex.Store({
 				state.loginStatus = true
 				state.token = state.user.token
 				// 打开socket
+				state.IsOpen = false;
 				
 				console.log("initUser-logined")
 				dispatch('openSocket')
@@ -202,13 +203,12 @@ export default new Vuex.Store({
 		// 打开socket
 		openSocket({ state,dispatch }){
 			let user = state.user;
-			console.log("openSocket")
 			if(!user) return
 			// 防止重复连接
 			if(state.IsOpen) return
 			// 连接
-			let _thisId = user.id;
-			let _url = "ws://" + "121.5.168.45:8585" + '/love/api/connect/' + _thisId
+			let _thisId = user.id; // localhost 121.5.168.45
+			let _url = "ws://" + "localhost:8585" + '/love/api/connect/' + _thisId
 			state.SocketTask = uni.connectSocket({
 			    url: _url,
 			    complete: ()=> {}
