@@ -18,8 +18,13 @@ public class UserInfoService implements UserInfoServe {
     private UserMapper userMapper;
 
 
+    @Transactional
     public Integer updateUserInfo(UserInfo userInfo) {
-        return userMapper.updateUserInfo(userInfo);
+        Integer user_id = userInfo.getUser_id();
+        String username = userInfo.getUsername();
+        userMapper.updateUserInfo(userInfo);
+        userMapper.updateUsername(user_id, username);
+        return 1;
     }
 
     @Transactional
@@ -82,5 +87,15 @@ public class UserInfoService implements UserInfoServe {
     @Override
     public UserInfo getUserInfo(Integer user_id) {
         return userMapper.getUserInfo(user_id);
+    }
+
+    @Override
+    public ResultInfo updateUserImage(Integer user_id, String url) {
+        Integer res = userMapper.updateUserImage(user_id, url);
+        if (res > 0) {
+            return ResultInfo.success(url);
+        } else {
+            return ResultInfo.fail("上传失败");
+        }
     }
 }

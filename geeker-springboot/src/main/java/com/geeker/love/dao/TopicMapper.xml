@@ -15,7 +15,7 @@
 
     <select id="getPostByTopicId" resultType="java.util.Map">
         SELECT DISTINCT p.id, u.username, u.userpic, p.create_time newstime,
-                p.title, p.titlepic, p.language, count(DISTINCT c.id) comment_count, count(DISTINCT s.id) support_count
+                p.title, p.titlepic, p.language, u.id user_id, count(DISTINCT c.id) comment_count, count(DISTINCT s.id) support_count
         FROM post AS p
         LEFT JOIN comment AS c ON p.id = c.post_id
         LEFT JOIN user AS u ON p.user_id = u.id

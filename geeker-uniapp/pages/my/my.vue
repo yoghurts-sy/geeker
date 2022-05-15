@@ -55,13 +55,14 @@
 		<uni-list-item title="个人资料" v-if="loginStatus"  showExtraIcon @click="openUserInfo">
 			<text slot="icon" class="iconfont icon-huiyuanvip"></text>
 		</uni-list-item>
-		<uni-list-item title="浏览历史" v-if="loginStatus"  showExtraIcon @click="openHistory">
-			<text slot="icon" class="iconfont icon-liulan"></text>
-		</uni-list-item>
-		
 		<uni-list-item title="审核帖子" v-if="user.status === 2" showExtraIcon>
 			<text slot="icon" class="iconfont icon-keyboard"></text>
 		</uni-list-item>
+		<uni-list-item title="退出登录" v-if="loginStatus"  showExtraIcon @click="loginOut">
+			<text slot="icon" class="iconfont icon-liulan"></text>
+		</uni-list-item>
+		
+		
 		<!-- #ifdef MP
 		<navigator url="../user-set/user-set" hover-class="none">
 		<uni-list-item title="我的设置" showExtraIcon>
@@ -147,9 +148,11 @@
 					url: '../login/login',
 				});
 			},
-			openHistory(){
-				uni.navigateTo({
-					url: '../history/history'
+			loginOut(){
+				console.log("loginOut")
+				this.$store.commit('logout')
+				uni.reLaunch({
+				    url: '../my/my'
 				});
 			},
 			openUserInfo() {

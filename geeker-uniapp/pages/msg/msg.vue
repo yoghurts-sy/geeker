@@ -121,6 +121,9 @@
 						uni.stopPullDownRefresh(); //停止刷新
 					}, 2000
 				)
+				uni.reLaunch({
+				    url: '../msg/msg'
+				});
 			},
 			popupEvent(e){
 				switch (e){

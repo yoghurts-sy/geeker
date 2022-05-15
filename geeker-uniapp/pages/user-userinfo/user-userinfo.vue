@@ -2,9 +2,15 @@
 	<view>
 		<uni-list-item title="头像" @click="changeUserpic">
 			<view class="flex align-center" slot="right">
-				<image :src="user.userpic ? user.userpic : '/static/default.jpg'"
+				<image :src="user.avatar ? user.avatar : '/static/default.jpg'"
 				style="width: 100rpx;height: 100rpx;"
 				class="rounded-circle"></image>
+				<text class="iconfont icon-bianji1 ml-2"></text>
+			</view>
+		</uni-list-item>
+		<uni-list-item title="呢称">
+			<view class="flex align-center" slot="right">
+				<input class="uni-input text-right" v-model="username" />
 				<text class="iconfont icon-bianji1 ml-2"></text>
 			</view>
 		</uni-list-item>
@@ -74,7 +80,8 @@
 				emotion : 0,
 				job : "保密",
 				school : "学院",
-				major : "专业"
+				major : "专业",
+				username:"昵称"
 			}
 		},
 		// 监听返回
@@ -100,6 +107,7 @@
 				this.school  = userinfo.school
 				this.major  = userinfo.major
 			}
+			this.username = this.user.username
 		},
 		computed: {
 			...mapState({
@@ -126,25 +134,32 @@
 			},
 			// 修改头像
 			changeUserpic(){
+				let id = this.$store.state.user.id;
 				uni.chooseImage({
 					count:1,
 					sizeType:["compressed"],
 					sourceType:["album","camera"],
 					success: (res) => {
-						this.$H.upload('/edituserpic',{
+						this.$H.upload('/uploadFile',{
 							filePath: res.tempFilePaths[0],
-							name: 'userpic',
-							token:true
+							name : 'file',
+							token : true
 						}).then(result=>{
-							console.log(result);
-							this.$store.commit('editUserInfo',{
-								key:"userpic",
-								value:result.data
+							//console.log(result.obj);
+							let url = result.obj;
+							let rL = '/updateUserpic?user_id='+id+'&url='+url;
+							this.$H.get(rL).then(res=>{
+								//console.log(res);
+								this.$store.commit('editUserInfo',{
+									key:"avatar",
+									value:res.data.obj
+								})
+								uni.showToast({
+									title: '修改头像成功',
+									icon: 'none'
+								});
+								
 							})
-							uni.showToast({
-								title: '修改头像成功',
-								icon: 'none'
-							});
 						}).catch(err=>{
 							console.log(err);
 						})
@@ -171,20 +186,20 @@
 			},
 			// 提交
 			submit(){
-				console.log(this.$store.state.user.userInfo)
+				
 				let obj = {
 					sex:this.sex,
 					grade:this.grade,
 					language:emotionArray[this.emotion],
 					school:this.school,
 					major:this.major,
-					user_id:this.$store.state.user.id
+					user_id:this.$store.state.user.id,
+					username:this.username
 				}
 				console.log(obj);
-				this.$H.post('/updateUserInfo', obj,{
+				this.$H.post('/updateUserInfo', obj, {
 					token:true
 				}).then(res=>{
-					console.log(res);
 					
 					this.$store.commit('editUserUserInfo', obj)
 					uni.showToast({
