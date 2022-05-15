@@ -3,7 +3,7 @@ import axios from 'axios'
  
 // create an axios instance
 const service = axios.create({
-	baseURL: 'http://localhost:8585/love/api', //  121.5.168.45
+	baseURL: 'http://121.5.168.45:8585/love/api', //  121.5.168.45
 	//withCredentials: true, // send cookies when cross-domain requests 注意：withCredentials和后端配置的cross跨域不可同时使用
 	timeout: 6000, // request timeout
 	crossDomain: true
