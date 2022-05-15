@@ -100,8 +100,7 @@
 					});
 				}
 			}
-		}
-		,
+		},
 		onPullDownRefresh(){
 			this.refresh();
 		},

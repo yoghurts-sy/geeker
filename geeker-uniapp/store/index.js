@@ -208,7 +208,7 @@ export default new Vuex.Store({
 			if(state.IsOpen) return
 			// 连接
 			let _thisId = user.id; // localhost 121.5.168.45
-			let _url = "ws://" + "localhost:8585" + '/love/api/connect/' + _thisId
+			let _url = "ws://" + "121.5.168.45:8585" + '/love/api/connect/' + _thisId
 			state.SocketTask = uni.connectSocket({
 			    url: _url,
 			    complete: ()=> {}
