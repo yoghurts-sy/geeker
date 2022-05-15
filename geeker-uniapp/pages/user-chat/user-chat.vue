@@ -60,7 +60,7 @@
 				this.update = false;
 				this.update = true;
 				
-				// 开启监听接收聊天信息
+				// 开启监听接收聊天信息，这里我没有利用上
 				uni.$on('UserChat', (res)=>{
 					console.log('[user-chat]接收聊天信息', res);
 					if(res.from_id === ToUser.user_id) {
@@ -118,6 +118,7 @@
 					if (this.list === undefined) {
 						console.log("第一次发消息")
 					} 
+					console.log(res);
 					this.renderPage({
 						data:result,
 						send:true

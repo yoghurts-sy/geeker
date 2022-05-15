@@ -73,6 +73,11 @@ public class ChatEndPoint {
     public static void sendMessage(MessageBean message) {
         String to_id =  message.getTo_id() + "";
         ChatEndPoint chatEndPoint = onLineUsers.get(to_id);
+
+        for (String key : onLineUsers.keySet()) {
+            System.out.print(key + " ");
+        }
+
         if (null != chatEndPoint) {
             Session session = chatEndPoint.session;
             try {
