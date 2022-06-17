@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import axios from 'axios'
  
-// create an axios instance
+// create an axios instance	
 const service = axios.create({
-	baseURL: 'http://121.5.168.45:8585/love/api', //  121.5.168.45
+	baseURL: 'http://localhost:8585/love/api', //  121.5.168.45
+	// 修改baseURL后需同步修改config.js   upload-file.vue 以及components/common/upload-image.vue中的url
 	//withCredentials: true, // send cookies when cross-domain requests 注意：withCredentials和后端配置的cross跨域不可同时使用
 	timeout: 6000, // request timeout
 	crossDomain: true
